@@ -36,7 +36,7 @@ public class AgentMovement : Agent{
         }
 
         Vector3 move = _movementVelocity + _verticalSpeed * Vector3.up;
-        Debug.Log($"CurrentSpeed: {_movementVelocity.sqrMagnitude * 100f}");
+        //Debug.Log($"CurrentSpeed: {_movementVelocity.sqrMagnitude * 100f}");
         _agnetAnimator?.SetSpeed(_movementVelocity.sqrMagnitude * 100f);
 
         _charController.Move(move);
