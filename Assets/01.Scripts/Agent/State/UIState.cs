@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIState : NormalState{
     public override void OnEnterState(){
         _agentMovement.IsActiveMove = false;
+        _agentAnimator.InitAllAnimations();
     }
 
     public override void OnExitState(){

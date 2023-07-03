@@ -14,10 +14,11 @@ public class AgentAnimator : Agent{
         base.SetUp(agent);
     }
 
-
-
     public void SetSpeed(float value){
         _animator.SetFloat(_speedHash,value);
     }
 
+    public void InitAllAnimations() {
+        _animator.SetFloat(_speedHash,0);
+    }
 }

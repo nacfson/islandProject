@@ -6,12 +6,18 @@ public class GameManager : MonoBehaviour{
 
     [SerializeField] private PoolingListSO _poolingList;
 
+    public AgentBrain PlayerBrain;
+
     private void Awake() {
         if(_instnace == null){
             _instnace = this;
         }
         else{
             Debug.LogError($"Multiple GameManager is exist");
+        }
+
+        if(PlayerBrain == null) {
+            PlayerBrain = GameObject.FindGameObjectWithTag("Player").GetComponent<AgentBrain>();
         }
 
         DontDestroyOnLoad(this);

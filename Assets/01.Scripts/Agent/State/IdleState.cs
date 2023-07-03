@@ -11,8 +11,5 @@ public class IdleState : NormalState{
     }
 
     public override void UpdateState(){
-        if(Input.GetKeyDown(KeyCode.T)){
-            _brain.ChangeState(StateType.UI);
-        }
     }
 }

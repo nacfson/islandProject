@@ -17,7 +17,7 @@ namespace UI_Toolkit{
         private void Awake() {
             if(Instance == null) {
                 Instance = this;
-                Debug.LogError(Instance);
+                //Debug.LogError(Instance);
             }
         }
         private void OnEnable() {
@@ -79,6 +79,7 @@ namespace UI_Toolkit{
                 }
                 else {
                     _infoUI.RemoveFromClassList("active");
+                    GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
                     _returnIdx = _talkData.talkList.Count - 1;
                 }
             }
@@ -91,6 +92,7 @@ namespace UI_Toolkit{
             //_contentLabel.tooltip = text;
             _targetText = text;
             _infoUI.AddToClassList("active");
+            GameManager.Instance.PlayerBrain.ChangeState(StateType.UI);
 
             _isAnimating = true;
 

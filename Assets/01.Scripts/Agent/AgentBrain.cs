@@ -10,9 +10,9 @@ public enum StateType{
 
 public class AgentBrain : MonoBehaviour{
     public NormalState CurrentState => _currentState;
-    [SerializeField] private NormalState _currentState;
+    [SerializeField] protected NormalState _currentState;
 
-    [SerializeField] private MovementData _movementData;
+    [SerializeField] protected MovementData _movementData;
     public MovementData MoveData => _movementData;
 
     public ActionData AD;
@@ -21,12 +21,12 @@ public class AgentBrain : MonoBehaviour{
 
     private List<Agent> _agents;
 
-    private void Awake() {
+    protected virtual void Awake() {
         SetUp(this.transform);
     }
 
 
-    private void SetUp(Transform agent){
+    protected virtual void SetUp(Transform agent){
         _agents = new List<Agent>();
         _stateDictionary = new Dictionary<StateType, NormalState>();
 
@@ -49,7 +49,7 @@ public class AgentBrain : MonoBehaviour{
         AD = transform.Find("ActionData").GetComponent<ActionData>();
     }
 
-    private void Update() {
+    protected virtual void Update() {
         _currentState.UpdateState();
     }
     
