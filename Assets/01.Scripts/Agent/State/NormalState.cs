@@ -6,6 +6,7 @@ public abstract class NormalState : MonoBehaviour, IState{
     protected AgentBrain _brain;
     protected AgentMovement _agentMovement;
     protected AgentAnimator _agentAnimator;
+    
     public abstract void OnEnterState();
 
     public abstract void OnExitState();

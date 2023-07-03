@@ -15,7 +15,7 @@ public class AgentBrain : MonoBehaviour{
     [SerializeField] protected MovementData _movementData;
     public MovementData MoveData => _movementData;
 
-    public ActionData AD;
+    [HideInInspector] public ActionData AD;
 
     private Dictionary<StateType,NormalState> _stateDictionary;
 
