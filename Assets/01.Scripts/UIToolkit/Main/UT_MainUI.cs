@@ -27,9 +27,11 @@ namespace UI_Toolkit{
 
             VisualElement iu = _root.Q<VisualElement>("InfoUI");
 
-            _infoUI = new InfoUI(iu,_talkData,() => Debug.Log("OnInfoUIClicked"));
+            _infoUI = new InfoUI(iu, _talkData, () => { 
+                Debug.Log("OnInfoUIClicked");
+                _infoUI.ShowText();
+            });
         }
-
 
         private void Update() {
             if (Input.GetKeyDown(KeyCode.T)) {
@@ -39,6 +41,7 @@ namespace UI_Toolkit{
     }
 
 
+
     public class InfoUI {
         //실질적 InfoUI의 VisualElement
         private VisualElement _infoUI;
@@ -46,6 +49,8 @@ namespace UI_Toolkit{
         private Label _contentLabel;
         private TalkData _talkData;
         private bool _isAnimating = false;
+
+        private string _targetText;
         private int _returnIdx;
 
         public InfoUI(VisualElement infoUI,TalkData talkData, Action action) {
@@ -59,16 +64,22 @@ namespace UI_Toolkit{
         public void RegisterAction(Action action) {
             _infoUI.RegisterCallback<PointerDownEvent>(e => action());
         }
+        //글자 애니메이션이 실행중이면 스킵, 실행중이 아니면 다음 대화로 이동
         public void ShowText() {
             if (_isAnimating) {
-                _contentLabel.text = _contentLabel.tooltip;
+                //_contentLabel.text = _contentLabel.tooltip;
+                UI_Toolkit.UT_MainUI.Instance.StopAllCoroutines();
+                _contentLabel.text = _targetText;
                 _isAnimating = false;
             }
             else {
                 if (_talkData.CanGetTalk(_returnIdx)) {
-                    Debug.LogError("CanTalk");
                     UI_Toolkit.UT_MainUI.Instance.StartCoroutine(AnimateTextCor(_talkData.GetTalk(_returnIdx),0.5f));
                     _returnIdx--;
+                }
+                else {
+                    _infoUI.RemoveFromClassList("active");
+                    _returnIdx = _talkData.talkList.Count - 1;
                 }
             }
         }
@@ -77,7 +88,8 @@ namespace UI_Toolkit{
         //typingDelay => 글자가 입력되는 속도
         public IEnumerator AnimateTextCor(string text, float startDelay, float typingDelay = 0.1f) {
             _contentLabel.text = string.Empty;
-            _contentLabel.tooltip = text;
+            //_contentLabel.tooltip = text;
+            _targetText = text;
             _infoUI.AddToClassList("active");
 
             _isAnimating = true;
