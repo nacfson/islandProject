@@ -1,0 +1,21 @@
+.infoUI {
+    bottom: auto;
+    width: 60%;
+    height: 30%;
+    background-color: rgb(255, 255, 255);
+    top: 60%;
+    left: 20%;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    transition-property: all;
+    transition-duration: 0.5s;
+    visibility: visible;
+    scale: 0 0;
+}
+
+.infoUI.active {
+    visibility: visible;
+    scale: 1 1;
+}

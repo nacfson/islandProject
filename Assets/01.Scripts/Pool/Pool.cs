@@ -19,6 +19,7 @@ public class Pool<T> where T : PoolableMono{
             _pool.Push(obj);
         }
     }
+    
     public T Pop(){
         T obj = null;
         if(_pool.Count <= 0){
