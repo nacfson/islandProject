@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -9,15 +10,18 @@ public class GameManager : MonoBehaviour{
     [SerializeField] private PoolingListSO _poolingList;
     private List<Transform> _targetPositions;
 
-    public AgentBrain PlayerBrain{
+    private CameraController _camController;
+    public CameraController CamController => _camController;
+
+    public AgentBrain<ActionData> PlayerBrain{
         get{
             if(_playerBrain == null){
-                _playerBrain = GameObject.FindGameObjectWithTag("Player").GetComponent<AgentBrain>();
+                _playerBrain = GameObject.FindGameObjectWithTag("Player").GetComponent<AgentBrain<ActionData>>();
             }
             return _playerBrain;
         }
     }
-    private AgentBrain _playerBrain;
+    private AgentBrain<ActionData> _playerBrain;
 
 
 
@@ -33,7 +37,13 @@ public class GameManager : MonoBehaviour{
         _targetPositions = new List<Transform>();
         GetComponentsInChildren<Transform>(_targetPositions);
 
+        CreatePoolManager(this.transform);
+        CreateCameraController();
         DontDestroyOnLoad(this);
+    }
+
+    private void CreateCameraController(){
+        _camController = new CameraController(this.transform);
     }
 
     private void CreatePoolManager(Transform trm){
@@ -46,7 +56,6 @@ public class GameManager : MonoBehaviour{
 
     public Vector3 RandomTargetPos(){
         int randomIdx = Random.Range(0,_targetPositions.Count);
-        Debug.Log(_targetPositions[randomIdx].gameObject.name);
         return _targetPositions[randomIdx].position;
     }
 

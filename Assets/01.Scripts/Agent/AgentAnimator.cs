@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class AgentAnimator : Agent{
+public class AgentAnimator : Agent<ActionData>{
     protected readonly int _speedHash = Animator.StringToHash("SPEED");
 
-    protected Animator _animator;`
+    protected Animator _animator;
 
     public override void SetUp(Transform agent){
         _animator = GetComponent<Animator>();
@@ -19,6 +19,6 @@ public class AgentAnimator : Agent{
     }
 
     public void InitAllAnimations() {
-        _animator.SetFloat(_speedHash,0);
+        _animator.SetFloat(_speedHash,0f);
     }
 }

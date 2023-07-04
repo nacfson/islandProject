@@ -8,19 +8,19 @@ public enum StateType{
     Idle = 0 ,UI = 1,
 }
 
-public class PlayerBrain : AgentBrain{
+public class PlayerBrain : AgentBrain<ActionData>{
     public NormalState CurrentState => _currentState;
     [SerializeField] protected NormalState _currentState;
 
     private Dictionary<StateType,NormalState> _stateDictionary;
 
-    private List<Agent> _agents;
+    private List<Agent<ActionData>> _agents;
     
     public override void SetUp(Transform agent){
-        _agents = new List<Agent>();
+        _agents = new List<Agent<ActionData>>();
         _stateDictionary = new Dictionary<StateType, NormalState>();
 
-        GetComponentsInChildren<Agent>(_agents);
+        GetComponentsInChildren<Agent<ActionData>>(_agents);
         _agents.ForEach(a => a.SetUp(agent));
         
         Transform stateTrm = transform.Find("States");
@@ -42,9 +42,10 @@ public class PlayerBrain : AgentBrain{
     protected virtual void Update() {
         _currentState.UpdateState();
     }
+
     public override void ChangeState(object state) {
         _currentState.OnExitState();
-        _currentState = state as NormalState;
+        _currentState = _stateDictionary[(StateType)state];
         _currentState.OnEnterState();
 
     }

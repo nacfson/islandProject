@@ -6,6 +6,7 @@ public class UIState : NormalState{
     public override void OnEnterState(){
         _agentMovement.IsActiveMove = false;
         _agentAnimator.InitAllAnimations();
+        _brain.GetAD().CanInteract = false;
     }
 
     public override void OnExitState(){

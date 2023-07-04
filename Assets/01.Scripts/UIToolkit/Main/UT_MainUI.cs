@@ -10,14 +10,13 @@ namespace UI_Toolkit{
         private UIDocument _document;
         private VisualElement _root;
         private InfoUI _infoUI;
+        private VisualElement _iu;
 
         public static UT_MainUI Instance;
 
-        [SerializeField] private TalkData _talkData;
         private void Awake() {
             if(Instance == null) {
                 Instance = this;
-                //Debug.LogError(Instance);
             }
         }
         private void OnEnable() {
@@ -25,18 +24,15 @@ namespace UI_Toolkit{
 
             _root = _document.rootVisualElement;
 
-            VisualElement iu = _root.Q<VisualElement>("InfoUI");
-
-            _infoUI = new InfoUI(iu, _talkData, () => { 
-                Debug.Log("OnInfoUIClicked");
-                _infoUI.ShowText();
-            });
+            _iu = _root.Q<VisualElement>("InfoUI");
         }
 
-        private void Update() {
-            if (Input.GetKeyDown(KeyCode.T)) {
+        public void StartTalk(TalkData talkData){
+            _infoUI = new InfoUI(_iu, talkData, () => { 
                 _infoUI.ShowText();
-            }
+            });
+
+            _infoUI.ShowText();
         }
     }
 
@@ -50,6 +46,8 @@ namespace UI_Toolkit{
         private TalkData _talkData;
         private bool _isAnimating = false;
 
+        private List<Action> _evnetCallbacks = new List<Action>();
+
         private string _targetText;
         private int _returnIdx;
 
@@ -61,11 +59,14 @@ namespace UI_Toolkit{
 
             RegisterAction(action);
         }
+
         public void RegisterAction(Action action) {
             _infoUI.RegisterCallback<PointerDownEvent>(e => action());
+            _evnetCallbacks.Add(action);
         }
         //글자 애니메이션이 실행중이면 스킵, 실행중이 아니면 다음 대화로 이동
         public void ShowText() {
+            //Debug.LogError("ShowText");
             if (_isAnimating) {
                 //_contentLabel.text = _contentLabel.tooltip;
                 UI_Toolkit.UT_MainUI.Instance.StopAllCoroutines();
@@ -81,6 +82,8 @@ namespace UI_Toolkit{
                     _infoUI.RemoveFromClassList("active");
                     GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
                     _returnIdx = _talkData.talkList.Count - 1;
+                    GameManager.Instance.CamController.TalkMode(false);
+                    _evnetCallbacks.ForEach(e => _infoUI.UnregisterCallback<PointerDownEvent>(evt => e()));
                 }
             }
         }
@@ -93,6 +96,7 @@ namespace UI_Toolkit{
             _targetText = text;
             _infoUI.AddToClassList("active");
             GameManager.Instance.PlayerBrain.ChangeState(StateType.UI);
+            GameManager.Instance.CamController.TalkMode(true);
 
             _isAnimating = true;
 
@@ -104,7 +108,6 @@ namespace UI_Toolkit{
                 float timer = 0f;
 
                 while (timer < typingDelay) {
-                    //여기서도 yield break;를 할진느 고민해야됨
                     timer += Time.deltaTime;
                     yield return null;
                 }

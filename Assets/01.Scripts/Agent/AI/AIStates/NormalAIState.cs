@@ -6,7 +6,7 @@ public abstract class NormalAIState : MonoBehaviour, IState {
     [HideInInspector] public List<AITransition> transitions;
     protected AIBrain _brain;
     protected AIActionData _actionData;
-    protected AgentAnimator _agentAnimator;
+    protected AIAnimator _agentAnimator;
 
     protected NavMovement _navMovement;
     protected bool _isSetUp = false;
@@ -28,7 +28,7 @@ public abstract class NormalAIState : MonoBehaviour, IState {
         _brain = agent.GetComponent<AIBrain>();
         _actionData = agent.Find("AI").GetComponent<AIActionData>();
         _navMovement = agent.GetComponent<NavMovement>();
-        _agentAnimator = agent.Find("Visual").GetComponent<AgentAnimator>();
+        _agentAnimator = agent.Find("Visual").GetComponent<AIAnimator>();
 
         transitions = new List<AITransition>();
         GetComponentsInChildren<AITransition>(transitions);

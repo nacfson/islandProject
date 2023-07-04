@@ -25,6 +25,16 @@ namespace Core{
             }
         }
 
+        private static CinemachineVirtualCamera _talkCam;
+        public static CinemachineVirtualCamera TalkCam{
+            get{
+                if(_talkCam == null){
+                    _talkCam = GameObject.Find("TalkCam").GetComponent<CinemachineVirtualCamera>();
+                }
+                return _talkCam;
+            }
+        }
+
 
 
     }

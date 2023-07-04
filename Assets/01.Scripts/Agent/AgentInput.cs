@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AgentInput : Agent{
+public class AgentInput : Agent<ActionData>{
     public event Action<Vector3> OnMoementKeyPress;
     public event Action OnJumpKeyPress;
     public event Action OnRunKeyPress;
+    public event Action OnInteractKeyPress;
 
     public override void SetUp(Transform agent){
         base.SetUp(agent);
@@ -18,6 +19,13 @@ public class AgentInput : Agent{
         GetMovementInput();
         GetJumpInput();
         GetRunInput();
+        GetInteractInput();
+    }
+
+    private void GetInteractInput(){
+        if(Input.GetKeyDown(KeyCode.F)){
+            OnInteractKeyPress?.Invoke();
+        }
     }
 
     private void GetRunInput(){

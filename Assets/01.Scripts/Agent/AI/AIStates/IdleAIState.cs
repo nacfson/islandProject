@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class IdleAIState : NormalAIState {
     public override void OnEnterState() {
+        _navMovement.StopImmediately();
         _agentAnimator.InitAllAnimations();
     }
 
@@ -12,5 +13,6 @@ public class IdleAIState : NormalAIState {
 
     public override void UpdateState() {
         base.UpdateState();
+        _agentAnimator.InitAllAnimations();
     }
 }

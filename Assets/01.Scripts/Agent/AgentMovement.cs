@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class AgentMovement : Agent{
+public class AgentMovement : Agent<ActionData>{
     [SerializeField] protected float _gravity = -9.81f;
 
     protected CharacterController _charController;
@@ -49,7 +49,7 @@ public class AgentMovement : Agent{
 
     private void CalculateMovement(){
         _movementVelocity.Normalize();
-        if(_brain.AD.IsRun){
+        if(_brain.GetAD().IsRun){
             _movementVelocity *= _brain.MoveData.RunSpeed * Time.fixedDeltaTime;
         }
         else{
@@ -66,6 +66,6 @@ public class AgentMovement : Agent{
         _movementVelocity = Vector3.zero;
     }
     public void SetRun(){
-        _brain.AD.IsRun = !_brain.AD.IsRun;
+        _brain.GetAD().IsRun = !_brain.GetAD().IsRun;
     }
 }

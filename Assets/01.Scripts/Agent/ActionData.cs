@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class ActionData : MonoBehaviour{
     public bool IsRun;
+    public bool IsInteracting;
+    
+
+    public bool CanInteract;
 
 }
