@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveAIState : NormalAIState {
     public override void OnEnterState() {
-        Debug.Log("OnMoveAIState");
+        _navMovement.SetDestination(GameManager.Instance.RandomTargetPos());
     }
 
     public override void OnExitState() {

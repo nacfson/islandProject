@@ -7,11 +7,17 @@ public class AIBrain : AgentBrain {
     [SerializeField] protected NormalAIState _currentAIState;
 
     public List<NormalAIState> states;
+    private List<Agent> _agents;
 
     protected override void Awake() {
         SetUp(this.transform);
     }
     public override void SetUp(Transform agent) {
+        _agents = new List<Agent>();
+
+        GetComponentsInChildren<Agent>(_agents);
+        _agents.ForEach(a => a.SetUp(agent));
+        
         states = new List<NormalAIState>();
 
         _actionData = agent.Find("AI").GetComponent<AIActionData>();

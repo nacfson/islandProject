@@ -16,5 +16,4 @@ public abstract class Agent : MonoBehaviour{
 
         _isSetUp = true;
     }
-
 }

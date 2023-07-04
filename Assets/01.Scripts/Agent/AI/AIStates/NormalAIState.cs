@@ -6,11 +6,16 @@ public abstract class NormalAIState : MonoBehaviour, IState {
     [HideInInspector] public List<AITransition> transitions;
     protected AIBrain _brain;
     protected AIActionData _actionData;
+
+    protected NavMovement _navMovement;
+    protected bool _isSetUp = false;
+
     public abstract void OnEnterState();
 
     public abstract void OnExitState();
 
     public virtual void UpdateState() {
+        if(!_isSetUp) return;
         foreach (AITransition t in transitions) {
             if (t.MakeATransition()) {
                 _brain.ChangeState(t.NextState);
@@ -21,9 +26,11 @@ public abstract class NormalAIState : MonoBehaviour, IState {
     public virtual void SetUp(Transform agent) {
         _brain = agent.GetComponent<AIBrain>();
         _actionData = agent.Find("AI").GetComponent<AIActionData>();
+        _navMovement = agent.GetComponent<NavMovement>();
 
         transitions = new List<AITransition>();
         GetComponentsInChildren<AITransition>(transitions);
         transitions.ForEach(t => t.SetUp(agent));
+        _isSetUp = true;
     }
 }
