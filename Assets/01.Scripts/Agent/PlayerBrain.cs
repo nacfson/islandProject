@@ -15,6 +15,7 @@ public class PlayerBrain : AgentBrain{
     private Dictionary<StateType,NormalState> _stateDictionary;
 
     private List<Agent> _agents;
+    
     public override void SetUp(Transform agent){
         _agents = new List<Agent>();
         _stateDictionary = new Dictionary<StateType, NormalState>();
