@@ -12,5 +12,11 @@ public class MoveAIState : NormalAIState {
 
     public override void UpdateState() {
         base.UpdateState();
+
+        if(_navMovement.IsArrived()){
+            Vector3 pos = GameManager.Instance.RandomTargetPos();
+            _navMovement.SetDestination(pos);
+            Debug.Log($"Pos: {pos}");
+        }
     }
 }

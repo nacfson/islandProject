@@ -20,4 +20,13 @@ public class NavMovement : Agent{
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = _brain.MoveData.Speed;
     }
+
+    public bool IsArrived(){
+        if(_navMeshAgent.pathPending) return false;
+
+        if(_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance){
+            return true;
+        }
+        return false;
+    }
 }
