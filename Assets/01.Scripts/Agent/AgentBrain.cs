@@ -1,63 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using System;
 
-public enum StateType{
-    Idle = 0 ,UI = 1,
-}
+public abstract class AgentBrain : MonoBehaviour, IControllable {
+    public ActionData AD => _actionData;
+    protected ActionData _actionData;
 
-public class AgentBrain : MonoBehaviour{
-    public NormalState CurrentState => _currentState;
-    [SerializeField] protected NormalState _currentState;
-
-    [SerializeField] protected MovementData _movementData;
     public MovementData MoveData => _movementData;
+    [SerializeField] protected MovementData _movementData;
 
-    [HideInInspector] public ActionData AD;
-
-    private Dictionary<StateType,NormalState> _stateDictionary;
-
-    private List<Agent> _agents;
+    public abstract void ChangeState(object state);
+    //ActionData 찾아서 넣어줘야함
+    public abstract void SetUp(Transform agent);
 
     protected virtual void Awake() {
         SetUp(this.transform);
-    }
-
-
-    protected virtual void SetUp(Transform agent){
-        _agents = new List<Agent>();
-        _stateDictionary = new Dictionary<StateType, NormalState>();
-
-        GetComponentsInChildren<Agent>(_agents);
-        _agents.ForEach(a => a.SetUp(agent));
-        
-        Transform stateTrm = transform.Find("States");
-
-        foreach(StateType state in Enum.GetValues(typeof(StateType))){
-            NormalState stateScript = stateTrm.GetComponent($"{state}State") as NormalState;
-
-            if(stateScript == null){
-                Debug.LogError($"There is no Script: {state}");
-                return;
-            }
-            stateScript.SetUp(agent);
-            _stateDictionary.Add(state,stateScript);
-        }
-
-        AD = transform.Find("ActionData").GetComponent<ActionData>();
-    }
-
-    protected virtual void Update() {
-        _currentState.UpdateState();
-    }
-    
-    public void ChangeState(StateType state){
-        _currentState.OnExitState();
-        Debug.Log($"ExitState: {_currentState}");
-        _currentState = _stateDictionary[state];
-        _currentState.OnEnterState();
-        Debug.Log($"EnterState: {_currentState}");
     }
 }

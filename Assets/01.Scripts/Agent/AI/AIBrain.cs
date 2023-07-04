@@ -11,20 +11,20 @@ public class AIBrain : AgentBrain {
     protected override void Awake() {
         SetUp(this.transform);
     }
-    protected override void SetUp(Transform agent) {
+    public override void SetUp(Transform agent) {
         states = new List<NormalAIState>();
 
-        AD = agent.Find("AI").GetComponent<AIActionData>();
+        _actionData = agent.Find("AI").GetComponent<AIActionData>();
         agent.Find("AI").GetComponentsInChildren(states);
         states.ForEach(s => s.SetUp(agent));
     }
-    protected override void Update() {
+    protected virtual void Update() {
         _currentAIState.UpdateState();
     }
 
-    public void ChangeState(NormalAIState state) {
+    public override void ChangeState(object state) {
         _currentAIState.OnExitState();
-        _currentAIState = state;
+        _currentAIState = state as NormalAIState;
         _currentAIState.OnEnterState();
     }
 }
