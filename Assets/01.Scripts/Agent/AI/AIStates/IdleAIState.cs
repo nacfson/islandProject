@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class IdleAIState : NormalAIState {
     public override void OnEnterState() {
+        _agentAnimator.InitAllAnimations();
     }
 
     public override void OnExitState() {

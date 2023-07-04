@@ -7,7 +7,7 @@ using UnityEngine;
 public class AgentAnimator : Agent{
     protected readonly int _speedHash = Animator.StringToHash("SPEED");
 
-    protected Animator _animator;
+    protected Animator _animator;`
 
     public override void SetUp(Transform agent){
         _animator = GetComponent<Animator>();

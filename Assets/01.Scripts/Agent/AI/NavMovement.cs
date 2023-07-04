@@ -20,6 +20,9 @@ public class NavMovement : Agent{
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = _brain.MoveData.Speed;
     }
+    public float GetSpeed(float multiplyValue){
+        return _navMeshAgent.velocity.sqrMagnitude * multiplyValue;
+    }
 
     public bool IsArrived(){
         if(_navMeshAgent.pathPending) return false;

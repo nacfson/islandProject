@@ -12,6 +12,7 @@ public class MoveAIState : NormalAIState {
 
     public override void UpdateState() {
         base.UpdateState();
+        _agentAnimator.SetSpeed(_navMovement.GetSpeed(0.3f));
 
         if(_navMovement.IsArrived()){
             Vector3 pos = GameManager.Instance.RandomTargetPos();
