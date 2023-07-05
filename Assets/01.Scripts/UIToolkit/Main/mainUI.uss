@@ -13,9 +13,34 @@
     transition-duration: 0.5s;
     visibility: visible;
     scale: 0 0;
+    background-image: none;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .infoUI.active {
     visibility: visible;
     scale: 1 1;
+}
+
+.nameUI {
+    width: 20%;
+    height: 20%;
+    bottom: 40%;
+    background-color: rgb(255, 123, 0);
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+    rotate: -13deg;
+    left: -5%;
+}
+
+.contentLabel {
+    align-items: center;
+    justify-content: center;
+    -unity-text-align: middle-center;
+    -unity-font-definition: url('project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&guid=68bf536b04e874c4d859fa5ed5b46fe1&type=2#Asia신디나루M SDF 1');
+    top: 35%;
+    font-size: 76px;
+    -unity-font-style: normal;
 }

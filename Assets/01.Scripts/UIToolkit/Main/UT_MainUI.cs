@@ -27,43 +27,44 @@ namespace UI_Toolkit{
             _iu = _root.Q<VisualElement>("InfoUI");
         }
 
-        public void StartTalk(TalkData talkData){
-            _infoUI = new InfoUI(_iu, talkData, () => { 
+        public void StartTalk(TalkData talkData,string name){
+            _infoUI = new InfoUI(_iu, talkData,name, () => { 
                 _infoUI.ShowText();
             });
-
             _infoUI.ShowText();
         }
+        
     }
-
-
 
     public class InfoUI {
         //실질적 InfoUI의 VisualElement
         private VisualElement _infoUI;
         //InfoUI의 Label(text)
         private Label _contentLabel;
+        private VisualElement _nameUI;
+
         private TalkData _talkData;
         private bool _isAnimating = false;
+        public Action Callback;
 
-        private List<Action> _evnetCallbacks = new List<Action>();
 
         private string _targetText;
+
         private int _returnIdx;
 
-        public InfoUI(VisualElement infoUI,TalkData talkData, Action action) {
+        public InfoUI(VisualElement infoUI,TalkData talkData,string name, Action action) {
             this._infoUI = infoUI;
             this._talkData = talkData;
+
             _contentLabel = infoUI.Q<Label>("ContentLabel");
+            _nameUI = infoUI.Q<VisualElement>("NameUI");
+
+            _nameUI.Q<Label>("NameLabel").text = name;
             _returnIdx = talkData.talkList.Count - 1;
 
             RegisterAction(action);
         }
 
-        public void RegisterAction(Action action) {
-            _infoUI.RegisterCallback<PointerDownEvent>(e => action());
-            _evnetCallbacks.Add(action);
-        }
         //글자 애니메이션이 실행중이면 스킵, 실행중이 아니면 다음 대화로 이동
         public void ShowText() {
             //Debug.LogError("ShowText");
@@ -83,14 +84,14 @@ namespace UI_Toolkit{
                     GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
                     _returnIdx = _talkData.talkList.Count - 1;
                     GameManager.Instance.CamController.TalkMode(false);
-                    _evnetCallbacks.ForEach(e => _infoUI.UnregisterCallback<PointerDownEvent>(evt => e()));
+                    _infoUI.UnregisterCallback<PointerDownEvent>(e => Callback());
                 }
             }
         }
 
         //startDelay => Transition Animation이 끝날때까지 기다려주는 시간
         //typingDelay => 글자가 입력되는 속도
-        public IEnumerator AnimateTextCor(string text, float startDelay, float typingDelay = 0.1f) {
+        public IEnumerator AnimateTextCor(string text, float startDelay, float typingDelay = 0.05f) {
             _contentLabel.text = string.Empty;
             //_contentLabel.tooltip = text;
             _targetText = text;
@@ -117,6 +118,12 @@ namespace UI_Toolkit{
             }
             _contentLabel.text = text.Substring(0, text.Length);
             _isAnimating = false;
+        }
+
+        //애초에 액션 자체를 VisualElement 클릭으로 넘겨줌
+        public void RegisterAction(Action action) {
+            Callback = action;
+            _infoUI.RegisterCallback<PointerDownEvent>(e => Callback());
         }
     }
 }

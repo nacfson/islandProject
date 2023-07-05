@@ -46,11 +46,13 @@ public class AIBrain : AgentBrain<AIActionData> ,IInteractable{
     }
 
     public void Interact(Transform audience){
-        UT_MainUI.Instance.StartTalk(_talkData);
-
+        //나중에 이름 설정하는 것도 필요할 듯
+        UT_MainUI.Instance.StartTalk(_talkData,gameObject.name);
+        
         GetAD().IsTalking = true;
         _navMovement.LookRotation(audience.position);
     }
+
     public void UnInteract(){
         GetAD().IsTalking = false;
     }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class TalkData : ScriptableObject {
     //마지막에 쓰여지는 string 값이 먼저 나옴
     public List<string> talkList = new List<string>();
+
     public bool CanGetTalk(int returnIdx) {
         return returnIdx >= 0;
     }
@@ -13,5 +14,4 @@ public class TalkData : ScriptableObject {
         string returnValue = talkList[returnIdx];
         return returnValue;
     }
-
 }

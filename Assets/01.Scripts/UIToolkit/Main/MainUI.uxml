@@ -2,8 +2,11 @@
     <Style src="project://database/Assets/01.Scripts/UIToolkit/Main/mainUI.uss?fileID=7433441132597879392&amp;guid=fb7d2205e97a1c64b9e26e097d7904cf&amp;type=3#mainUI" />
     <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(99, 99, 99, 0); position: absolute; bottom: 0; width: 100%; height: 100%;">
         <ui:VisualElement name="InfoUI" class="infoUI">
-            <ui:Label tabindex="-1" text="I Found The Rocket" display-tooltip-when-elided="true" name="ContentLabel" style="top: 30%; -unity-font-style: bold; -unity-text-align: middle-center; font-size: 63px;" />
-            <ui:VisualElement name="NextImage" style="background-color: rgba(0, 0, 0, 0); bottom: auto; top: 90%; width: 5%; left: 48%; background-image: url(&apos;project://database/Assets/02.Assets/Models/Topdown%20Island%20Pack/Materials_textures/Accessories_Normal.tga?fileID=2800000&amp;guid=9da46f231c5f10c408d9fb9a3dbfbbd2&amp;type=3#Accessories_Normal&apos;); height: 5%;" />
+            <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ContentLabel" class="contentLabel" />
+            <ui:VisualElement name="NextImage" style="background-color: rgba(0, 0, 0, 0); bottom: auto; top: 75%; width: 5%; left: 48%; background-image: url(&apos;project://database/Assets/02.Assets/Models/Topdown%20Island%20Pack/Materials_textures/Accessories_Normal.tga?fileID=2800000&amp;guid=9da46f231c5f10c408d9fb9a3dbfbbd2&amp;type=3#Accessories_Normal&apos;); height: 5%;" />
+            <ui:VisualElement name="NameUI" class="nameUI">
+                <ui:Label tabindex="-1" text="Name" display-tooltip-when-elided="true" name="NameLabel" style="-unity-text-align: middle-center; font-size: 40px; -unity-font-style: bold; top: 10%; -unity-font-definition: url(&apos;project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&amp;guid=68bf536b04e874c4d859fa5ed5b46fe1&amp;type=2#Asia신디나루M SDF 1&apos;);" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
