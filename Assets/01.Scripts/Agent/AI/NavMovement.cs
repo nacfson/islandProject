@@ -13,7 +13,6 @@ public class NavMovement : Agent<AIActionData>{
         _navMeshAgent.speed = _brain.MoveData.Speed;
     }
 
-
     public void SetDestination(Vector3 pos){
         _navMeshAgent.SetDestination(pos);
     }

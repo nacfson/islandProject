@@ -25,10 +25,12 @@ namespace UI_Toolkit{
             _root = _document.rootVisualElement;
 
             _iu = _root.Q<VisualElement>("InfoUI");
+            
+            _infoUI = new InfoUI(_iu);
         }
 
         public void StartTalk(TalkData talkData,string name){
-            _infoUI = new InfoUI(_iu, talkData,name, () => { 
+            _infoUI.SetUp(talkData,name, () => { 
                 _infoUI.ShowText();
             });
             _infoUI.ShowText();
@@ -41,28 +43,33 @@ namespace UI_Toolkit{
         private VisualElement _infoUI;
         //InfoUI의 Label(text)
         private Label _contentLabel;
-        private VisualElement _nameUI;
+        private Label _nameLabel;
 
         private TalkData _talkData;
         private bool _isAnimating = false;
-        public Action Callback;
+        private Action _callback;
 
 
         private string _targetText;
 
         private int _returnIdx;
 
-        public InfoUI(VisualElement infoUI,TalkData talkData,string name, Action action) {
+        public InfoUI(VisualElement infoUI) {
             this._infoUI = infoUI;
-            this._talkData = talkData;
+            
 
             _contentLabel = infoUI.Q<Label>("ContentLabel");
-            _nameUI = infoUI.Q<VisualElement>("NameUI");
+            _nameLabel = infoUI.Q<VisualElement>("NameUI").Q<Label>("NameLabel");
 
-            _nameUI.Q<Label>("NameLabel").text = name;
+            RegisterAction();
+        }
+
+        public void SetUp(TalkData talkData,string name, Action action) {
+            _callback = action;
+            this._talkData = talkData;
+
+            _nameLabel.text = name;
             _returnIdx = talkData.talkList.Count - 1;
-
-            RegisterAction(action);
         }
 
         //글자 애니메이션이 실행중이면 스킵, 실행중이 아니면 다음 대화로 이동
@@ -84,7 +91,6 @@ namespace UI_Toolkit{
                     GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
                     _returnIdx = _talkData.talkList.Count - 1;
                     GameManager.Instance.CamController.TalkMode(false);
-                    _infoUI.UnregisterCallback<PointerDownEvent>(e => Callback());
                 }
             }
         }
@@ -121,9 +127,9 @@ namespace UI_Toolkit{
         }
 
         //애초에 액션 자체를 VisualElement 클릭으로 넘겨줌
-        public void RegisterAction(Action action) {
-            Callback = action;
-            _infoUI.RegisterCallback<PointerDownEvent>(e => Callback());
+        public void RegisterAction() {
+            //Callback = action;
+            _infoUI.RegisterCallback<PointerDownEvent>(e => _callback?.Invoke());
         }
     }
 }

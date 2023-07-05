@@ -16,7 +16,7 @@ public class AgentInteract : Agent<ActionData>{
     public void Interact(){
         if(!_brain.GetAD().CanInteract || _brain.GetAD().IsInteracting) return;
 
-       Collider[] colliders = Physics.OverlapSphere(transform.position, _detectionRadius,1 << LayerMask.NameToLayer("AI"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _detectionRadius,1 << LayerMask.NameToLayer("AI"));
 
         float closestDistance = Mathf.Infinity;
         Collider closestCollider = null;
@@ -46,6 +46,8 @@ public class AgentInteract : Agent<ActionData>{
         }
     }
 
+    
+    
     public void UnInteract(){
         if(_interactable != null){
             _interactable.UnInteract();
