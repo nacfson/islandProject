@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IInteractable{
-    public void Interact(Transform audience);
+    public void Interact(AgentBrain<ActionData> brain);
     public void UnInteract();
 }

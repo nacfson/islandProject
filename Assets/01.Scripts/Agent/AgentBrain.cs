@@ -8,6 +8,20 @@ public abstract class AgentBrain<T> : MonoBehaviour, IControllable where T : Act
     public MovementData MoveData => _movementData;
     [SerializeField] protected MovementData _movementData;
 
+    protected IInteractable _interactable;
+    public IInteractable Interactable{
+        get{
+            if(_interactable == null){
+                Debug.LogError("Interactable is null!");
+                return null;
+            }
+            return _interactable;
+        }
+        set{
+            _interactable = value;
+        }
+    }
+
     public abstract void ChangeState(object state);
     //ActionData 찾아서 넣어줘야함
     public abstract void SetUp(Transform agent);

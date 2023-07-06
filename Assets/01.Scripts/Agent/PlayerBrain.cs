@@ -5,7 +5,7 @@ using System.Linq;
 using System;
 
 public enum StateType{
-    Idle = 0 ,UI = 1,
+    Idle = 0 ,UI = 1,Push = 2,
 }
 
 public class PlayerBrain : AgentBrain<ActionData>{
@@ -15,6 +15,8 @@ public class PlayerBrain : AgentBrain<ActionData>{
     private Dictionary<StateType,NormalState> _stateDictionary;
 
     private List<Agent<ActionData>> _agents;
+
+
     
     public override void SetUp(Transform agent){
         _agents = new List<Agent<ActionData>>();

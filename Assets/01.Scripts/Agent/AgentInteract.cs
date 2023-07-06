@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AgentInteract : Agent<ActionData>{
-
     [SerializeField] protected float _detectionRadius = 3f;
-
-    protected IInteractable _interactable;
 
     public override void SetUp(Transform agent){
         base.SetUp(agent);
@@ -16,7 +13,7 @@ public class AgentInteract : Agent<ActionData>{
     public void Interact(){
         if(!_brain.GetAD().CanInteract || _brain.GetAD().IsInteracting) return;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _detectionRadius,1 << LayerMask.NameToLayer("AI"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _detectionRadius,1 << LayerMask.NameToLayer("INTERACTABLE"));
 
         float closestDistance = Mathf.Infinity;
         Collider closestCollider = null;
@@ -39,19 +36,18 @@ public class AgentInteract : Agent<ActionData>{
             // 여기에서 가장 가까운 콜라이더에 대한 동작을 수행할 수 있습니다.
             Debug.Log("가장 가까운 콜라이더: " + closestCollider.name);
             if(closestCollider.TryGetComponent<IInteractable>(out IInteractable i)){
-                _interactable = i;
-                i.Interact(this.transform);
+                _brain.Interactable = i;
+                i.Interact(_brain);
                 _brain.GetAD().IsInteracting = true;
             }
         }
     }
 
     
-    
     public void UnInteract(){
-        if(_interactable != null){
-            _interactable.UnInteract();
-            _interactable = null;
+        if(_brain.Interactable != null){
+            _brain.Interactable.UnInteract();
+            _brain.Interactable = null;
             _brain.GetAD().IsInteracting = false;
         }
     }
