@@ -16,5 +16,9 @@ public class PushState : NormalState{
         if(Input.GetMouseButtonDown(0)){
             _brain.Interactable.Interact(_brain);
         }
+
+        if(_agentMovement.GetMovementSpeed(1f) > 0f){
+            _brain.ChangeState(StateType.Idle);
+        }
     }
 }

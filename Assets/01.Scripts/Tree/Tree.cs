@@ -17,18 +17,12 @@ public class Tree : MonoBehaviour,IInteractable{
 
     public void Interact(AgentBrain<ActionData> brain){
         Debug.Log("Interact");
-        if(brain.Interactable == null){
-            brain.ChangeState(StateType.Push);
-        }
-        else{
-            Shake(brain);
-        }
+        brain.ChangeState(StateType.Push);
         //audience.transform.Find("Visual").GetComponent<AgentAnimator>().SetBoolPush(true);
     }
 
     public void UnInteract(){
         _shakeCount = 3;
-        
     }
 
     public void Shake(AgentBrain<ActionData> brain){

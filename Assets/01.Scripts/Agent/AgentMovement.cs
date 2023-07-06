@@ -65,6 +65,10 @@ public class AgentMovement : Agent<ActionData>{
     public void StopImmediately(){
         _movementVelocity = Vector3.zero;
     }
+
+    public float GetMovementSpeed(float multiply){
+        return _movementVelocity.sqrMagnitude * multiply;
+    }
     public void SetRun(){
         _brain.GetAD().IsRun = !_brain.GetAD().IsRun;
     }
