@@ -9,17 +9,15 @@ public abstract class AgentBrain<T> : MonoBehaviour, IControllable where T : Act
     [SerializeField] protected MovementData _movementData;
 
     protected IInteractable _interactable;
+    protected IActionable _actionable;
     public IInteractable Interactable{
-        get{
-            if(_interactable == null){
-                Debug.LogError("Interactable is null!");
-                return null;
-            }
-            return _interactable;
-        }
-        set{
-            _interactable = value;
-        }
+        get =>_interactable;
+        set => _interactable = value;
+    }
+
+    public IActionable Actionable {
+        get => _actionable;
+        set => _actionable = value;
     }
 
     public abstract void ChangeState(object state);

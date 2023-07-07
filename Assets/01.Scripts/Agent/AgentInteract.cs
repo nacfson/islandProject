@@ -9,7 +9,7 @@ public class AgentInteract : Agent<ActionData>{
         base.SetUp(agent);
         _agentInput.OnInteractKeyPress += Interact;
     }
-
+    
     public void Interact(){
         if(!_brain.GetAD().CanInteract || _brain.GetAD().IsInteracting) return;
 
@@ -39,6 +39,10 @@ public class AgentInteract : Agent<ActionData>{
                 _brain.Interactable = i;
                 i.Interact(_brain);
                 _brain.GetAD().IsInteracting = true;
+            }
+            if(closestCollider.TryGetComponent<IActionable>(out IActionable a)) {
+                Debug.Log(a);
+                _brain.Actionable = a;
             }
         }
     }

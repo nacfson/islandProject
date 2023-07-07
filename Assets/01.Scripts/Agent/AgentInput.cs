@@ -8,6 +8,7 @@ public class AgentInput : Agent<ActionData>{
     public event Action OnJumpKeyPress;
     public event Action OnRunKeyPress;
     public event Action OnInteractKeyPress;
+    public event Action OnActionKeyPress;
 
     public override void SetUp(Transform agent){
         base.SetUp(agent);
@@ -20,6 +21,13 @@ public class AgentInput : Agent<ActionData>{
         GetJumpInput();
         GetRunInput();
         GetInteractInput();
+        GetActionInput();
+    }
+
+    private void GetActionInput() {
+        if (Input.GetMouseButtonDown(0)) {
+            OnActionKeyPress?.Invoke();
+        }
     }
 
     private void GetInteractInput(){

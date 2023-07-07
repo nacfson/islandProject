@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class Tree : MonoBehaviour,IInteractable{
+public class Tree : MonoBehaviour,IInteractable,IActionable{
     private int _shakeCount = 3;
-    [SerializeField] private float _shakeTimer;
+    [SerializeField] private float _shakeTimer = 3f;
+    [SerializeField] private ItemListData _itemList;
 
-    public List<ItemObject> items = new List<ItemObject>();
-    
+    private bool _canDrop = true;
 
-    public ItemObject GetRandItemObj(){
-        int rand = Random.Range(0,items.Count);
-        return items[rand];
-    }
 
     public void Interact(AgentBrain<ActionData> brain){
         Debug.Log("Interact");
@@ -25,11 +21,25 @@ public class Tree : MonoBehaviour,IInteractable{
         _shakeCount = 3;
     }
 
+    private void DropItem() {
+        Debug.Log("DropItem");
+
+        ItemObject item = _itemList.GetRandItemObj();
+        for(int i = 0; i< 3; i++) {
+            ItemObject obj = Instantiate(item);
+            obj.transform.position = transform.position;
+        }
+        _canDrop = false;
+    }
+
     public void Shake(AgentBrain<ActionData> brain){
+        if (!_canDrop) return;
         _shakeCount--;
         _shakeCount = Mathf.Clamp(_shakeCount,0,3);
         if(_shakeCount <= 0){
-            Debug.Log("DropItem");
+            DropItem();
+            brain.ChangeState(StateType.Idle);
+            StopAllCoroutines();
             return;
         }
         StopAllCoroutines();
@@ -44,4 +54,14 @@ public class Tree : MonoBehaviour,IInteractable{
         }
         brain.ChangeState(StateType.Idle);        
     }
+
+    public void DoAction(AgentBrain<ActionData> brain) {
+        Shake(brain);
+    }
+    public void UnAction() {
+        _shakeCount = 3;
+    }
+
+
+
 }

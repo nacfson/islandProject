@@ -7,6 +7,7 @@ public abstract class NormalState : MonoBehaviour, IState{
     protected AgentMovement _agentMovement;
     protected AgentAnimator _agentAnimator;
     protected AgentInteract _agentInteract;
+    protected AgentAction _agentAction;
     
     public abstract void OnEnterState();
 
@@ -18,6 +19,7 @@ public abstract class NormalState : MonoBehaviour, IState{
         _brain = agent.GetComponent<AgentBrain<ActionData>>();
         _agentMovement = agent.GetComponent<AgentMovement>();
         _agentInteract = agent.GetComponent<AgentInteract>();
+        _agentAction = agent.GetComponent<AgentAction>();
         _agentAnimator = agent.Find("Visual").GetComponent<AgentAnimator>();
     }
 }

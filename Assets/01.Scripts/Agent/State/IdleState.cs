@@ -6,6 +6,7 @@ public class IdleState : NormalState{
     public override void OnEnterState(){
         _agentMovement.IsActiveMove = true;
         _agentInteract.UnInteract();
+        _agentAction.UnAction();
         _brain.GetAD().CanInteract = true;
     }
 

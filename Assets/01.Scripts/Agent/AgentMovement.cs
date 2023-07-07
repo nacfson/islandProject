@@ -37,7 +37,7 @@ public class AgentMovement : Agent<ActionData>{
 
         Vector3 move = _movementVelocity + _verticalSpeed * Vector3.up;
         //Debug.Log($"CurrentSpeed: {_movementVelocity.sqrMagnitude * 100f}");
-        _agnetAnimator?.SetSpeed(_movementVelocity.sqrMagnitude * 100f);
+        _agentAnimator?.SetSpeed(_movementVelocity.sqrMagnitude * 100f);
 
         _charController.Move(move);
 
@@ -67,7 +67,7 @@ public class AgentMovement : Agent<ActionData>{
     }
 
     public float GetMovementSpeed(float multiply){
-        return _movementVelocity.sqrMagnitude * multiply;
+        return _charController.velocity.sqrMagnitude * multiply;
     }
     public void SetRun(){
         _brain.GetAD().IsRun = !_brain.GetAD().IsRun;
