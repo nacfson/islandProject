@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(Collider))]
 public class Tree : MonoBehaviour,IInteractable,IActionable{
     private int _shakeCount = 3;
     [SerializeField] private float _shakeTimer = 3f;
     [SerializeField] private ItemListData _itemList;
+    private float _dropRadius = 1.5f;
 
     private bool _canDrop = true;
     private bool _canShake = true;
@@ -16,7 +18,7 @@ public class Tree : MonoBehaviour,IInteractable,IActionable{
         Debug.Log("Interact");
         brain.ChangeState(StateType.Push);
         PlayerBrain pb = brain as PlayerBrain;
-        pb.AgentAnimator.OnPushAnimationEndTrigger += ChangeShakeFalse;
+        pb.AgentAnimator.OnPushAnimationEndTrigger += ChangeShakeTrue;
 
         //audience.transform.Find("Visual").GetComponent<AgentAnimator>().SetBoolPush(true);
     }
@@ -32,6 +34,18 @@ public class Tree : MonoBehaviour,IInteractable,IActionable{
         for(int i = 0; i< 3; i++) {
             ItemObject obj = Instantiate(item);
             obj.transform.position = transform.position;
+
+            Vector3 offset = new Vector3(Mathf.Cos(Mathf.PI * 2 * i / 3),0,Mathf.Sin(Mathf.PI * 2 * i / 3)) * _dropRadius;
+
+            bool result = Physics.Raycast(transform.position, Vector3.down,out RaycastHit hit,10f,1 << LayerMask.NameToLayer("GROUND"));
+            if(result){
+                offset.y = hit.point.y + 0.2f;
+            }
+            else{
+                Debug.LogError("Can't Find the Ground");
+                return;
+            }
+            obj.transform.DOJump(offset,3f,1,1f);
         }
         _canDrop = false;
     }
@@ -72,11 +86,12 @@ public class Tree : MonoBehaviour,IInteractable,IActionable{
     public void UnAction(AgentBrain<ActionData> brain) {
         _shakeCount = 3;
         PlayerBrain pb = brain as PlayerBrain;
-        pb.AgentAnimator.OnPushAnimationEndTrigger -= ChangeShakeFalse;
+        pb.AgentAnimator.OnPushAnimationEndTrigger -= ChangeShakeTrue;
         pb.AgentAnimator.OnPushAnimationEndTrigger -= ChangeToIdle;
+        ChangeShakeTrue(brain);
     }
 
-    public void ChangeShakeFalse(AgentBrain<ActionData> brain){
+    public void ChangeShakeTrue(AgentBrain<ActionData> brain){
         _canShake = true;
     }
 
