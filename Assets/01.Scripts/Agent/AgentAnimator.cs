@@ -2,12 +2,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(Animator))]
 public class AgentAnimator : Agent<ActionData>{
     protected readonly int _speedHash = Animator.StringToHash("SPEED");
     protected readonly int _pushBoolHash = Animator.StringToHash("IS_PUSH");
     protected readonly int _pushTriggerHash = Animator.StringToHash("PUSH");
+
+    public event Action<AgentBrain<ActionData>> OnPushAnimationEndTrigger;
 
     protected Animator _animator;
 
@@ -33,6 +36,12 @@ public class AgentAnimator : Agent<ActionData>{
     }
 
     public void InitAllAnimations() {
-        _animator.SetFloat(_speedHash,0f);
+        SetSpeed(0f);
+        SetBoolPush(false);
+        SetTriggerPush(false);
+    }
+    
+    public void OnPushAnimationEnd(){
+        OnPushAnimationEndTrigger?.Invoke(_brain);
     }
 }

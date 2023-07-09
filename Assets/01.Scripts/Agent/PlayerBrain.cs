@@ -16,14 +16,17 @@ public class PlayerBrain : AgentBrain<ActionData>{
 
     private List<Agent<ActionData>> _agents;
 
+    private AgentAnimator _agentAnimator;
+    public AgentAnimator AgentAnimator => _agentAnimator;
 
-    
     public override void SetUp(Transform agent){
         _agents = new List<Agent<ActionData>>();
         _stateDictionary = new Dictionary<StateType, NormalState>();
 
         GetComponentsInChildren<Agent<ActionData>>(_agents);
         _agents.ForEach(a => a.SetUp(agent));
+
+        _agentAnimator = _agents.Find(a => a.GetType() == typeof(AgentAnimator)) as AgentAnimator;
         
         Transform stateTrm = transform.Find("States");
 

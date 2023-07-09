@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IActionable {
     public void DoAction(AgentBrain<ActionData> brain);
-    public void UnAction();
+    public void UnAction(AgentBrain<ActionData> brain);
 }

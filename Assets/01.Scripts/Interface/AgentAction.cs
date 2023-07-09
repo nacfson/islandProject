@@ -15,12 +15,12 @@ public class AgentAction : Agent<ActionData> {
             actionable.DoAction(_brain);
         }
 
-        Debug.Log("DOAction");      
+        //Debug.Log("DOAction");      
     }
     public void UnAction() {
         IActionable actionable = _brain.Actionable;
         if(actionable != null) {
-            actionable.UnAction();
+            actionable.UnAction(_brain);
             actionable = null;
             //_brain.GetAD().IsAction = false;
         }
