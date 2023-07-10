@@ -6,6 +6,7 @@ public class ActionData : MonoBehaviour{
     public bool IsRun;
     public bool IsInteracting;
     public bool IsPushing;
+    public bool IsPicking;
 
     public bool CanInteract;
 

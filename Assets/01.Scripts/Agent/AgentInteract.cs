@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AgentInteract : Agent<ActionData>{
-    [SerializeField] protected float _detectionRadius = 3f;
+    [SerializeField] protected float _detectionRadius = 1f;
 
     public override void SetUp(Transform agent){
         base.SetUp(agent);
@@ -50,7 +50,7 @@ public class AgentInteract : Agent<ActionData>{
     
     public void UnInteract(){
         if(_brain.Interactable != null){
-            _brain.Interactable.UnInteract();
+            _brain.Interactable.UnInteract(_brain);
             _brain.Interactable = null;
             _brain.GetAD().IsInteracting = false;
         }

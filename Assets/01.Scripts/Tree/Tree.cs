@@ -22,19 +22,17 @@ public class Tree : MonoBehaviour,IInteractable,IActionable{
         pb.AgentAnimator.OnPushAnimationEndTrigger += ChangeShakeTrue;
     }
 
-    public void UnInteract(){
+    public void UnInteract(AgentBrain<ActionData> brain){
         _shakeCount = 3;
     }
 
     private void DropItem() {
-        Debug.Log("DropItem");
-
         ItemObject item = _itemList.GetRandItemObj();
         for(int i = 0; i< 3; i++) {
             ItemObject obj = PoolManager.Instance.Pop(item.name) as ItemObject;
             obj.transform.position = transform.position;
 
-            Vector3 offset = new Vector3(Mathf.Cos(Mathf.PI * 2 * i / 3),0,Mathf.Sin(Mathf.PI * 2 * i / 3)) * _dropRadius;
+            Vector3 offset = transform.position + new Vector3(Mathf.Cos(Mathf.PI * 2 * i / 3),0,Mathf.Sin(Mathf.PI * 2 * i / 3)) * _dropRadius;
 
             bool result = Physics.Raycast(transform.position, Vector3.down,out RaycastHit hit,10f,1 << LayerMask.NameToLayer("GROUND"));
             if(result){
@@ -66,25 +64,32 @@ public class Tree : MonoBehaviour,IInteractable,IActionable{
             return;
         }
         StopAllCoroutines();
-        StartCoroutine(ShakeTreeCor());
+        //StartCoroutine(ShakeTreeCor());
         StartCoroutine(ShakeCor(brain));
         //pb.AgentAnimator.SetTriggerPush(false);
     }
+    #region coroutines
 
     private IEnumerator ShakeTreeCor(){
         float timer = 0f;
         float target = 0.7f;
 
-        float origin = _meshRenderer.material.GetFloat("Vector1_abfa6146a1744fdb95fe34e6c3c07490");
+        float originStr = _meshRenderer.material.GetFloat("_WindStrength");
+        float originSpeed = _meshRenderer.material.GetFloat("_WindSpeed");
+        float originScale = _meshRenderer.material.GetFloat("_WindScale");
         while(timer < target){
             float value = timer / target;
             timer += Time.deltaTime;
-            _meshRenderer.material.SetFloat("Vector1_abfa6146a1744fdb95fe34e6c3c07490",value);
-            Debug.Log($"value: {value}");
-            Debug.Log($"MatValue: {_meshRenderer.material.GetFloat("Vector1_abfa6146a1744fdb95fe34e6c3c07490}")}");
+            _meshRenderer.material.SetFloat("_WindStrength",value * 0.1f);
+            _meshRenderer.material.SetFloat("_WindSpeed",value * 0.1f);
+            _meshRenderer.material.SetFloat("_WindScale",10f);
+
             yield return null;
         }
-        _meshRenderer.material.SetFloat("Vector1_abfa6146a1744fdb95fe34e6c3c07490",origin);
+        _meshRenderer.material.SetFloat("_WindStrength",originStr);
+        _meshRenderer.material.SetFloat("_WindSpeed",originSpeed);
+        _meshRenderer.material.SetFloat("_WindSpeed",originScale);
+
     }
 
     private IEnumerator ShakeCor(AgentBrain<ActionData> brain){
@@ -95,7 +100,7 @@ public class Tree : MonoBehaviour,IInteractable,IActionable{
         }
         brain.ChangeState(StateType.Idle);        
     }
-
+#endregion
     public void DoAction(AgentBrain<ActionData> brain) {
         Shake(brain);
     }

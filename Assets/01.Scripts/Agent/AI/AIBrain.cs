@@ -53,7 +53,7 @@ public class AIBrain : AgentBrain<AIActionData> ,IInteractable{
         _navMovement.LookRotation(brain.transform.position);
     }
 
-    public void UnInteract(){
+    public void UnInteract(AgentBrain<ActionData> brain){
         GetAD().IsTalking = false;
     }
 }

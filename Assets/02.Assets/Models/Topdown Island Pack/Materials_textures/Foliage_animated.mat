@@ -110,5 +110,6 @@ Material:
     - Vector1_abfa6146a1744fdb95fe34e6c3c07490_2: 6
     - _QueueControl: 1
     - _QueueOffset: 0
+    - _WindStrength: 0.1
     m_Colors: []
   m_BuildTextureStacks: []
