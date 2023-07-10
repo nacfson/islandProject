@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer),typeof(MeshFilter))]
-public class ItemObject : MonoBehaviour{
+public class ItemObject : PoolableMono{
     [SerializeField] private Mesh _mesh;
     [SerializeField] private Material _mat;
 
@@ -31,7 +31,10 @@ public class ItemObject : MonoBehaviour{
         this._item = item;
     }
 
-
-
-
+    public override void Init(){
+        Debug.Log("Init");
+        
+        _meshFilter.mesh = _mesh;
+        _meshRenderer.material = _mat;
+    }
 }

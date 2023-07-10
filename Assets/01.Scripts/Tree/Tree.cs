@@ -13,14 +13,13 @@ public class Tree : MonoBehaviour,IInteractable,IActionable{
     private bool _canDrop = true;
     private bool _canShake = true;
 
+    [SerializeField] private MeshRenderer _meshRenderer;
 
     public void Interact(AgentBrain<ActionData> brain){
         Debug.Log("Interact");
         brain.ChangeState(StateType.Push);
         PlayerBrain pb = brain as PlayerBrain;
         pb.AgentAnimator.OnPushAnimationEndTrigger += ChangeShakeTrue;
-
-        //audience.transform.Find("Visual").GetComponent<AgentAnimator>().SetBoolPush(true);
     }
 
     public void UnInteract(){
@@ -32,7 +31,7 @@ public class Tree : MonoBehaviour,IInteractable,IActionable{
 
         ItemObject item = _itemList.GetRandItemObj();
         for(int i = 0; i< 3; i++) {
-            ItemObject obj = Instantiate(item);
+            ItemObject obj = PoolManager.Instance.Pop(item.name) as ItemObject;
             obj.transform.position = transform.position;
 
             Vector3 offset = new Vector3(Mathf.Cos(Mathf.PI * 2 * i / 3),0,Mathf.Sin(Mathf.PI * 2 * i / 3)) * _dropRadius;
@@ -45,7 +44,7 @@ public class Tree : MonoBehaviour,IInteractable,IActionable{
                 Debug.LogError("Can't Find the Ground");
                 return;
             }
-            obj.transform.DOJump(offset,3f,1,1f);
+            obj.transform.DOJump(offset,2f,1,1f).SetEase(Ease.InCirc);
         }
         _canDrop = false;
     }
@@ -67,8 +66,25 @@ public class Tree : MonoBehaviour,IInteractable,IActionable{
             return;
         }
         StopAllCoroutines();
+        StartCoroutine(ShakeTreeCor());
         StartCoroutine(ShakeCor(brain));
         //pb.AgentAnimator.SetTriggerPush(false);
+    }
+
+    private IEnumerator ShakeTreeCor(){
+        float timer = 0f;
+        float target = 0.7f;
+
+        float origin = _meshRenderer.material.GetFloat("Vector1_abfa6146a1744fdb95fe34e6c3c07490");
+        while(timer < target){
+            float value = timer / target;
+            timer += Time.deltaTime;
+            _meshRenderer.material.SetFloat("Vector1_abfa6146a1744fdb95fe34e6c3c07490",value);
+            Debug.Log($"value: {value}");
+            Debug.Log($"MatValue: {_meshRenderer.material.GetFloat("Vector1_abfa6146a1744fdb95fe34e6c3c07490}")}");
+            yield return null;
+        }
+        _meshRenderer.material.SetFloat("Vector1_abfa6146a1744fdb95fe34e6c3c07490",origin);
     }
 
     private IEnumerator ShakeCor(AgentBrain<ActionData> brain){

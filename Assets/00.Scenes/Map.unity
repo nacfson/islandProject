@@ -389,6 +389,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shakeTimer: 3
   _itemList: {fileID: 11400000, guid: 9858511e125fe524db5178cfb1496141, type: 2}
+  _meshRenderer: {fileID: 266097548}
+--- !u!23 &266097548 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3752682640801026039, guid: 00a19dbcf1f356b449c9b29112c122e7, type: 3}
+  m_PrefabInstance: {fileID: 782380233}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &295662050
 GameObject:
   m_ObjectHideFlags: 0
