@@ -44,3 +44,24 @@
     font-size: 76px;
     -unity-font-style: normal;
 }
+
+.inventoryUI {
+    width: 70%;
+    height: 50%;
+    background-color: rgb(176, 176, 176);
+    flex-grow: 1;
+    flex-shrink: 0;
+    top: 10%;
+    position: absolute;
+    left: 15%;
+    border-top-left-radius: 80px;
+    border-bottom-left-radius: 80px;
+    border-top-right-radius: 80px;
+    border-bottom-right-radius: 80px;
+    rotate: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.inventorySlot {
+}

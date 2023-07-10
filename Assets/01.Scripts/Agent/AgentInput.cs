@@ -5,10 +5,12 @@ using System;
 
 public class AgentInput : Agent<ActionData>{
     public event Action<Vector3> OnMoementKeyPress;
+    
     public event Action OnJumpKeyPress;
     public event Action OnRunKeyPress;
     public event Action OnInteractKeyPress;
     public event Action OnActionKeyPress;
+    public event Action OnInventoryKeyPress;
 
     public override void SetUp(Transform agent){
         base.SetUp(agent);
@@ -22,6 +24,13 @@ public class AgentInput : Agent<ActionData>{
         GetRunInput();
         GetInteractInput();
         GetActionInput();
+        GetInventoryInput();
+    }
+
+    private void GetInventoryInput(){
+        if(Input.GetKeyDown(KeyCode.E)){
+            OnInventoryKeyPress?.Invoke();
+        }
     }
 
     private void GetActionInput() {

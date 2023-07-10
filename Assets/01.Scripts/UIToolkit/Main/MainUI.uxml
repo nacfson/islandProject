@@ -8,5 +8,8 @@
                 <ui:Label tabindex="-1" text="Name" display-tooltip-when-elided="true" name="NameLabel" style="-unity-text-align: middle-center; font-size: 40px; -unity-font-style: bold; top: 10%; -unity-font-definition: url(&apos;project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&amp;guid=68bf536b04e874c4d859fa5ed5b46fe1&amp;type=2#Asia신디나루M SDF 1&apos;);" />
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement name="InventoryUI" class="inventoryUI" style="flex-grow: 1;">
+            <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
