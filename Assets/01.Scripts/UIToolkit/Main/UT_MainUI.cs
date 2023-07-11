@@ -9,8 +9,10 @@ namespace UI_Toolkit{
     public class UT_MainUI : MonoBehaviour {
         private UIDocument _document;
         private VisualElement _root;
+
         private InfoUI _infoUI;
         private VisualElement _iu;
+        private VisualElement _inventoryUI;
 
         public static UT_MainUI Instance;
 
@@ -25,8 +27,26 @@ namespace UI_Toolkit{
             _root = _document.rootVisualElement;
 
             _iu = _root.Q<VisualElement>("InfoUI");
-            
+            _inventoryUI = _root.Q<VisualElement>("InventoryUI");
+
+
             _infoUI = new InfoUI(_iu);
+        }
+        private void Start() {
+            List<InventorySlot> slotList = new List<InventorySlot>();
+            int count = _inventoryUI.childCount;
+            for(int i = 0; i < count ; i++){
+                VisualElement ele = _inventoryUI.ElementAt(i);
+
+                VisualElement image = ele.Q<VisualElement>("ItemImage");
+                Label cnt = ele.Q<Label>("ItemCount");
+                
+                InventorySlot slot = new InventorySlot(image,cnt);
+                slot.UpdateUI();
+                slotList.Add(slot);
+            }
+
+            InventoryManager.Instance.SetSlotList(ref slotList);
         }
 
         public void StartTalk(TalkData talkData,string name){
@@ -37,6 +57,8 @@ namespace UI_Toolkit{
         }
         
     }
+
+
 
     public class InfoUI {
         //실질적 InfoUI의 VisualElement

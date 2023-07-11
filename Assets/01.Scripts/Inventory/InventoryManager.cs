@@ -35,6 +35,7 @@ public class InventoryManager : MonoBehaviour{
                 return;
             }
         }
+
         foreach(var i in _slotList){
             if(i.GetItem() == null){
                 i.SetItem(item,amount);
@@ -42,15 +43,20 @@ public class InventoryManager : MonoBehaviour{
                 return;
             }
         }
-
     }
 
     private void UpdateInventory(){
         Debug.Log("UpdateInventory");
         foreach(var i in _slotList){
             if(i.GetItem() != null){
+                i.UpdateUI();
                 Debug.Log($"Item: {i.GetItem()} Count {i.GetAmount()}");
             }
         }
+    }
+
+    public void SetSlotList(ref List<InventorySlot> slotList){
+        Debug.Log("SetSlotList");
+        _slotList = slotList;
     }
 }
