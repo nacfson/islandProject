@@ -43,7 +43,7 @@ public class AgentMovement : Agent<ActionData>{
 
     }
 
-    private void RotateToVector(Vector3 dir){
+    public void RotateToVector(Vector3 dir){
         transform.rotation = Quaternion.LookRotation(dir);
     }
 

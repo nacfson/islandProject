@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02940642bf6d3b646b0c44db7be082f3, type: 3}
   m_Name: Item
   m_EditorClassIdentifier: 
-  itemName: 
-  prize: 0
-  itemSprite: {fileID: 0}
+  itemName: Apple
+  prize: 1
+  itemSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}

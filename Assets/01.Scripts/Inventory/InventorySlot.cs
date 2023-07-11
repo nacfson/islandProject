@@ -16,7 +16,7 @@ public class InventorySlot : MonoBehaviour{
     public void UpdateUI(){
         if(_inventory == null ) return;
         string result = $"x{_inventory.amount}";
-        _image.style.backgroundImage = _inventory.item.itemSprite.texture;
+        _image.style.backgroundImage = _inventory?.item?.itemSprite?.texture;
         _count.text = result;
     }   
 

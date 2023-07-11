@@ -37,6 +37,7 @@ public class AgentInteract : Agent<ActionData>{
             Debug.Log("가장 가까운 콜라이더: " + closestCollider.name);
             if(closestCollider.TryGetComponent<IInteractable>(out IInteractable i)){
                 _brain.Interactable = i;
+                _agentMovement.RotateToVector(closestCollider.transform.position);
                 i.Interact(_brain);
                 _brain.GetAD().IsInteracting = true;
             }

@@ -6,6 +6,7 @@ public abstract class Agent<T> : MonoBehaviour where T : ActionData{
     protected AgentBrain<T> _brain;
     protected AgentInput _agentInput;
     protected AgentAnimator _agentAnimator;
+    protected AgentMovement _agentMovement;
 
     protected bool _isSetUp = false;
 
@@ -13,6 +14,7 @@ public abstract class Agent<T> : MonoBehaviour where T : ActionData{
         _brain = agent.GetComponent<AgentBrain<T>>();
         _agentInput = agent.GetComponent<AgentInput>();
         _agentAnimator = agent.Find("Visual").GetComponent<AgentAnimator>();
+        _agentMovement = agent.GetComponent<AgentMovement>();
 
         _isSetUp = true;
     }
