@@ -10,4 +10,6 @@ public class ActionData : MonoBehaviour{
 
     public bool CanInteract;
 
+    public Vector3 TargetPos;
+
 }

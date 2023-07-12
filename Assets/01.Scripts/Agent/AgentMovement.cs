@@ -42,6 +42,19 @@ public class AgentMovement : Agent<ActionData>{
         _charController.Move(move);
 
     }
+    public void GoToVector(Vector3 dir,Action Callback = null){
+        StartCoroutine(GoToVectorCor(dir,Callback));
+    }
+
+    IEnumerator GoToVectorCor(Vector3 targetPos,Action Callback){
+        IsActiveMove = false;
+        while(Vector3.Distance(transform.position,targetPos) >= 3f){
+            _charController.Move(targetPos);
+            yield return null;
+        }
+        //IsActiveMove = true;
+        Callback?.Invoke();
+    }
 
     public void RotateToVector(Vector3 dir){
         transform.rotation = Quaternion.LookRotation(dir);

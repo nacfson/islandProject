@@ -68,6 +68,8 @@
     justify-content: center;
     align-items: center;
     align-self: center;
+    scale: 0 0;
+    transition-duration: 0.5s;
 }
 
 .inventorySlot {
@@ -83,13 +85,25 @@
 .inventorySlot.image {
     flex-grow: 1;
     background-color: rgba(255, 255, 255, 0.24);
-    flex-shrink: 1;
+    flex-shrink: 0;
     width: 100%;
     height: 100%;
+    bottom: 0;
+    right: 0;
+    background-image: url('project://database/Assets/02.Assets/Models/Topdown%20Island%20Pack/Materials_textures/Smoke.tga?fileID=2800000&guid=ff655d3619e794b49802b22a40ba671e&type=3#Smoke');
 }
 
 .inventorySlot.count {
-    bottom: 0;
-    flex-shrink: 0;
-    position: relative;
+    bottom: -30px;
+    flex-shrink: 1;
+    position: absolute;
+    right: 38px;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-font-definition: url('project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&guid=68bf536b04e874c4d859fa5ed5b46fe1&type=2#Asia신디나루M SDF 1');
+    font-size: 40px;
+    -unity-font-style: bold;
+}
+
+.inventoryUI.active {
+    scale: 1 1;
 }

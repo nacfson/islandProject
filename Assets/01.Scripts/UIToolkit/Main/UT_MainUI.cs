@@ -28,10 +28,11 @@ namespace UI_Toolkit{
 
             _iu = _root.Q<VisualElement>("InfoUI");
             _inventoryUI = _root.Q<VisualElement>("InventoryUI");
-
+            _inventoryUI.RemoveFromClassList("active");
 
             _infoUI = new InfoUI(_iu);
         }
+
         private void Start() {
             List<InventorySlot> slotList = new List<InventorySlot>();
             int count = _inventoryUI.childCount;
@@ -47,6 +48,18 @@ namespace UI_Toolkit{
             }
 
             InventoryManager.Instance.SetSlotList(ref slotList);
+            OpenInv(false);
+        }
+
+        public void OpenInv(bool result){
+            if(result){
+                _inventoryUI.AddToClassList("active");
+                GameManager.Instance.PlayerBrain.ChangeState(StateType.UI);
+            }
+            else{
+                _inventoryUI.RemoveFromClassList("active");
+                GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
+            }
         }
 
         public void StartTalk(TalkData talkData,string name){
@@ -54,6 +67,10 @@ namespace UI_Toolkit{
                 _infoUI.ShowText();
             });
             _infoUI.ShowText();
+        }
+
+        public bool IsInvOpen(){
+            return _inventoryUI.ClassListContains("active");
         }
         
     }

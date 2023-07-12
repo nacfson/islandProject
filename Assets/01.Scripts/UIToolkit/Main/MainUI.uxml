@@ -10,112 +10,112 @@
         </ui:VisualElement>
         <ui:VisualElement name="InventoryUI" class="inventoryUI">
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
-                <ui:VisualElement name="ItemImage" class="inventorySlot image" style="background-image: url(&apos;project://database/Assets/02.Assets/Models/Topdown%20Island%20Pack/Materials_textures/Accessories_AlbedoTransparency.tga?fileID=2800000&amp;guid=5215f83428053d74c9daa4dc9dffddc4&amp;type=3#Accessories_AlbedoTransparency&apos;);" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:VisualElement name="ItemImage" class="inventorySlot image" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
             <ui:VisualElement name="InventorySlot" class="inventorySlot" style="flex-grow: 1;">
                 <ui:VisualElement name="ItemImage" class="inventorySlot image" />
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" style="bottom: 0;" />
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

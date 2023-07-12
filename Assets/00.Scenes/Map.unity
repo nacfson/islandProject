@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 7379250}
   - component: {fileID: 7379251}
   - component: {fileID: 7379252}
+  - component: {fileID: 7379253}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -254,6 +255,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31a370ea25f9dc4dacf77b8ba6db662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7379253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7379245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14859986c63662b43ba1dcf43202e79c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &37648584
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,6 +280,7 @@ GameObject:
   - component: {fileID: 37648587}
   - component: {fileID: 37648588}
   - component: {fileID: 37648589}
+  - component: {fileID: 37648590}
   m_Layer: 0
   m_Name: States
   m_TagString: Untagged
@@ -335,6 +349,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f123d81dfd3c57469774c3c390fbdaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &37648590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37648584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a18722646dfa24eb651d16fb32bde0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &86895738
@@ -989,6 +1015,7 @@ MonoBehaviour:
   IsPushing: 0
   IsPicking: 0
   CanInteract: 1
+  TargetPos: {x: 0, y: 0, z: 0}
 --- !u!1001 &782380233
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1049,6 +1076,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -6953769394644018759, guid: 8dd7b510d34ea17459f74b65fd543fd3, type: 3}
+    - target: {fileID: 1398825745851642344, guid: 00a19dbcf1f356b449c9b29112c122e7, type: 3}
+      propertyPath: m_Name
+      value: EnterDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1398825745851642344, guid: 00a19dbcf1f356b449c9b29112c122e7, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1472608172252765930, guid: 00a19dbcf1f356b449c9b29112c122e7, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1316,6 +1351,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6207217858383910259, guid: 00a19dbcf1f356b449c9b29112c122e7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 266097545}
+    - targetCorrespondingSourceObject: {fileID: 1398825745851642344, guid: 00a19dbcf1f356b449c9b29112c122e7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1986204381}
   m_SourcePrefab: {fileID: 100100000, guid: 00a19dbcf1f356b449c9b29112c122e7, type: 3}
 --- !u!1 &837542152
 GameObject:
@@ -1448,6 +1486,7 @@ MonoBehaviour:
   IsPushing: 0
   IsPicking: 0
   CanInteract: 0
+  TargetPos: {x: 0, y: 0, z: 0}
   IsTalking: 0
 --- !u!1 &1335843688
 GameObject:
@@ -1462,7 +1501,7 @@ GameObject:
   - component: {fileID: 1335843692}
   - component: {fileID: 1335843691}
   - component: {fileID: 1335843693}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: AI_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1953,6 +1992,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1986204376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1398825745851642344, guid: 00a19dbcf1f356b449c9b29112c122e7, type: 3}
+  m_PrefabInstance: {fileID: 782380233}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1986204381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986204376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a740cea581fbd4483e18dadf71e9b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &2109266938
 GameObject:
   m_ObjectHideFlags: 0

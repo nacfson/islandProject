@@ -5,7 +5,7 @@ using System.Linq;
 using System;
 
 public enum StateType{
-    Idle = 0 ,UI = 1,Push = 2,Pick = 3,
+    Idle = 0 ,UI = 1,Push = 2,Pick = 3,Entry = 4,
 }
 
 public class PlayerBrain : AgentBrain<ActionData>{
