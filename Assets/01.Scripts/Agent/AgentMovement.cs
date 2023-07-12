@@ -40,19 +40,23 @@ public class AgentMovement : Agent<ActionData>{
         _agentAnimator?.SetSpeed(_movementVelocity.sqrMagnitude * 100f);
 
         _charController.Move(move);
-
     }
     public void GoToVector(Vector3 dir,Action Callback = null){
-        StartCoroutine(GoToVectorCor(dir,Callback));
+        float distance = Vector3.Distance(transform.position,dir);
+        StartCoroutine(GoToVectorCor(dir,distance,Callback));
     }
 
-    IEnumerator GoToVectorCor(Vector3 targetPos,Action Callback){
+    //IsActiveMove가 켜져있으면 원래 위치로 순간이동 해버림
+    IEnumerator GoToVectorCor(Vector3 targetPos,float dist,Action Callback){
         IsActiveMove = false;
-        while(Vector3.Distance(transform.position,targetPos) >= 3f){
-            _charController.Move(targetPos);
+        while(Vector3.Distance(transform.position,targetPos) >= 1f){
+            transform.position += (targetPos - transform.position) * Time.fixedDeltaTime;
             yield return null;
         }
-        //IsActiveMove = true;
+        //_charController.Move(transform.position);
+        
+        IsActiveMove = true;
+        StopImmediately();
         Callback?.Invoke();
     }
 
@@ -73,10 +77,13 @@ public class AgentMovement : Agent<ActionData>{
 
     private void SetMovementVelocity(Vector3 movement){
         _movementVelocity = movement;
+        _charController.Move(Vector3.zero);
+        //_charController.velocity = Vector3.zero;
     }
     
     public void StopImmediately(){
         _movementVelocity = Vector3.zero;
+        //_charController.Move(transform.position);
     }
 
     public float GetMovementSpeed(float multiply){
