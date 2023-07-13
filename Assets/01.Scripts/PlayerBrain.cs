@@ -19,6 +19,9 @@ public class PlayerBrain : AgentBrain<ActionData>{
     private AgentAnimator _agentAnimator;
     public AgentAnimator AgentAnimator => _agentAnimator;
 
+    private AgentMovement _agentMovement;
+    public AgentMovement AgentMovement => _agentMovement;
+
     public override void SetUp(Transform agent){
         _agents = new List<Agent<ActionData>>();
         _stateDictionary = new Dictionary<StateType, NormalState>();
@@ -27,6 +30,7 @@ public class PlayerBrain : AgentBrain<ActionData>{
         _agents.ForEach(a => a.SetUp(agent));
 
         _agentAnimator = _agents.Find(a => a.GetType() == typeof(AgentAnimator)) as AgentAnimator;
+        _agentMovement = _agents.Find(a => a.GetType() == typeof(AgentMovement)) as AgentMovement;
         
         Transform stateTrm = transform.Find("States");
 
@@ -42,6 +46,10 @@ public class PlayerBrain : AgentBrain<ActionData>{
         }
 
         _actionData = transform.Find("ActionData").GetComponent<ActionData>();
+
+
+
+        _agentAnimator.OnOpenAnimationEndTrigger += (AgentBrain<ActionData> brain) => ChangeState(StateType.Idle);
     }
 
     protected virtual void Update() {

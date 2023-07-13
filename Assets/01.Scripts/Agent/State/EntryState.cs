@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EntryState : NormalState{
     public override void OnEnterState(){
-        _agentMovement.GoToVector(_brain.GetAD().TargetPos,() => _brain.ChangeState(StateType.Idle));
+        _agentMovement.GoToVector(_brain.GetAD().TargetPos,() => _agentAnimator.SetTriggerOpen(true));
     }
 
     public override void OnExitState(){

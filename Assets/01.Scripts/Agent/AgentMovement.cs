@@ -59,10 +59,14 @@ public class AgentMovement : Agent<ActionData>{
             yield return null;
         }
         StopImmediately();
-        _charController.enabled = false;
         Callback?.Invoke();
-        _charController.enabled = true;
         IsActiveMove = true;
+    }
+
+    public void SetPlayerPos(Vector3 pos){
+        _charController.enabled = false;
+        transform.position = pos;
+        _charController.enabled  = true;
     }
 
     public void RotateToVector(Vector3 dir){
@@ -101,6 +105,7 @@ public class AgentMovement : Agent<ActionData>{
     }
     
     public void StopImmediately(){
+        _charController.SimpleMove(Vector3.zero);
         _movementVelocity = Vector3.zero;
         _agentAnimator?.SetSpeed(0f);
         //_charController.Move(transform.position);
@@ -111,16 +116,5 @@ public class AgentMovement : Agent<ActionData>{
     }
     public void SetRun(){
         _brain.GetAD().IsRun = !_brain.GetAD().IsRun;
-    }
-
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    private void Update()
-    {
-        // if(Input.GetKeyDown(KeyCode.G))
-        // {
-        //     transform.position = Vector3.zero;
-        // }
     }
 }
