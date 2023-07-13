@@ -50,6 +50,7 @@ public class AIBrain : AgentBrain<AIActionData> ,IInteractable{
         UT_MainUI.Instance.StartTalk(_talkData,gameObject.name);
         
         GetAD().IsTalking = true;
+        Debug.Log(brain.transform.position);
         _navMovement.LookRotation(brain.transform.position);
     }
 

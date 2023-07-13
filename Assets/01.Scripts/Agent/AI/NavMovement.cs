@@ -19,10 +19,9 @@ public class NavMovement : Agent<AIActionData>{
     
     //Lerp를 이용해 좀 더 자연스러운 화면 돌림을 구현하는 것도 고려
     public void LookRotation(Vector3 dir){
-        var to = Quaternion.LookRotation(dir);
-        //transform.rotation = Quaternion.Lerp(transform.rotation,to,0.1f);
-        transform.rotation = to;
-        
+        Vector3 targetPos = dir - transform.position;
+        dir.y = 0;
+        transform.rotation = Quaternion.LookRotation(targetPos);                                  
     }
 
     public void StopImmediately(){

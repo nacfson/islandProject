@@ -41,27 +41,42 @@ public class AgentMovement : Agent<ActionData>{
 
         _charController.Move(move);
     }
+
     public void GoToVector(Vector3 dir,Action Callback = null){
         float distance = Vector3.Distance(transform.position,dir);
-        StartCoroutine(GoToVectorCor(dir,distance,Callback));
+        StartCoroutine(GoToVectorCor(dir,Callback));
     }
 
     //IsActiveMove가 켜져있으면 원래 위치로 순간이동 해버림
-    IEnumerator GoToVectorCor(Vector3 targetPos,float dist,Action Callback){
+    IEnumerator GoToVectorCor(Vector3 targetPos,Action Callback){
         IsActiveMove = false;
+        
         while(Vector3.Distance(transform.position,targetPos) >= 1f){
-            transform.position += (targetPos - transform.position) * Time.fixedDeltaTime;
+            _charController.Move( (targetPos  - transform.position).normalized * 10f * Time.fixedDeltaTime );
             yield return null;
         }
-        //_charController.Move(transform.position);
-        
-        IsActiveMove = true;
         StopImmediately();
+        _charController.enabled = false;
         Callback?.Invoke();
+        _charController.enabled = true;
+        IsActiveMove = true;
     }
 
     public void RotateToVector(Vector3 dir){
-        transform.rotation = Quaternion.LookRotation(dir);
+        Vector3 targetPos = dir - transform.position;
+        targetPos.y = 0;
+        var rot = Quaternion.LookRotation(targetPos);
+        transform.rotation = rot;
+    }
+
+    public void LookRotation(Vector3 dir,bool sLerp){
+        var rot = Quaternion.LookRotation(dir);
+        if(sLerp){
+            transform.rotation = Quaternion.Slerp(transform.rotation,rot,Time.deltaTime * 10f);
+        }
+        else{
+            transform.rotation = rot;
+        }
     }
 
     private void CalculateMovement(){
@@ -72,7 +87,8 @@ public class AgentMovement : Agent<ActionData>{
         else{
             _movementVelocity *= _brain.MoveData.Speed * Time.fixedDeltaTime;
         }
-        RotateToVector(_movementVelocity);
+        //RotateToVector(_movementVelocity);
+        LookRotation(_movementVelocity,true);
     }
 
     private void SetMovementVelocity(Vector3 movement){
@@ -91,5 +107,16 @@ public class AgentMovement : Agent<ActionData>{
     }
     public void SetRun(){
         _brain.GetAD().IsRun = !_brain.GetAD().IsRun;
+    }
+
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    private void Update()
+    {
+        // if(Input.GetKeyDown(KeyCode.G))
+        // {
+        //     transform.position = Vector3.zero;
+        // }
     }
 }

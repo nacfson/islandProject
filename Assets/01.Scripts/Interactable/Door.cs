@@ -13,5 +13,6 @@ public class Door : MonoBehaviour, IInteractable{
     public void UnInteract(AgentBrain<ActionData> brain){
         //Debug.LogError("UnInteract");
         brain.transform.position = _targetPos;
+        Debug.Log(_targetPos);
     }
 }
