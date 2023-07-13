@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IInteractable{
     [SerializeField] private Vector3 _targetPos;
+    private Transform _pivot;
+
+    private void Awake() {
+        _pivot = transform.Find("DoorPivot");
+    } 
 
     public void Interact(AgentBrain<ActionData> brain){
-        brain.GetAD().TargetPos = transform.position;
+        brain.GetAD().TargetPos = _pivot.position;
         brain.ChangeState(StateType.Entry);
     }
 

@@ -52,7 +52,10 @@ public class AgentMovement : Agent<ActionData>{
         IsActiveMove = false;
         
         while(Vector3.Distance(transform.position,targetPos) >= 1f){
-            _charController.Move( (targetPos  - transform.position).normalized * 10f * Time.fixedDeltaTime );
+            _charController.Move((targetPos  - transform.position).normalized * 2f * Time.fixedDeltaTime );
+            //걸어야 되어서 고정된 값을 넣어주지만 나중에 고쳐야 함
+            _agentAnimator?.SetSpeed(0.3f);
+
             yield return null;
         }
         StopImmediately();
@@ -93,12 +96,13 @@ public class AgentMovement : Agent<ActionData>{
 
     private void SetMovementVelocity(Vector3 movement){
         _movementVelocity = movement;
-        _charController.Move(Vector3.zero);
+        //_charController.Move(Vector3.zero);
         //_charController.velocity = Vector3.zero;
     }
     
     public void StopImmediately(){
         _movementVelocity = Vector3.zero;
+        _agentAnimator?.SetSpeed(0f);
         //_charController.Move(transform.position);
     }
 

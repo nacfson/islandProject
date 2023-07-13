@@ -15,5 +15,6 @@ public class IdleState : NormalState{
     }
 
     public override void UpdateState(){
-    }
+
+    }   
 }
