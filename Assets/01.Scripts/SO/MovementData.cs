@@ -6,6 +6,7 @@ using UnityEngine;
 public class MovementData : ScriptableObject{
     public float Speed = 5f;
     public float RunSpeed = 8f;
+    public float entrySpeed = 1f;
 
     //public float MaxSpeed;
 }

@@ -38,12 +38,11 @@ public class AgentMovement : Agent<ActionData>{
         Vector3 move = _movementVelocity + _verticalSpeed * Vector3.up;
         //Debug.Log($"CurrentSpeed: {_movementVelocity.sqrMagnitude * 100f}");
         _agentAnimator?.SetSpeed(_movementVelocity.sqrMagnitude * 100f);
-
+        
         _charController.Move(move);
     }
 
     public void GoToVector(Vector3 dir,Action Callback = null){
-        float distance = Vector3.Distance(transform.position,dir);
         StartCoroutine(GoToVectorCor(dir,Callback));
     }
 
@@ -52,7 +51,7 @@ public class AgentMovement : Agent<ActionData>{
         IsActiveMove = false;
         
         while(Vector3.Distance(transform.position,targetPos) >= 1f){
-            _charController.Move((targetPos  - transform.position).normalized * 2f * Time.fixedDeltaTime );
+            _charController.Move((targetPos  - transform.position).normalized* _brain.MoveData.entrySpeed * Time.fixedDeltaTime);
             //걸어야 되어서 고정된 값을 넣어주지만 나중에 고쳐야 함
             _agentAnimator?.SetSpeed(0.3f);
 

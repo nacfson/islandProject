@@ -14,6 +14,7 @@ public class AgentAnimator : Agent<ActionData>{
 
     public event Action<AgentBrain<ActionData>> OnPushAnimationEndTrigger;
     public event Action<AgentBrain<ActionData>> OnPickAnimationEndTrigger;
+    public event Action<AgentBrain<ActionData>> OnOpenAnimationStartTrigger;
     public event Action<AgentBrain<ActionData>> OnOpenAnimationEndTrigger;
 
     protected Animator _animator;
@@ -71,5 +72,8 @@ public class AgentAnimator : Agent<ActionData>{
     }
     public void OnOpenAnimationEnd(){
         OnOpenAnimationEndTrigger?.Invoke(_brain);
+    }
+    public void OnOpenAnimationStart(){
+        OnOpenAnimationStartTrigger?.Invoke(_brain);
     }
 }

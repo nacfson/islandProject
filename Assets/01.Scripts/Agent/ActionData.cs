@@ -9,7 +9,5 @@ public class ActionData : MonoBehaviour{
     public bool IsPicking;
 
     public bool CanInteract;
-
     public Vector3 TargetPos;
-
 }
