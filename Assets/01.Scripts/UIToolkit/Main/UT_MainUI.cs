@@ -13,6 +13,7 @@ namespace UI_Toolkit{
         private InfoUI _infoUI;
         private VisualElement _iu;
         private VisualElement _inventoryUI;
+        private VisualElement _fadeUI;
 
         public static UT_MainUI Instance;
 
@@ -28,6 +29,8 @@ namespace UI_Toolkit{
 
             _iu = _root.Q<VisualElement>("InfoUI");
             _inventoryUI = _root.Q<VisualElement>("InventoryUI");
+            _fadeUI = _root.Q<VisualElement>("FadeUI");
+
             _inventoryUI.RemoveFromClassList("active");
 
             _infoUI = new InfoUI(_iu);
@@ -49,8 +52,33 @@ namespace UI_Toolkit{
 
             InventoryManager.Instance.SetSlotList(ref slotList);
             OpenInv(false);
+
+            _fadeUI.transform.scale = Vector3.zero;
         }
 
+        //private void Update() {
+        //    if (Input.GetKeyDown(KeyCode.T)) {
+        //        Debug.Log("StartTestCode");
+        //        ShowFadeSequence(1f,() => Debug.Log("Actioned"));
+        //    }
+        //}
+
+        //public void ShowFadeSequence(float targetTime,Action Callback = null) {
+        //    StartCoroutine(ShowFadeSeqCor(targetTime, Callback));
+        //}
+        //private IEnumerator ShowFadeSeqCor(float targetTime,Action Callback) {
+        //    float timer = 0f;
+        //    float value = timer / targetTime;
+
+        //    while(value < 1) {
+        //        timer += Time.deltaTime;
+        //        value = timer / targetTime;
+        //        _fadeUI.transform.scale = new Vector2(value,value);
+        //        yield return null;
+        //    }
+
+        //    Callback?.Invoke();
+        //}
         public void OpenInv(bool result){
             if(result){
                 _inventoryUI.AddToClassList("active");

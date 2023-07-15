@@ -118,5 +118,6 @@
                 <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ItemCount" class="inventorySlot count" />
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement name="FadeUI" class="fadeUI" style="visibility: hidden;" />
     </ui:VisualElement>
 </ui:UXML>
