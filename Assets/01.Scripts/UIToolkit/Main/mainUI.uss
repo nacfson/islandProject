@@ -122,8 +122,52 @@
     background-color: rgb(255, 255, 255);
     width: 100%;
     height: 100%;
+    flex-grow: 1;
+    position: absolute;
 }
 
 .shopUI.active {
     scale: 1 1;
+}
+
+.shopView {
+    right: 5%;
+    width: 50%;
+    height: 70%;
+    background-color: rgb(255, 129, 129);
+    position: absolute;
+    top: 15%;
+    border-top-left-radius: 28px;
+    border-bottom-left-radius: 28px;
+    border-top-right-radius: 28px;
+    border-bottom-right-radius: 28px;
+    padding-left: 26px;
+    padding-right: 26px;
+    padding-top: 26px;
+    padding-bottom: 26px;
+}
+
+.item {
+    height: 54px;
+    flex-grow: 1;
+    flex-shrink: 0;
+    background-color: rgb(254, 255, 109);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    flex-direction: row;
+}
+
+.item > .image {
+    flex-shrink: 0;
+    width: 10%;
+    background-color: rgb(255, 255, 255);
+}
+
+.item > .label {
+    -unity-font-definition: url('project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&guid=68bf536b04e874c4d859fa5ed5b46fe1&type=2#Asia신디나루M SDF 1');
+    -unity-font-style: bold;
+    font-size: 34px;
+    -unity-text-align: middle-left;
 }
