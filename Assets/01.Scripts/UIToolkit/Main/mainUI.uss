@@ -115,3 +115,15 @@
 
 .fadeUI.active {
 }
+
+.shopUI {
+    scale: 0 0;
+    flex-shrink: 0;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: 100%;
+}
+
+.shopUI.active {
+    scale: 1 1;
+}

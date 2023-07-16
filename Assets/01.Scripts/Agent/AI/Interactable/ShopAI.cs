@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopAI : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
+public class ShopAI : AIInteractable{
+    public override void Interact(AgentBrain<ActionData> brain){
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public override void UnInteract(AgentBrain<ActionData> brain){
+
     }
 }

@@ -44,6 +44,4 @@ public class AIBrain : AgentBrain<AIActionData> {
         _currentAIState = state as NormalAIState;
         _currentAIState.OnEnterState();
     }
-
-
 }

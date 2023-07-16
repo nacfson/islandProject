@@ -119,5 +119,6 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="FadeUI" class="fadeUI" style="visibility: hidden;" />
+        <ui:VisualElement name="ShopUI" class="shopUI" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
     </ui:VisualElement>
 </ui:UXML>
