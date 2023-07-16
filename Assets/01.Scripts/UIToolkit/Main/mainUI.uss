@@ -11,15 +11,12 @@
     border-bottom-right-radius: 50px;
     transition-property: all;
     transition-duration: 0.5s;
-    visibility: visible;
     scale: 0 0;
-    background-image: none;
-    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .infoUI.active {
-    visibility: visible;
     scale: 1 1;
+    flex-shrink: 0;
 }
 
 .nameUI {
