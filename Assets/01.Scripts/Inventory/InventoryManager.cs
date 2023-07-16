@@ -20,8 +20,6 @@ public class InventoryManager : MonoBehaviour{
             _instance = this;
         }
         DontDestroyOnLoad(this.gameObject);
-
-        //GetComponentsInChildren<InventorySlot>(_slotList);
     }
     
     //똑같은 아이템을 보유하고있는 슬롯 있으면 개수 추가,

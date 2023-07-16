@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1535,6 +1535,7 @@ GameObject:
   - component: {fileID: 1335843692}
   - component: {fileID: 1335843691}
   - component: {fileID: 1335843693}
+  - component: {fileID: 1335843694}
   m_Layer: 7
   m_Name: AI_1
   m_TagString: Untagged
@@ -1573,7 +1574,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementData: {fileID: 11400000, guid: ec48eed5813ad7d46a85730a6788b814, type: 2}
   _currentAIState: {fileID: 1220075500}
-  _talkData: {fileID: 11400000, guid: ec0176c9583548242bfdfc7420d7e428, type: 2}
   states: []
 --- !u!114 &1335843691
 MonoBehaviour:
@@ -1632,6 +1632,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1335843694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335843688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c0eff0b127ec5c4494b7cff3e0bf13f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _talkData: {fileID: 11400000, guid: ec0176c9583548242bfdfc7420d7e428, type: 2}
 --- !u!1 &1373556699
 GameObject:
   m_ObjectHideFlags: 3

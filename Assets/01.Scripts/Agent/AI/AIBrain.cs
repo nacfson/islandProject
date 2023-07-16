@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UI_Toolkit;
 
-public class AIBrain : AgentBrain<AIActionData> ,IInteractable{
+public class AIBrain : AgentBrain<AIActionData> {
     public NormalAIState CurrentAIState => _currentAIState;
     [SerializeField] protected NormalAIState _currentAIState;
 
-    [SerializeField] protected TalkData _talkData;
+
     public List<NormalAIState> states;
     private List<Agent<AIActionData>> _agents;
 
     //Agent<AIActionData>를 상속받고 있지 않기 때문에 따로 받아줌
     protected AIAnimator _agentAnimator;
+    public NavMovement NavMovement => _navMovement;
     protected NavMovement _navMovement;
 
     protected override void Awake() {
@@ -45,16 +45,5 @@ public class AIBrain : AgentBrain<AIActionData> ,IInteractable{
         _currentAIState.OnEnterState();
     }
 
-    public void Interact(AgentBrain<ActionData> brain){
-        //나중에 이름 설정하는 것도 필요할 듯
-        UT_MainUI.Instance.StartTalk(_talkData,gameObject.name);
-        
-        GetAD().IsTalking = true;
-        Debug.Log(brain.transform.position);
-        _navMovement.LookRotation(brain.transform.position);
-    }
 
-    public void UnInteract(AgentBrain<ActionData> brain){
-        GetAD().IsTalking = false;
-    }
 }
