@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour{
         }
     }
     private List<InventorySlot> _slotList = new List<InventorySlot>();
+    public List<InventorySlot> SlotList => _slotList;
 
     private void Awake() {
         if(_instance == null){

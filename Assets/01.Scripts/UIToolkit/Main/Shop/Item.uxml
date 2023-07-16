@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
     <ui:VisualElement name="Item" class="item" style="flex-grow: 1;">
         <ui:VisualElement name="ItemImage" class="image" />
-        <ui:Label tabindex="-1" text="고급 낚싯대" display-tooltip-when-elided="true" name="NameLabel" class="label" style="-unity-text-align: middle-left;" />
-        <ui:Label tabindex="-1" text="1200" display-tooltip-when-elided="true" name="PrizeLabel" class="label" style="position: absolute; top: 15%;" />
+        <ui:Label tabindex="-1" text="고급 낚싯대" display-tooltip-when-elided="true" name="NameLabel" class="label" />
+        <ui:Label tabindex="-1" text="1200" display-tooltip-when-elided="true" name="PriceLabel" class="label" style="position: absolute; right: 0;" />
     </ui:VisualElement>
 </ui:UXML>

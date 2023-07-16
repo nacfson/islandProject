@@ -1,3 +1,4 @@
+using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,15 @@ namespace UI_Toolkit{
     public class UT_MainUI : MonoBehaviour {
         private UIDocument _document;
         private VisualElement _root;
+        private VisualTreeAsset _itemUXML;
 
         private InfoUI _infoUI;
         private VisualElement _iu;
         private VisualElement _inventoryUI;
         private VisualElement _fadeUI;
+
         private VisualElement _shopUI;
+        private ScrollView _shopView;
 
         public static UT_MainUI Instance;
 
@@ -31,6 +35,8 @@ namespace UI_Toolkit{
             _iu = _root.Q<VisualElement>("InfoUI");
             _inventoryUI = _root.Q<VisualElement>("InventoryUI");
             //_fadeUI = _root.Q<VisualElement>("FadeUI");
+            _shopUI = _root.Q<VisualElement>("ShopUI");
+            _shopView = _shopUI.Q<ScrollView>("ShopView");
 
             _inventoryUI.RemoveFromClassList("active");
 
@@ -75,13 +81,49 @@ namespace UI_Toolkit{
             return _inventoryUI.ClassListContains("active");
         }
         #endregion
+        
+        
         public void StartTalk(TalkData talkData,string name){
             _infoUI.SetUp(talkData,name, () => { 
                 _infoUI.ShowText();
             });
             _infoUI.ShowText();
         }
+        public void ShowShopUI(){
+            _shopUI.AddToClassList("active");
 
+            CreateItemUI();
+        }
+
+        private void CreateItemUI(){
+            List<InventorySlot> slotList = InventoryManager.Instance.SlotList;
+
+
+            foreach(InventorySlot slot in slotList){
+                Item item = slot.GetItem();
+                if(item == null) continue;
+
+                VisualElement itemUXML = _itemUXML.Instantiate();
+
+                VisualElement itemImage = itemUXML.Q<VisualElement>("ItemImage");
+                Label nameLabel = itemUXML.Q<Label>("NameLabel");
+                Label priceLabel = itemUXML.Q<Label>("PriceLabel");
+
+                Action<Sprite,string,int> SetUI = (image,name,price) => {
+                    itemImage.style.backgroundImage = image.texture;
+                    nameLabel.text = name;
+                    priceLabel.text = $"{price}BP";
+                };
+
+                SetUI(item.itemSprite,item.itemName,item.price);
+            }
+        }
+
+        public void UnShowAllUI(){
+            _inventoryUI.RemoveFromClassList("active");
+            _iu.RemoveFromClassList("active");
+            _shopUI.RemoveFromClassList("active");
+        }
     }
 
 

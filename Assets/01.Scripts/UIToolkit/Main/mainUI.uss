@@ -124,6 +124,7 @@
     height: 100%;
     flex-grow: 1;
     position: absolute;
+    transition-duration: 0.5s;
 }
 
 .shopUI.active {
@@ -157,12 +158,20 @@
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     flex-direction: row;
+    margin-left: 9px;
+    margin-right: 9px;
+    margin-top: 9px;
+    margin-bottom: 9px;
 }
 
 .item > .image {
     flex-shrink: 0;
-    width: 10%;
+    width: 8%;
     background-color: rgb(255, 255, 255);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .item > .label {
