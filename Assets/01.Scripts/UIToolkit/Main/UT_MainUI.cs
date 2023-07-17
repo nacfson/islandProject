@@ -9,6 +9,7 @@ using System;
 namespace UI_Toolkit{
     public class UT_MainUI : MonoBehaviour {
         private UIDocument _document;
+
         private VisualElement _root;
         [SerializeField] private VisualTreeAsset _itemUXML;
 
@@ -17,8 +18,11 @@ namespace UI_Toolkit{
         private VisualElement _inventoryUI;
         private VisualElement _fadeUI;
 
+        [Header("Shop")]
         private VisualElement _shopUI;
         private ScrollView _shopView;
+        private Item _selectedItem;
+        private Dictionary<VisualElement,Item> _slotDictionary = new Dictionary<VisualElement, Item>();
 
         public static UT_MainUI Instance;
 
@@ -41,11 +45,11 @@ namespace UI_Toolkit{
             Button sellBtn = _shopUI.Q<Button>("SellBtn");
 
             buyBtn.RegisterCallback<ClickEvent>(e => {
-                Debug.Log("BuyBtn");
+                BuyItem();
             });
 
             sellBtn.RegisterCallback<ClickEvent>(e => {
-                Debug.Log("SellBtn");
+                SellItem();
             });
             _shopView = _shopUI.Q<ScrollView>("ShopView");
 
@@ -105,6 +109,7 @@ namespace UI_Toolkit{
             });
             _infoUI.ShowText();
         }
+        #region ShopUI
 
         public void ShowShopUI(){
             _shopUI.AddToClassList("active");
@@ -114,6 +119,7 @@ namespace UI_Toolkit{
 
         private void CreateItemUI(){
             _shopView.Clear();
+            _slotDictionary.Clear();
             List<InventorySlot> slotList = InventoryManager.Instance.SlotList;
 
 
@@ -127,6 +133,11 @@ namespace UI_Toolkit{
                 Label nameLabel = itemUXML.Q<Label>("NameLabel");
                 Label priceLabel = itemUXML.Q<Label>("PriceLabel");
 
+                _slotDictionary.Add(itemUXML,item);
+                itemUXML.RegisterCallback<ClickEvent>(e => {
+                    _selectedItem = _slotDictionary[itemUXML];
+                });
+
                 Action<Sprite,string,int> SetUI = (image,name,price) => {
                     itemImage.style.backgroundImage = image.texture;
                     nameLabel.text = name;
@@ -139,15 +150,27 @@ namespace UI_Toolkit{
             }
         }
 
+        public bool BuyItem(){
+            if(_selectedItem == null) return false; 
+            Debug.Log(_selectedItem.itemName);
+            return true;
+        }
+        public bool SellItem(){
+            if(_selectedItem == null) return false;
+            Debug.Log(_selectedItem.price);
+            return true;
+        }
+        #endregion
+
         public void UnShowAllUI(){
             _inventoryUI.RemoveFromClassList("active");
             _iu.RemoveFromClassList("active");
             _shopUI.RemoveFromClassList("active");
         }
-    }
+    }   
 
 
-
+#region TalkClass(InfoUI)
     public class InfoUI {
         //������ InfoUI�� VisualElement
         private VisualElement _infoUI;
@@ -242,5 +265,6 @@ namespace UI_Toolkit{
             _infoUI.RegisterCallback<PointerDownEvent>(e => _callback?.Invoke());
         }
     }
+    #endregion
 }
 
