@@ -1,5 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="Item" src="project://database/Assets/01.Scripts/UIToolkit/Main/Shop/Item.uxml?fileID=9197481963319205126&amp;guid=5a66d299617b017439575faec1e09169&amp;type=3#Item" />
     <Style src="project://database/Assets/01.Scripts/UIToolkit/Main/mainUI.uss?fileID=7433441132597879392&amp;guid=fb7d2205e97a1c64b9e26e097d7904cf&amp;type=3#mainUI" />
     <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(99, 99, 99, 0); position: absolute; bottom: 0; width: 100%; height: 100%; flex-wrap: nowrap;">
         <ui:VisualElement name="InfoUI" class="infoUI">
@@ -120,10 +119,10 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="FadeUI" class="fadeUI" style="visibility: hidden;" />
-        <ui:VisualElement name="ShopUI" class="shopUI active" style="flex-grow: 1;">
-            <ui:ScrollView name="ShopView" class="shopView">
-                <ui:Instance template="Item" name="Item" />
-            </ui:ScrollView>
+        <ui:VisualElement name="ShopUI" class="shopUI" style="flex-grow: 1;">
+            <ui:ScrollView name="ShopView" class="shopView" />
+            <ui:Button text="Buy" display-tooltip-when-elided="true" name="BuyBtn" class="button" />
+            <ui:Button text="Sell" display-tooltip-when-elided="true" name="SellBtn" class="button" style="right: 20%; background-color: rgb(255, 147, 131);" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

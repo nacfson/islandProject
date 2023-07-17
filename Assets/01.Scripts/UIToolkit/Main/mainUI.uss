@@ -180,3 +180,25 @@
     font-size: 34px;
     -unity-text-align: middle-left;
 }
+
+.shopUI > .button {
+    width: 10%;
+    height: 5%;
+    background-color: rgb(141, 255, 131);
+    position: absolute;
+    bottom: 5%;
+    right: 40%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    -unity-font-definition: url('project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&guid=68bf536b04e874c4d859fa5ed5b46fe1&type=2#Asia신디나루M SDF 1');
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    font-size: 26px;
+    transition-duration: 0.5s;
+}
+
+.shopUI > .button:hover {
+    scale: 0.8 0.8;
+}

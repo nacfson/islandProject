@@ -10,7 +10,7 @@ namespace UI_Toolkit{
     public class UT_MainUI : MonoBehaviour {
         private UIDocument _document;
         private VisualElement _root;
-        private VisualTreeAsset _itemUXML;
+        [SerializeField] private VisualTreeAsset _itemUXML;
 
         private InfoUI _infoUI;
         private VisualElement _iu;
@@ -36,6 +36,17 @@ namespace UI_Toolkit{
             _inventoryUI = _root.Q<VisualElement>("InventoryUI");
             //_fadeUI = _root.Q<VisualElement>("FadeUI");
             _shopUI = _root.Q<VisualElement>("ShopUI");
+
+            Button buyBtn = _shopUI.Q<Button>("BuyBtn");
+            Button sellBtn = _shopUI.Q<Button>("SellBtn");
+
+            buyBtn.RegisterCallback<ClickEvent>(e => {
+                Debug.Log("BuyBtn");
+            });
+
+            sellBtn.RegisterCallback<ClickEvent>(e => {
+                Debug.Log("SellBtn");
+            });
             _shopView = _shopUI.Q<ScrollView>("ShopView");
 
             _inventoryUI.RemoveFromClassList("active");
@@ -60,9 +71,14 @@ namespace UI_Toolkit{
             InventoryManager.Instance.SetSlotList(ref slotList);
             OpenInv(false);
 
-            _fadeUI.transform.scale = Vector3.zero;
+            //_fadeUI.transform.scale = Vector3.zero;
         }
-
+        void Update(){
+            //Test Code
+            if(Input.GetKeyDown(KeyCode.T)){
+                ShowShopUI();
+            }
+        }
         #region Inventory Logic
         public void OpenInv(bool result){
             if(result){
@@ -89,6 +105,7 @@ namespace UI_Toolkit{
             });
             _infoUI.ShowText();
         }
+
         public void ShowShopUI(){
             _shopUI.AddToClassList("active");
 
@@ -96,6 +113,7 @@ namespace UI_Toolkit{
         }
 
         private void CreateItemUI(){
+            _shopView.Clear();
             List<InventorySlot> slotList = InventoryManager.Instance.SlotList;
 
 
@@ -116,6 +134,8 @@ namespace UI_Toolkit{
                 };
 
                 SetUI(item.itemSprite,item.itemName,item.price);
+
+                _shopView.Add(itemUXML);
             }
         }
 
@@ -129,9 +149,9 @@ namespace UI_Toolkit{
 
 
     public class InfoUI {
-        //½ÇÁúÀû InfoUIÀÇ VisualElement
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ InfoUIï¿½ï¿½ VisualElement
         private VisualElement _infoUI;
-        //InfoUIÀÇ Label(text)
+        //InfoUIï¿½ï¿½ Label(text)
         private Label _contentLabel;
         private Label _nameLabel;
 
@@ -162,7 +182,7 @@ namespace UI_Toolkit{
             _returnIdx = talkData.talkList.Count - 1;
         }
 
-        //±ÛÀÚ ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ½ÇÇàÁßÀÌ¸é ½ºÅµ, ½ÇÇàÁßÀÌ ¾Æ´Ï¸é ´ÙÀ½ ´ëÈ­·Î ÀÌµ¿
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½Åµ, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½ ï¿½Ìµï¿½
         public void ShowText() {
             //Debug.LogError("ShowText");
             if (_isAnimating) {
@@ -185,8 +205,8 @@ namespace UI_Toolkit{
             }
         }
 
-        //startDelay => Transition AnimationÀÌ ³¡³¯¶§±îÁö ±â´Ù·ÁÁÖ´Â ½Ã°£
-        //typingDelay => ±ÛÀÚ°¡ ÀÔ·ÂµÇ´Â ¼Óµµ
+        //startDelay => Transition Animationï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ù·ï¿½ï¿½Ö´ï¿½ ï¿½Ã°ï¿½
+        //typingDelay => ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Ô·ÂµÇ´ï¿½ ï¿½Óµï¿½
         public IEnumerator AnimateTextCor(string text, float startDelay, float typingDelay = 0.05f) {
             _contentLabel.text = string.Empty;
             //_contentLabel.tooltip = text;
@@ -216,7 +236,7 @@ namespace UI_Toolkit{
             _isAnimating = false;
         }
 
-        //¾ÖÃÊ¿¡ ¾×¼Ç ÀÚÃ¼¸¦ VisualElement Å¬¸¯À¸·Î ³Ñ°ÜÁÜ
+        //ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½×¼ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ VisualElement Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ°ï¿½ï¿½ï¿½
         public void RegisterAction() {
             //Callback = action;
             _infoUI.RegisterCallback<PointerDownEvent>(e => _callback?.Invoke());
