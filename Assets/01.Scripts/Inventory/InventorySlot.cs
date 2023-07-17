@@ -40,6 +40,9 @@ public class InventorySlot{
     }
     public void AddItem(int amount){
         _inventory.AddItem(amount);
+        if(_inventory.amount <= 0){
+            _inventory = null;
+        }
     }
     public int GetAmount(){
         return _inventory.amount;

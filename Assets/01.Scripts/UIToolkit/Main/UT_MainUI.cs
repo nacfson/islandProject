@@ -131,6 +131,7 @@ namespace UI_Toolkit{
 
                 VisualElement itemImage = itemUXML.Q<VisualElement>("ItemImage");
                 Label nameLabel = itemUXML.Q<Label>("NameLabel");
+                
                 Label priceLabel = itemUXML.Q<Label>("PriceLabel");
 
                 _slotDictionary.Add(itemUXML,item);
@@ -152,13 +153,27 @@ namespace UI_Toolkit{
 
         public bool BuyItem(){
             if(_selectedItem == null) return false; 
-            Debug.Log(_selectedItem.itemName);
-            return true;
+
+            bool enoughMoney = MoneyManager.Instance.CanUseMoney(_selectedItem.price);
+            if(enoughMoney){
+                InventoryManager.Instance.AddItem(_selectedItem,1); // 아이템 추가
+                MoneyManager.Instance.AddMoney(-_selectedItem.price);  //돈 사용
+                CreateItemUI();
+                return true;
+            }
+            return false;
         }
+
         public bool SellItem(){
             if(_selectedItem == null) return false;
-            Debug.Log(_selectedItem.price);
-            return true;
+
+            bool enoughItem = InventoryManager.Instance.SubtractItem(_selectedItem,1); //아이템 감소
+            if(enoughItem){
+                MoneyManager.Instance.AddMoney(_selectedItem.sellPrice); // 돈 추가
+                CreateItemUI();
+                return true;
+            }
+            return false;
         }
         #endregion
 

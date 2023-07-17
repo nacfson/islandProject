@@ -4,6 +4,7 @@ using UnityEngine;
 public class Item : ScriptableObject{
     public string itemName;
     public int price;
+    public int sellPrice;
     public Sprite itemSprite;
 
     public int maxCnt = 100;

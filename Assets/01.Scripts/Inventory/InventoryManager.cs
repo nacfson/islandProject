@@ -52,6 +52,18 @@ public class InventoryManager : MonoBehaviour{
         return true;
     }
 
+    public bool SubtractItem(Item item, int amount){
+        foreach(var i in _slotList){
+            if(i.GetItem() == item){
+                if(i.GetAmount() >= amount){
+                    i.AddItem(-amount);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void UpdateInventory(){
         Debug.Log("UpdateInventory");
         foreach(var i in _slotList){
