@@ -137,6 +137,8 @@ namespace UI_Toolkit{
                 _slotDictionary.Add(itemUXML,item);
                 itemUXML.RegisterCallback<ClickEvent>(e => {
                     _selectedItem = _slotDictionary[itemUXML];
+                    itemUXML.AddToClassList("select");
+                    //Debug.LogError("SelectedItem");
                 });
 
                 Action<Sprite,string,int> SetUI = (image,name,price) => {
