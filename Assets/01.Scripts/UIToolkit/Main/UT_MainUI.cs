@@ -77,12 +77,7 @@ namespace UI_Toolkit{
 
             //_fadeUI.transform.scale = Vector3.zero;
         }
-        void Update(){
-            //Test Code
-            if(Input.GetKeyDown(KeyCode.T)){
-                ShowShopUI();
-            }
-        }
+
         #region Inventory Logic
         public void OpenInv(bool result){
             if(result){

@@ -104,7 +104,9 @@ public class AgentMovement : Agent<ActionData>{
     }
     
     public void StopImmediately(){
-        _charController.SimpleMove(Vector3.zero);
+
+        //StackOverFlow
+        //_charController.SimpleMove(Vector3.zero);
         _movementVelocity = Vector3.zero;
         _agentAnimator?.SetSpeed(0f);
         //_charController.Move(transform.position);

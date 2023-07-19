@@ -10,9 +10,17 @@ public class UIState : NormalState{
     }
 
     public override void OnExitState(){
+
     }
 
     public override void UpdateState(){
 
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            UI_Toolkit.UT_MainUI.Instance.UnShowAllUI();
+
+            //여기서 NullReference 오류 발생
+            _brain.ChangeState(StateType.Idle);
+        }
     }
 }
