@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveAIState : NormalAIState {
     public override void OnEnterState() {
-        _navMovement.SetDestination(GameManager.Instance.RandomTargetPos());
+        _navMovement.SetDestination(_brain.TargetPosData.GetRandomTargetPos());
     }
 
     public override void OnExitState() {
@@ -15,7 +15,8 @@ public class MoveAIState : NormalAIState {
         _agentAnimator.SetSpeed(_navMovement.GetSpeed(0.3f));
 
         if(_navMovement.IsArrived()){
-            Vector3 pos = GameManager.Instance.RandomTargetPos();
+            //Vector3 pos = GameManager.Instance.RandomTargetPos();
+            Vector3 pos = _brain.TargetPosData.GetRandomTargetPos();
             _navMovement.SetDestination(pos);
         }
     }

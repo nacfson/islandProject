@@ -6,14 +6,18 @@ public class AIBrain : AgentBrain<AIActionData> {
     public NormalAIState CurrentAIState => _currentAIState;
     [SerializeField] protected NormalAIState _currentAIState;
 
+    [SerializeField] protected TargetPosData _targetPosSO;
+    public TargetPosData TargetPosData => _targetPosSO;
 
     public List<NormalAIState> states;
     private List<Agent<AIActionData>> _agents;
-
+    
     //Agent<AIActionData>를 상속받고 있지 않기 때문에 따로 받아줌
     protected AIAnimator _agentAnimator;
     public NavMovement NavMovement => _navMovement;
     protected NavMovement _navMovement;
+
+
 
     protected override void Awake() {
         SetUp(this.transform);
