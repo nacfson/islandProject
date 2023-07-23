@@ -28,7 +28,7 @@ public class AIBrain : AgentBrain<AIActionData>, IUpdatable
     }
 
     private void OnEnable() => Add(this);
-    private void OnDisable() => Remove(this);
+private void OnDisable() => Remove(this);
     public override void SetUp(Transform agent)
     {
         _agents = new List<Agent<AIActionData>>();
