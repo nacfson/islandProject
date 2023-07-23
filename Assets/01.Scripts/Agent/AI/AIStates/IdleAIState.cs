@@ -13,6 +13,6 @@ public class IdleAIState : NormalAIState {
 
     public override void UpdateState() {
         base.UpdateState();
-        _agentAnimator.InitAllAnimations();
+        //_agentAnimator.InitAllAnimations();
     }
 }

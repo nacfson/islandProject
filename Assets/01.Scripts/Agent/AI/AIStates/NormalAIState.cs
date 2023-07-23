@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class NormalAIState : MonoBehaviour, IState {
+public abstract class NormalAIState : MonoBehaviour, IState
+{
     [HideInInspector] public List<AITransition> transitions;
     protected AIBrain _brain;
     protected AIActionData _actionData;
@@ -15,16 +16,20 @@ public abstract class NormalAIState : MonoBehaviour, IState {
 
     public abstract void OnExitState();
 
-    public virtual void UpdateState() {
-        if(!_isSetUp) return;
-        foreach (AITransition t in transitions) {
-            if (t.MakeATransition()) {
+    public virtual void UpdateState()
+    {
+        if (!_isSetUp) return;
+        foreach (AITransition t in transitions)
+        {
+            if (t.MakeATransition())
+            {
                 _brain.ChangeState(t.NextState);
             }
         }
     }
 
-    public virtual void SetUp(Transform agent) {
+    public virtual void SetUp(Transform agent)
+    {
         _brain = agent.GetComponent<AIBrain>();
         _actionData = agent.Find("AI").GetComponent<AIActionData>();
         _navMovement = agent.GetComponent<NavMovement>();
