@@ -1,8 +1,11 @@
+using CustomUpdateManager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class AIBrain : AgentBrain<AIActionData> {
+public class AIBrain : AgentBrain<AIActionData>, IUpdatable
+{
     public NormalAIState CurrentAIState => _currentAIState;
     [SerializeField] protected NormalAIState _currentAIState;
 
@@ -11,7 +14,7 @@ public class AIBrain : AgentBrain<AIActionData> {
 
     public List<NormalAIState> states;
     private List<Agent<AIActionData>> _agents;
-    
+
     //Agent<AIActionData>를 상속받고 있지 않기 때문에 따로 받아줌
     protected AIAnimator _agentAnimator;
     public NavMovement NavMovement => _navMovement;
@@ -19,10 +22,15 @@ public class AIBrain : AgentBrain<AIActionData> {
 
 
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         SetUp(this.transform);
     }
-    public override void SetUp(Transform agent) {
+
+    private void OnEnable() => Add(this);
+    private void OnDisable() => Remove(this);
+    public override void SetUp(Transform agent)
+    {
         _agents = new List<Agent<AIActionData>>();
 
         GetComponentsInChildren<Agent<AIActionData>>(_agents);
@@ -32,20 +40,26 @@ public class AIBrain : AgentBrain<AIActionData> {
         _agentAnimator.SetUp(agent);
 
         _navMovement = agent.GetComponent<NavMovement>();
-        
+
         states = new List<NormalAIState>();
 
         _actionData = agent.Find("AI").GetComponent<AIActionData>();
         agent.Find("AI").GetComponentsInChildren(states);
         states.ForEach(s => s.SetUp(agent));
     }
-    protected virtual void Update() {
-        _currentAIState.UpdateState();
-    }
-
-    public override void ChangeState(object state) {
+    public override void ChangeState(object state)
+    {
         _currentAIState.OnExitState();
         _currentAIState = state as NormalAIState;
         _currentAIState.OnEnterState();
     }
+
+    public virtual void CustomUpdate()
+    {
+        _currentAIState.UpdateState();
+    }
+
+    public void Add(IUpdatable updatable) => UpdateManager.Add(updatable);
+
+    public void Remove(IUpdatable updatable) => UpdateManager.Remove(updatable);
 }

@@ -1,3 +1,4 @@
+using CustomUpdateManager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +14,7 @@ public abstract class NormalAIState : MonoBehaviour, IState
     protected bool _isSetUp = false;
 
     public abstract void OnEnterState();
-
     public abstract void OnExitState();
-
     public virtual void UpdateState()
     {
         if (!_isSetUp) return;

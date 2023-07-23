@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Linq;
 using System;
-
+using UI_Toolkit;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
 
         CreatePoolManager(this.transform);
         CreateCameraController();
+        UT_MainUI.Instance.Generate();
+
         DontDestroyOnLoad(this);
 
         _targetPosList.posDatas.ForEach(p => p.SetPosDatas());
