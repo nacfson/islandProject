@@ -100,6 +100,12 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
+    public Item GetItemFromID(int uniqueID)
+    {
+        Item item = _itemDictionary[uniqueID];
+        if (item == null) return null;
+        return item;
+    }
 
     public bool IsFullInv()
     {
@@ -112,10 +118,11 @@ public class InventoryManager : MonoBehaviour
         return result;
     }
 
-    public void SetSlotList(ref List<InventorySlot> slotList)
+    public void SetSlotList(ref List<InventorySlot> slotList) => _slotList = slotList;
+    public void SetSlotItem(List<Item> itemList)
     {
-        _slotList = slotList;
-    }
 
+
+    }
     public void Generate(){}
 }

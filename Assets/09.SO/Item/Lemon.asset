@@ -15,5 +15,6 @@ MonoBehaviour:
   itemName: Lemon
   price: 1500
   sellPrice: 0
+  uniqueID: 2
   itemSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   maxCnt: 100
