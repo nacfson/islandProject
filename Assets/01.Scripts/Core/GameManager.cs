@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
         CreatePoolManager(this.transform);
         CreateCameraController();
         UT_MainUI.Instance.Generate();
+        SaveManager.Instance.Generate();
+        InventoryManager.Instance.Generate();
 
         DontDestroyOnLoad(this);
 

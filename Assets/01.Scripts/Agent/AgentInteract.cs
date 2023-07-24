@@ -2,55 +2,65 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AgentInteract : Agent<ActionData>{
+public class AgentInteract : Agent<ActionData>
+{
     [SerializeField] protected float _detectionRadius = 1f;
 
-    public override void SetUp(Transform agent){
+    public override void SetUp(Transform agent)
+    {
         base.SetUp(agent);
         _agentInput.OnInteractKeyPress += Interact;
     }
-    
-    public void Interact(){
-        if(!_brain.GetAD().CanInteract || _brain.GetAD().IsInteracting) return;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _detectionRadius,1 << LayerMask.NameToLayer("INTERACTABLE"));
+    public void Interact()
+    {
+        if (!_brain.GetAD().CanInteract || _brain.GetAD().IsInteracting) return;
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _detectionRadius, 1 << LayerMask.NameToLayer("INTERACTABLE"));
 
         float closestDistance = Mathf.Infinity;
         Collider closestCollider = null;
 
         // 가장 가까운 콜라이더 찾기
-        foreach (Collider collider in colliders){
+        foreach (Collider collider in colliders)
+        {
             // 플레이어 자신의 콜라이더는 제외
             if (collider.gameObject == this.gameObject) continue;
 
             float distance = Vector3.Distance(transform.position, collider.transform.position);
 
-            if (distance < closestDistance){
+            if (distance < closestDistance)
+            {
                 closestDistance = distance;
                 closestCollider = collider;
             }
         }
 
         // 가장 가까운 콜라이더 사용하기
-        if (closestCollider != null){
+        if (closestCollider != null)
+        {
             // 여기에서 가장 가까운 콜라이더에 대한 동작을 수행할 수 있습니다.
             Debug.Log("가장 가까운 콜라이더: " + closestCollider.name);
-            if(closestCollider.TryGetComponent<IInteractable>(out IInteractable i)){
+            if (closestCollider.TryGetComponent<IInteractable>(out IInteractable i))
+            {
                 _brain.Interactable = i;
                 _agentMovement.RotateToVector(closestCollider.transform.position);
                 i.Interact(_brain);
                 _brain.GetAD().IsInteracting = true;
             }
-            if(closestCollider.TryGetComponent<IActionable>(out IActionable a)) {
+            if (closestCollider.TryGetComponent<IActionable>(out IActionable a))
+            {
                 Debug.Log(a);
                 _brain.Actionable = a;
             }
         }
     }
 
-    
-    public void UnInteract(){
-        if(_brain.Interactable != null){
+
+    public void UnInteract()
+    {
+        if (_brain.Interactable != null)
+        {
             _brain.Interactable.UnInteract(_brain);
             _brain.Interactable = null;
             _brain.GetAD().IsInteracting = false;

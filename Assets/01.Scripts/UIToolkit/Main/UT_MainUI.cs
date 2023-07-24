@@ -124,20 +124,22 @@ namespace UI_Toolkit{
         }
         #region ShopUI
 
-        public void ShowShopUI(){
+        public void ShowShopUI(HashSet<Item> itemList)
+        {
             _shopUI.AddToClassList("active");
 
-            CreateItemUI();
+            CreateItemUI(itemList);
         }
 
-        private void CreateItemUI(){
+        private void CreateItemUI(HashSet<Item> itemList)
+        {
             _shopView.Clear();
             _slotDictionary.Clear();
-            List<InventorySlot> slotList = InventoryManager.Instance.SlotList;
+            InventoryManager.Instance.SlotList.ForEach(s => itemList.Add(s.GetItem()));
+            //List<InventorySlot> slotList = InventoryManager.Instance.SlotList;
 
-
-            foreach(InventorySlot slot in slotList){
-                Item item = slot.GetItem();
+            foreach(Item item in itemList)
+            {
                 if(item == null) continue;
 
                 VisualElement itemUXML = _itemUXML.Instantiate();
@@ -173,7 +175,7 @@ namespace UI_Toolkit{
             if(enoughMoney){
                 InventoryManager.Instance.AddItem(_selectedItem,1); // 아이템 추가
                 MoneyManager.Instance.AddMoney(-_selectedItem.price);  //돈 사용
-                CreateItemUI();
+                //CreateItemUI(); 아이템을 샀을 때 인벤토리 리스트랑 상점 리스트랑 같이 업데이트 해주어야 되는데 지금은 생략 ( 어차피 돈 없으면 못 사고 개수 부족하면 판매 안됨 )
                 return true;
             }
             return false;
@@ -185,7 +187,7 @@ namespace UI_Toolkit{
             bool enoughItem = InventoryManager.Instance.SubtractItem(_selectedItem,1); //아이템 감소
             if(enoughItem){
                 MoneyManager.Instance.AddMoney(_selectedItem.sellPrice); // 돈 추가
-                CreateItemUI();
+                //CreateItemUI();
                 return true;
             }
             return false;

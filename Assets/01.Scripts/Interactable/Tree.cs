@@ -7,7 +7,7 @@ using DG.Tweening;
 public class Tree : MonoBehaviour,IInteractable,IActionable{
     private int _shakeCount = 3;
     [SerializeField] private float _shakeTimer = 3f;
-    [SerializeField] private ItemListData _itemList;
+    [SerializeField] private ItemObjListData _itemList;
     private float _dropRadius = 1.5f;
 
     private bool _canDrop = true;

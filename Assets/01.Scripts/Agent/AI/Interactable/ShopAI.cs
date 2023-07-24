@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UI_Toolkit;
+using System.Linq;
+
 public class ShopAI : AIInteractable
 {
+    [SerializeField] private ItemListData _items;
     public override void Interact(AgentBrain<ActionData> brain)
     {
-        UT_MainUI.Instance.ShowShopUI();
+        UT_MainUI.Instance.ShowShopUI(_items.itemList.ToHashSet<Item>());
         AIBrain aiBrain = (AIBrain)_brain;
         aiBrain.GetAD().IsInteracting = true;
         //aiBrain.NavMovement.StopImmediately();
