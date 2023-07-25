@@ -44,15 +44,9 @@ public class SaveManager : MonoBehaviour
         {
             _instance = this;
         }
-        else
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        DontDestroyOnLoad(this.gameObject);
         _saveData = new SaveData();
 
-        _savePath = Path.Combine(Application.dataPath, "/SaveData.txt");
+        _savePath = Application.dataPath + "/SaveData.txt";
         if(!Directory.Exists(_savePath))
         {
             Directory.CreateDirectory(_savePath);
@@ -62,8 +56,7 @@ public class SaveManager : MonoBehaviour
     [ContextMenu("Save")]
     public void Save()
     {
-        string jsonData = JsonUtility.ToJson(_saveData, true);
-        File.WriteAllText(_savePath + _fileName, jsonData);
+
 
         int money = MoneyManager.Instance.Money;
         Vector3 playerPos = GameManager.Instance.PlayerBrain.transform.position;
@@ -79,6 +72,9 @@ public class SaveManager : MonoBehaviour
         }
 
         _saveData.SetDatas(money, playerPos, itemDictionary);
+
+        string jsonData = JsonUtility.ToJson(_saveData, true);
+        File.WriteAllText(_savePath + _fileName, jsonData);
     }
     [ContextMenu("Load")]
     public void Load()
@@ -90,20 +86,19 @@ public class SaveManager : MonoBehaviour
             string json = File.ReadAllText(_savePath + _fileName);
             _saveData = JsonUtility.FromJson<SaveData>(json);
 
-            Transform playerTrm = GameManager.Instance.PlayerBrain.transform;
-            playerTrm.position = _saveData.playerPos;
-            Debug.Log(playerTrm.position);
+            Vector3 pos = _saveData.playerPos;
+            GameManager.Instance.PlayerBrain.AgentMovement.SetPlayerPos(pos);
             Debug.Log(_saveData.playerPos);
 
             MoneyManager.Instance.SetMoney(_saveData.money);
 
-            List<Item> itemList = new List<Item>();
-            foreach(int id in _saveData.itemDictionary.Keys)
+            Dictionary<Item, int> itemDictionary = new Dictionary<Item, int>();
+            foreach(KeyValuePair<int,int> pair  in _saveData.itemDictionary)
             {
-                Item item = InventoryManager.Instance.GetItemFromID(id);
-                itemList.Add(item);
+                Item item = InventoryManager.Instance.GetItemFromID(pair.Key);
+                itemDictionary.Add(item,pair.Value);
             }
-            InventoryManager.Instance.SetSlotItem(itemList);
+            InventoryManager.Instance.SetSlotItem(itemDictionary);
         }
     }
     public void Generate(){}

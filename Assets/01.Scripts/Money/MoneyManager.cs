@@ -6,7 +6,17 @@ using TMPro;
 public class MoneyManager : MonoBehaviour
 {
     private static MoneyManager _instance;
-    public static MoneyManager Instance => _instance;
+    public static MoneyManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance= FindObjectOfType<MoneyManager>();    
+            }
+            return _instance;
+        }
+    }
 
     public const int MAX_MONEY = 1000000;
 
@@ -17,8 +27,10 @@ public class MoneyManager : MonoBehaviour
 
     void Awake()
     {
-        if (_instance == null) _instance = this;
-        //DontDestroyOnLoad(this.gameObject);
+        if (_instance == null)
+        {
+            _instance = this;
+        }
 
         _money = 3000;
         _moneyTxt = FindObjectOfType<TMP_Text>();
@@ -38,4 +50,6 @@ public class MoneyManager : MonoBehaviour
 
     public void SetMoney(int money) => this._money = money; 
     public bool CanUseMoney(int prize) => _money >= prize;
+
+    public void Generate(){}
 }

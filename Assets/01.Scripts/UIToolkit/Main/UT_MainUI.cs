@@ -6,8 +6,10 @@ using UnityEngine.UIElements;
 using DG.Tweening;
 using System;
 
-namespace UI_Toolkit{
-    public class UT_MainUI : MonoBehaviour {
+namespace UI_Toolkit
+{
+    public class UT_MainUI : MonoBehaviour
+    {
         private UIDocument _document;
 
         private VisualElement _root;
@@ -22,14 +24,14 @@ namespace UI_Toolkit{
         private VisualElement _shopUI;
         private ScrollView _shopView;
         private Item _selectedItem;
-        private Dictionary<VisualElement,Item> _slotDictionary = new Dictionary<VisualElement, Item>();
+        private Dictionary<VisualElement, Item> _slotDictionary = new Dictionary<VisualElement, Item>();
 
         private static UT_MainUI _instance;
         public static UT_MainUI Instance
         {
             get
             {
-                if(_instance == null )
+                if (_instance == null)
                 {
                     _instance = FindObjectOfType<UT_MainUI>();
                 }
@@ -37,8 +39,10 @@ namespace UI_Toolkit{
             }
         }
 
-        private void Awake() {
-            if(_instance == null) {
+        private void Awake()
+        {
+            if (_instance == null)
+            {
                 _instance = this;
             }
             else
@@ -49,7 +53,8 @@ namespace UI_Toolkit{
 
             DontDestroyOnLoad(this.gameObject);
         }
-        private void OnEnable() {
+        private void OnEnable()
+        {
             _document = GetComponent<UIDocument>();
 
             _root = _document.rootVisualElement;
@@ -62,11 +67,13 @@ namespace UI_Toolkit{
             Button buyBtn = _shopUI.Q<Button>("BuyBtn");
             Button sellBtn = _shopUI.Q<Button>("SellBtn");
 
-            buyBtn.RegisterCallback<ClickEvent>(e => {
+            buyBtn.RegisterCallback<ClickEvent>(e =>
+            {
                 BuyItem();
             });
 
-            sellBtn.RegisterCallback<ClickEvent>(e => {
+            sellBtn.RegisterCallback<ClickEvent>(e =>
+            {
                 SellItem();
             });
             _shopView = _shopUI.Q<ScrollView>("ShopView");
@@ -76,16 +83,18 @@ namespace UI_Toolkit{
             _infoUI = new InfoUI(_iu);
         }
 
-        private void Start() {
+        private void Start()
+        {
             List<InventorySlot> slotList = new List<InventorySlot>();
             int count = _inventoryUI.childCount;
-            for(int i = 0; i < count ; i++){
+            for (int i = 0; i < count; i++)
+            {
                 VisualElement ele = _inventoryUI.ElementAt(i);
 
                 VisualElement image = ele.Q<VisualElement>("ItemImage");
                 Label cnt = ele.Q<Label>("ItemCount");
-                
-                InventorySlot slot = new InventorySlot(image,cnt);
+
+                InventorySlot slot = new InventorySlot(image, cnt);
                 slot.UpdateUI();
                 slotList.Add(slot);
             }
@@ -97,12 +106,15 @@ namespace UI_Toolkit{
         }
 
         #region Inventory Logic
-        public void OpenInv(bool result){
-            if(result){
+        public void OpenInv(bool result)
+        {
+            if (result)
+            {
                 _inventoryUI.AddToClassList("active");
                 GameManager.Instance.PlayerBrain.ChangeState(StateType.UI);
             }
-            else{
+            else
+            {
                 _inventoryUI.RemoveFromClassList("active");
                 GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
             }
@@ -110,14 +122,17 @@ namespace UI_Toolkit{
 
 
 
-        public bool IsInvOpen(){
+        public bool IsInvOpen()
+        {
             return _inventoryUI.ClassListContains("active");
         }
         #endregion
-        
-        
-        public void StartTalk(TalkData talkData,string name){
-            _infoUI.SetUp(talkData,name, () => { 
+
+
+        public void StartTalk(TalkData talkData, string name)
+        {
+            _infoUI.SetUp(talkData, name, () =>
+            {
                 _infoUI.ShowText();
             });
             _infoUI.ShowText();
@@ -138,42 +153,46 @@ namespace UI_Toolkit{
             InventoryManager.Instance.SlotList.ForEach(s => itemList.Add(s.GetItem()));
             //List<InventorySlot> slotList = InventoryManager.Instance.SlotList;
 
-            foreach(Item item in itemList)
+            foreach (Item item in itemList)
             {
-                if(item == null) continue;
+                if (item == null) continue;
 
                 VisualElement itemUXML = _itemUXML.Instantiate();
 
                 VisualElement itemImage = itemUXML.Q<VisualElement>("ItemImage");
                 Label nameLabel = itemUXML.Q<Label>("NameLabel");
-                
+
                 Label priceLabel = itemUXML.Q<Label>("PriceLabel");
 
-                _slotDictionary.Add(itemUXML,item);
-                itemUXML.RegisterCallback<ClickEvent>(e => {
+                _slotDictionary.Add(itemUXML, item);
+                itemUXML.RegisterCallback<ClickEvent>(e =>
+                {
                     _selectedItem = _slotDictionary[itemUXML];
                     itemUXML.AddToClassList("select");
                     //Debug.LogError("SelectedItem");
                 });
 
-                Action<Sprite,string,int> SetUI = (image,name,price) => {
+                Action<Sprite, string, int> SetUI = (image, name, price) =>
+                {
                     itemImage.style.backgroundImage = image.texture;
                     nameLabel.text = name;
                     priceLabel.text = $"{price}BP";
                 };
 
-                SetUI(item.itemSprite,item.itemName,item.price);
+                SetUI(item.itemSprite, item.itemName, item.price);
 
                 _shopView.Add(itemUXML);
             }
         }
 
-        public bool BuyItem(){
-            if(_selectedItem == null) return false; 
+        public bool BuyItem()
+        {
+            if (_selectedItem == null) return false;
 
             bool enoughMoney = MoneyManager.Instance.CanUseMoney(_selectedItem.price);
-            if(enoughMoney){
-                InventoryManager.Instance.AddItem(_selectedItem,1); // 아이템 추가
+            if (enoughMoney)
+            {
+                InventoryManager.Instance.AddItem(_selectedItem, 1); // 아이템 추가
                 MoneyManager.Instance.AddMoney(-_selectedItem.price);  //돈 사용
                 //CreateItemUI(); 아이템을 샀을 때 인벤토리 리스트랑 상점 리스트랑 같이 업데이트 해주어야 되는데 지금은 생략 ( 어차피 돈 없으면 못 사고 개수 부족하면 판매 안됨 )
                 return true;
@@ -181,11 +200,13 @@ namespace UI_Toolkit{
             return false;
         }
 
-        public bool SellItem(){
-            if(_selectedItem == null) return false;
+        public bool SellItem()
+        {
+            if (_selectedItem == null) return false;
 
-            bool enoughItem = InventoryManager.Instance.SubtractItem(_selectedItem,1); //아이템 감소
-            if(enoughItem){
+            bool enoughItem = InventoryManager.Instance.SubtractItem(_selectedItem, 1); //아이템 감소
+            if (enoughItem)
+            {
                 MoneyManager.Instance.AddMoney(_selectedItem.sellPrice); // 돈 추가
                 //CreateItemUI();
                 return true;
@@ -194,7 +215,8 @@ namespace UI_Toolkit{
         }
         #endregion
 
-        public void UnShowAllUI(){
+        public void UnShowAllUI()
+        {
             _inventoryUI.RemoveFromClassList("active");
             _iu.RemoveFromClassList("active");
             _shopUI.RemoveFromClassList("active");
@@ -202,13 +224,14 @@ namespace UI_Toolkit{
         /// <summary>
         /// 그저 싱글톤 생성을 위해서 만들어 둔 함수.
         /// </summary>
-        public void Generate(){}
-    }   
+        public void Generate() { }
+    }
 
 
 
-#region TalkClass(InfoUI)
-    public class InfoUI {
+    #region TalkClass(InfoUI)
+    public class InfoUI
+    {
         //������ InfoUI�� VisualElement
         private VisualElement _infoUI;
         //InfoUI�� Label(text)
@@ -224,9 +247,10 @@ namespace UI_Toolkit{
 
         private int _returnIdx;
 
-        public InfoUI(VisualElement infoUI) {
+        public InfoUI(VisualElement infoUI)
+        {
             this._infoUI = infoUI;
-            
+
 
             _contentLabel = infoUI.Q<Label>("ContentLabel");
             _nameLabel = infoUI.Q<VisualElement>("NameUI").Q<Label>("NameLabel");
@@ -234,7 +258,8 @@ namespace UI_Toolkit{
             RegisterAction();
         }
 
-        public void SetUp(TalkData talkData,string name, Action action) {
+        public void SetUp(TalkData talkData, string name, Action action)
+        {
             _callback = action;
             this._talkData = talkData;
 
@@ -243,20 +268,25 @@ namespace UI_Toolkit{
         }
 
         //���� �ִϸ��̼��� �������̸� ��ŵ, �������� �ƴϸ� ���� ��ȭ�� �̵�
-        public void ShowText() {
+        public void ShowText()
+        {
             //Debug.LogError("ShowText");
-            if (_isAnimating) {
+            if (_isAnimating)
+            {
                 //_contentLabel.text = _contentLabel.tooltip;
                 UI_Toolkit.UT_MainUI.Instance.StopAllCoroutines();
                 _contentLabel.text = _targetText;
                 _isAnimating = false;
             }
-            else {
-                if (_talkData.CanGetTalk(_returnIdx)) {
-                    UI_Toolkit.UT_MainUI.Instance.StartCoroutine(AnimateTextCor(_talkData.GetTalk(_returnIdx),0.5f));
+            else
+            {
+                if (_talkData.CanGetTalk(_returnIdx))
+                {
+                    UI_Toolkit.UT_MainUI.Instance.StartCoroutine(AnimateTextCor(_talkData.GetTalk(_returnIdx), 0.5f));
                     _returnIdx--;
                 }
-                else {
+                else
+                {
                     _infoUI.RemoveFromClassList("active");
                     GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
                     _returnIdx = _talkData.talkList.Count - 1;
@@ -267,7 +297,8 @@ namespace UI_Toolkit{
 
         //startDelay => Transition Animation�� ���������� ��ٷ��ִ� �ð�
         //typingDelay => ���ڰ� �ԷµǴ� �ӵ�
-        public IEnumerator AnimateTextCor(string text, float startDelay, float typingDelay = 0.05f) {
+        public IEnumerator AnimateTextCor(string text, float startDelay, float typingDelay = 0.05f)
+        {
             _contentLabel.text = string.Empty;
             //_contentLabel.tooltip = text;
             _targetText = text;
@@ -279,12 +310,14 @@ namespace UI_Toolkit{
 
             yield return new WaitForSeconds(startDelay);
             int i = 0;
-            while (_contentLabel.text.Length != text.Length) {
+            while (_contentLabel.text.Length != text.Length)
+            {
                 if (!_isAnimating) yield break;
 
                 float timer = 0f;
 
-                while (timer < typingDelay) {
+                while (timer < typingDelay)
+                {
                     timer += Time.deltaTime;
                     yield return null;
                 }
@@ -297,7 +330,8 @@ namespace UI_Toolkit{
         }
 
         //���ʿ� �׼� ��ü�� VisualElement Ŭ������ �Ѱ���
-        public void RegisterAction() {
+        public void RegisterAction()
+        {
             //Callback = action;
             _infoUI.RegisterCallback<PointerDownEvent>(e => _callback?.Invoke());
         }

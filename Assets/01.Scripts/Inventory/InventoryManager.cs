@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -28,13 +30,6 @@ public class InventoryManager : MonoBehaviour
         {
             _instance = this;
         }
-        else
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        DontDestroyOnLoad(this.gameObject);
-
         _itemDictionary = new Dictionary<int, Item>();
         _itemListSO.itemList.ForEach(i => _itemDictionary.Add(i.uniqueID, i)); //ItemDictionary에 고유 id에 맞는 아이템 추가
     }
@@ -119,10 +114,15 @@ public class InventoryManager : MonoBehaviour
     }
 
     public void SetSlotList(ref List<InventorySlot> slotList) => _slotList = slotList;
-    public void SetSlotItem(List<Item> itemList)
+    public void SetSlotItem(Dictionary<Item,int> itemDictionary)
     {
-
-
+        for(int i =0; i < itemDictionary.Count; i++)
+        {
+            KeyValuePair<Item,int> pair = itemDictionary.ElementAt(i);
+            Debug.Log(String.Format(pair.ToString()));
+            _slotList[i].SetItem(pair.Key, pair.Value);
+        }
+        UpdateInventory();
     }
     public void Generate(){}
 }

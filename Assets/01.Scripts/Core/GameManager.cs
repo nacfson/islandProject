@@ -15,18 +15,18 @@ public class GameManager : MonoBehaviour
     private CameraController _camController;
     public CameraController CamController => _camController;
 
-    public AgentBrain<ActionData> PlayerBrain
+    public PlayerBrain PlayerBrain
     {
         get
         {
             if (_playerBrain == null)
             {
-                _playerBrain = GameObject.FindGameObjectWithTag("Player").GetComponent<AgentBrain<ActionData>>();
+                _playerBrain = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBrain>();
             }
             return _playerBrain;
         }
     }
-    private AgentBrain<ActionData> _playerBrain;
+    private PlayerBrain _playerBrain;
 
 
 
@@ -54,6 +54,10 @@ public class GameManager : MonoBehaviour
         _targetPosList.posDatas.ForEach(p => p.SetPosDatas());
     }
 
+    public void OnDestroy()
+    {
+        Debug.Log("Destroy GameManager");
+    }
     private void CreateCameraController()
     {
         _camController = new CameraController(this.transform);
