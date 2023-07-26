@@ -4,7 +4,18 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using System.IO;
 using System.Text;
-
+[System.Serializable]
+public class CustomKeyValue<TKey,TValue>
+{
+    public TKey key;
+    public TValue value;
+    public CustomKeyValue(TKey key, TValue value)
+    {
+        this.key = key;
+        this.value = value;
+    }
+    public CustomKeyValue(){}
+}
 [System.Serializable]
 public class SaveData
 {
@@ -12,12 +23,13 @@ public class SaveData
     public Vector3 playerPos;
 
     //Key => 아이템 고유 id, Value => 아이템 개수
-    public Dictionary<int, int> itemDictionary = new Dictionary<int, int>(); 
-    public void SetDatas(int money, Vector3 playerPos, Dictionary<int, int> itemDictionary)
+    //public Dictionary<int, int> itemDictionary = new Dictionary<int, int>(); 
+    public List<CustomKeyValue<int, int>> customKeyValues = new List<CustomKeyValue<int, int>>();
+    public void SetDatas(int money, Vector3 playerPos, List<CustomKeyValue<int, int>> customKeyValues)
     {
         this.money = money;
         this.playerPos = playerPos;
-        this.itemDictionary = itemDictionary;
+        this.customKeyValues = customKeyValues;
     }
 }
 public class SaveManager : MonoBehaviour
@@ -56,22 +68,23 @@ public class SaveManager : MonoBehaviour
     [ContextMenu("Save")]
     public void Save()
     {
-
-
         int money = MoneyManager.Instance.Money;
         Vector3 playerPos = GameManager.Instance.PlayerBrain.transform.position;
         Debug.Log(string.Format("PlayerPos: {0}",playerPos.ToString()));
-        Dictionary<int, int> itemDictionary = new Dictionary<int, int>();
+        var itemKeyValues = new List<CustomKeyValue<int, int>>();
         /* 슬롯 리스트에서 아이템 아이디, 얼마나 있는지 가져와서 Dictionary에 넣어줌*/
         foreach(InventorySlot slot in InventoryManager.Instance.SlotList)
         {
             Item item = slot.GetItem();
             if (item == null) continue;
             int id = item.uniqueID;
-            itemDictionary.Add(id, slot.GetAmount());
+            Debug.Log(string.Format("Item ID: {0}", id));
+
+            var keyValue = new CustomKeyValue<int, int>(id,slot.GetAmount());
+            itemKeyValues.Add(keyValue);
         }
 
-        _saveData.SetDatas(money, playerPos, itemDictionary);
+        _saveData.SetDatas(money, playerPos, itemKeyValues);
 
         string jsonData = JsonUtility.ToJson(_saveData, true);
         File.WriteAllText(_savePath + _fileName, jsonData);
@@ -92,13 +105,15 @@ public class SaveManager : MonoBehaviour
 
             MoneyManager.Instance.SetMoney(_saveData.money);
 
-            Dictionary<Item, int> itemDictionary = new Dictionary<Item, int>();
-            foreach(KeyValuePair<int,int> pair  in _saveData.itemDictionary)
+            var itemIntKeyValues = new List<CustomKeyValue<Item, int>>();
+            foreach (CustomKeyValue<int, int> pair in _saveData.customKeyValues)
             {
-                Item item = InventoryManager.Instance.GetItemFromID(pair.Key);
-                itemDictionary.Add(item,pair.Value);
+                Item item = InventoryManager.Instance.GetItemFromID(pair.key);
+                var keyValue = new CustomKeyValue<Item, int>(item,pair.value);
+                itemIntKeyValues.Add(keyValue);
             }
-            InventoryManager.Instance.SetSlotItem(itemDictionary);
+            InventoryManager.Instance.SetSlotItem(itemIntKeyValues);
+
         }
     }
     public void Generate(){}

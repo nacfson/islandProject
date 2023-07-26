@@ -114,13 +114,13 @@ public class InventoryManager : MonoBehaviour
     }
 
     public void SetSlotList(ref List<InventorySlot> slotList) => _slotList = slotList;
-    public void SetSlotItem(Dictionary<Item,int> itemDictionary)
+    public void SetSlotItem(List<CustomKeyValue<Item, int>> itemKeyValues)
     {
-        for(int i =0; i < itemDictionary.Count; i++)
+        for(int i =0; i < itemKeyValues.Count; i++)
         {
-            KeyValuePair<Item,int> pair = itemDictionary.ElementAt(i);
+            CustomKeyValue<Item,int> pair = itemKeyValues.ElementAt(i);
             Debug.Log(String.Format(pair.ToString()));
-            _slotList[i].SetItem(pair.Key, pair.Value);
+            _slotList[i].SetItem(pair.key, pair.value);
         }
         UpdateInventory();
     }
