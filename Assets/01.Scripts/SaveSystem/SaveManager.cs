@@ -23,13 +23,16 @@ public class SaveData
     public Vector3 playerPos;
 
     //Key => 아이템 고유 id, Value => 아이템 개수
-    //public Dictionary<int, int> itemDictionary = new Dictionary<int, int>(); 
-    public List<CustomKeyValue<int, int>> customKeyValues = new List<CustomKeyValue<int, int>>();
-    public void SetDatas(int money, Vector3 playerPos, List<CustomKeyValue<int, int>> customKeyValues)
+    public List<CustomKeyValue<int, int>> itemKeyValues = new List<CustomKeyValue<int, int>>();
+    public CropSaveData[] cropDatas;
+    public void SetDatas(int money, Vector3 playerPos, List<CustomKeyValue<int, int>> itemKeyValues,CropSaveData[] cropDatas)
     {
         this.money = money;
         this.playerPos = playerPos;
-        this.customKeyValues = customKeyValues;
+        this.itemKeyValues = itemKeyValues;
+
+        this.cropDatas = new CropSaveData[cropDatas.Length];
+        this.cropDatas = cropDatas;
     }
 }
 public class SaveManager : MonoBehaviour
@@ -70,7 +73,7 @@ public class SaveManager : MonoBehaviour
     {
         int money = MoneyManager.Instance.Money;
         Vector3 playerPos = GameManager.Instance.PlayerBrain.transform.position;
-        Debug.Log(string.Format("PlayerPos: {0}",playerPos.ToString()));
+
         var itemKeyValues = new List<CustomKeyValue<int, int>>();
         /* 슬롯 리스트에서 아이템 아이디, 얼마나 있는지 가져와서 Dictionary에 넣어줌*/
         foreach(InventorySlot slot in InventoryManager.Instance.SlotList)
@@ -84,7 +87,7 @@ public class SaveManager : MonoBehaviour
             itemKeyValues.Add(keyValue);
         }
 
-        _saveData.SetDatas(money, playerPos, itemKeyValues);
+        _saveData.SetDatas(money, playerPos, itemKeyValues,FarmManager.Instance.CropDatas);
 
         string jsonData = JsonUtility.ToJson(_saveData, true);
         File.WriteAllText(_savePath + _fileName, jsonData);
@@ -106,7 +109,7 @@ public class SaveManager : MonoBehaviour
             MoneyManager.Instance.SetMoney(_saveData.money);
 
             var itemIntKeyValues = new List<CustomKeyValue<Item, int>>();
-            foreach (CustomKeyValue<int, int> pair in _saveData.customKeyValues)
+            foreach (CustomKeyValue<int, int> pair in _saveData.itemKeyValues)
             {
                 Item item = InventoryManager.Instance.GetItemFromID(pair.key);
                 var keyValue = new CustomKeyValue<Item, int>(item,pair.value);

@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
         UT_MainUI.Instance.Generate();
         SaveManager.Instance.Generate();
         InventoryManager.Instance.Generate();
+        FarmManager.Instance.Generate();
 
         DontDestroyOnLoad(this);
 

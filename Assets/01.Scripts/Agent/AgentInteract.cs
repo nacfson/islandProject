@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class AgentInteract : Agent<ActionData>
 {
@@ -36,23 +37,22 @@ public class AgentInteract : Agent<ActionData>
             }
         }
 
+        Action<IInteractable> action = (i) =>
+        {
+            _brain.Interactable = i;
+            _agentMovement.RotateToVector(closestCollider.transform.position);
+            i.Interact(_brain);
+            _brain.GetAD().IsInteracting = true;
+        };
         // 가장 가까운 콜라이더 사용하기
         if (closestCollider != null)
         {
             // 여기에서 가장 가까운 콜라이더에 대한 동작을 수행할 수 있습니다.
             Debug.Log("가장 가까운 콜라이더: " + closestCollider.name);
-            if (closestCollider.TryGetComponent<IInteractable>(out IInteractable i))
-            {
-                _brain.Interactable = i;
-                _agentMovement.RotateToVector(closestCollider.transform.position);
-                i.Interact(_brain);
-                _brain.GetAD().IsInteracting = true;
-            }
-            if (closestCollider.TryGetComponent<IActionable>(out IActionable a))
-            {
-                Debug.Log(a);
-                _brain.Actionable = a;
-            }
+            if (closestCollider.TryGetComponent<IInteractable>(out IInteractable i)) action(i);
+            else if (closestCollider.transform.parent.TryGetComponent<IInteractable>(out IInteractable ii)) action(ii);
+
+            if (closestCollider.TryGetComponent<IActionable>(out IActionable a)) _brain.Actionable = a;
         }
     }
 
