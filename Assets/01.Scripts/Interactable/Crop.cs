@@ -71,8 +71,17 @@ public class Crop : MonoBehaviour, IInteractable
         for(int i =0; i< _meshRenderers.Length; i++)
         {
             //ÀÎµ¦½º ¿À·ù try catch plz
-            _meshFilters[i].mesh = _cropSO.meshs[index];
-            _meshRenderers[i].material = _cropSO.mat;
+            try
+            {
+                _meshFilters[i].mesh = _cropSO.meshs[index];
+                _meshRenderers[i].material = _cropSO.mat;
+            }
+            catch
+            {
+                _meshFilters[i].mesh = _cropSO.meshs[0];
+                _meshRenderers[i].material = _cropSO.mat;
+            }
+
         }
     }
 }
