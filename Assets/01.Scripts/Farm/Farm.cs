@@ -12,9 +12,11 @@ public class Farm : MonoBehaviour
 
     private List<Crop> _cropList = new List<Crop>();
     public List<Crop> CropList => _cropList;
-    private void Awake()
+
+    public void SetUp()
     {
         _collider = GetComponent<Collider>();
+        
     }
     public bool CanPlantCrop(Vector3 pos) => Vector3.Distance(transform.position,pos) < _canPlantDistance;
 

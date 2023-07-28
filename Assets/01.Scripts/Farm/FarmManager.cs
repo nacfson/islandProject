@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CustomUpdateManager;
 
-public class FarmManager : MonoBehaviour
+public class FarmManager : MonoBehaviour,IUpdatable
 {
     private static FarmManager _instance;
     public static FarmManager Instance
@@ -36,7 +36,10 @@ public class FarmManager : MonoBehaviour
     }
 
     private float _timer = 0f;
-    private float _targetTime = 10f;
+    [SerializeField] private float _targetTime = 10f;
+
+
+
     private void Awake()
     {
         if (_instance == null)
@@ -67,5 +70,23 @@ public class FarmManager : MonoBehaviour
             _farmList.Add(farm);
         }
     }
+    #region UpdateSystem
+    public void CustomUpdate()
+    {
+        _timer += Time.deltaTime;
+        if (_timer > _targetTime)
+        {
+            //현재는 특정시간마다 모든 작물들을 업그레이드 시켜주는데
+            //나중에는 작물마다 다른시간들을 적용하면 좋을 것 같다.
+            Debug.Log("UpgradeLevel");
+            _cropList.ForEach(c => c.UpgradeLevel(1));
+            _timer = 0f;
+        }
+    }
+    private void OnEnable() => Add(this);
+    private void OnDisable() => Remove(this);
+    public void Add(IUpdatable updatable) => UpdateManager.Add(updatable);
+    public void Remove(IUpdatable updatable) => UpdateManager.Remove(updatable);
+    #endregion
 }
 

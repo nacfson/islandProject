@@ -17,7 +17,7 @@ public class CropSaveData
     }
 }
 
-public class Crop : MonoBehaviour, IInteractable,IUpdatable
+public class Crop : MonoBehaviour, IInteractable
 {
     [SerializeField] private CropData _cropSO;
     private CropSaveData _cropSaveData;
@@ -30,10 +30,6 @@ public class Crop : MonoBehaviour, IInteractable,IUpdatable
     private MeshFilter[] _meshFilters;
 
     private int _currentLevel = 0;
-
-    private float _timer = 0f;
-    private float _targetTime = 10f;
-
     private void Awake()
     {
         _meshRenderers = GetComponentsInChildren<MeshRenderer>();
@@ -43,23 +39,6 @@ public class Crop : MonoBehaviour, IInteractable,IUpdatable
 
         _cropSaveData = new CropSaveData(transform.position,_currentLevel,_cropSO.uniqueID); 
     }
-
-    #region UpdateSystem
-    public void CustomUpdate()
-    {
-        _timer += Time.deltaTime;
-        if (_timer > _targetTime)
-        {
-            Debug.Log("UpgradeLevel");
-            UpgradeLevel(1);
-            _timer = 0f;
-        }
-    }
-    private void OnEnable() => Add(this);
-    private void OnDisable() => Remove(this);
-    public void Add(IUpdatable updatable) => UpdateManager.Add(updatable);
-    public void Remove(IUpdatable updatable) => UpdateManager.Remove(updatable);
-    #endregion
     public void Interact(AgentBrain<ActionData> brain)
     {
         Debug.Log("Interact");
@@ -84,7 +63,7 @@ public class Crop : MonoBehaviour, IInteractable,IUpdatable
         ChangeCropState(_currentLevel);
         InventoryManager.Instance.AddItem(_cropSO,Random.Range(1,3));
     }
-    private void UpgradeLevel(int plus)
+    public void UpgradeLevel(int plus)
     {
         if (_currentLevel >= _cropSO.maxLevel) return;
 
