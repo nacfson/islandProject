@@ -87,7 +87,7 @@ public class SaveManager : MonoBehaviour
             itemKeyValues.Add(keyValue);
         }
 
-        _saveData.SetDatas(money, playerPos, itemKeyValues,FarmManager.Instance.CropDatas);
+        //_saveData.SetDatas(money, playerPos, itemKeyValues,FarmManager.Instance.CropDatas);
 
         string jsonData = JsonUtility.ToJson(_saveData, true);
         File.WriteAllText(_savePath + _fileName, jsonData);

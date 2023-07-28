@@ -110,4 +110,9 @@ public class Crop : MonoBehaviour, IInteractable,IUpdatable
 
         }
     }
+
+    public static explicit operator Crop(PoolableMono v)
+    {
+        throw new System.NotImplementedException();
+    }
 }

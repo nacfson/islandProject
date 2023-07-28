@@ -19,15 +19,15 @@ public class FarmManager : MonoBehaviour
     }
     public void Generate() { }
 
-    private Transform _cropParentTrm;
+    private Transform _farmParentTrm;
     private List<Farm> _farmList = new List<Farm>();
+    private List<Crop> _cropList = new List<Crop>();
     public CropSaveData[] CropDatas
     {
         get
         {
             CropSaveData[] cropDatas = new CropSaveData[_cropList.Count];
-
-            for(int i =0; i < cropDatas.Length; i++)
+            for (int i = 0; i < cropDatas.Length; i++)
             {
                 cropDatas[i] = _cropList[i].CropSaveData;
             }
@@ -43,25 +43,29 @@ public class FarmManager : MonoBehaviour
         {
             _instance = this;
         }
-        _cropParentTrm = transform.Find("FarmPos");
-        _cropParentTrm.GetComponentsInChildren<Farm>(_farmList);
+        _farmParentTrm = transform.Find("PosData/FarmPos");
+        _farmParentTrm.GetComponentsInChildren(_farmList);
     }
-
-    //스크립트를 만들어서 그 위치에 스크립트가 존재하는지 확인후 bool 값 리턴
     //bool이 true 상태이면 식물을 심음
-    public bool CanPlantCrops(Vector3 pos)
+    public bool CanPlantCrops(Vector3 pos,int itemID)
     {
         foreach(Farm farm in _farmList)
         {
-            bool result = farm.CanPlanCrop(pos);
+            bool result = farm.CanPlantCrop(pos);
             if(result)
             {
-                //일단 position만 넘겨줌 
-                //나중에 식물 데이터도 넘겨줘서 식물을 알아서 심도록 바꾸어야 함
-                farm.AddCrop(pos);
+                farm.AddCrop(pos,itemID);
+                return true;
             }
         }
-        return true;
+        return false;
+    }
+    public void AddFarm(Farm farm)
+    {
+        if(!_farmList.Exists(x => x == farm))
+        {
+            _farmList.Add(farm);
+        }
     }
 }
 

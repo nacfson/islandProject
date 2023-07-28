@@ -23,4 +23,5 @@ MonoBehaviour:
   - {fileID: 3015700756381422355, guid: 51ac12e0b0c69c041a1f0b95d62e1239, type: 3}
   mat: {fileID: 2100000, guid: 6cab32ef94998564aa45688ee5cb31b8, type: 2}
   maxLevel: 1
+  sizeLevel: 3
   time: 10
