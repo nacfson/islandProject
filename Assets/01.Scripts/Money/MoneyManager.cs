@@ -17,14 +17,9 @@ public class MoneyManager : MonoBehaviour
             return _instance;
         }
     }
-
-    public const int MAX_MONEY = 1000000;
-
+    private const int MAX_MONEY = 1000000;
     private int _money;
     public int Money => _money;
-
-    private TMP_Text _moneyTxt;
-
     void Awake()
     {
         if (_instance == null)
@@ -33,23 +28,13 @@ public class MoneyManager : MonoBehaviour
         }
 
         _money = 3000;
-        _moneyTxt = FindObjectOfType<TMP_Text>();
     }
-
-    private void Update()
-    {
-        _moneyTxt.SetText(_money.ToString());
-    }
-
     public void AddMoney(int plus)
     {
         _money += plus;
         _money = Mathf.Clamp(_money, 0, MAX_MONEY);
-        Debug.Log($"Money: {_money}");
     }
-
     public void SetMoney(int money) => this._money = money; 
     public bool CanUseMoney(int prize) => _money >= prize;
-
     public void Generate(){}
 }

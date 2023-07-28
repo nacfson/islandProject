@@ -1,3 +1,4 @@
+using CustomUpdateManager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class CropSaveData
     }
 }
 
-public class Crop : MonoBehaviour, IInteractable
+public class Crop : MonoBehaviour, IInteractable,IUpdatable
 {
     [SerializeField] private CropData _cropSO;
     private CropSaveData _cropSaveData;
@@ -30,6 +31,9 @@ public class Crop : MonoBehaviour, IInteractable
 
     private int _currentLevel = 0;
 
+    private float _timer = 0f;
+    private float _targetTime = 10f;
+
     private void Awake()
     {
         _meshRenderers = GetComponentsInChildren<MeshRenderer>();
@@ -39,28 +43,51 @@ public class Crop : MonoBehaviour, IInteractable
 
         _cropSaveData = new CropSaveData(transform.position,_currentLevel,_cropSO.uniqueID); 
     }
+
+    #region UpdateSystem
+    public void CustomUpdate()
+    {
+        _timer += Time.deltaTime;
+        if (_timer > _targetTime)
+        {
+            Debug.Log("UpgradeLevel");
+            UpgradeLevel(1);
+            _timer = 0f;
+        }
+    }
+    private void OnEnable() => Add(this);
+    private void OnDisable() => Remove(this);
+    public void Add(IUpdatable updatable) => UpdateManager.Add(updatable);
+    public void Remove(IUpdatable updatable) => UpdateManager.Remove(updatable);
+    #endregion
     public void Interact(AgentBrain<ActionData> brain)
     {
         Debug.Log("Interact");
         if(_currentLevel == _cropSO.maxLevel)
         {
-            DropItem();
+            PlayerBrain pb = (PlayerBrain)brain;
+            pb.ChangeState(StateType.Pick);
+            pb.AgentAnimator.OnPickAnimationEndTrigger += DropItem;
             return;
         }
         return;
     }
     public void UnInteract(AgentBrain<ActionData> brain)
     {
-
+        PlayerBrain pb = (PlayerBrain)brain;
+        pb.AgentAnimator.OnPickAnimationEndTrigger -= DropItem;
     }
-    public void DropItem()
+    private void DropItem(AgentBrain<ActionData> brain)
     {
+        brain.ChangeState(StateType.Idle);
         _currentLevel = 0;
         ChangeCropState(_currentLevel);
         InventoryManager.Instance.AddItem(_cropSO,Random.Range(1,3));
     }
-    public void UpgradeLevel(int plus)
+    private void UpgradeLevel(int plus)
     {
+        if (_currentLevel >= _cropSO.maxLevel) return;
+
         _currentLevel += plus;
         _currentLevel = Mathf.Clamp(_currentLevel, 0, _cropSO.maxLevel);
         ChangeCropState(_currentLevel);
@@ -70,7 +97,6 @@ public class Crop : MonoBehaviour, IInteractable
     {
         for(int i =0; i< _meshRenderers.Length; i++)
         {
-            //ÀÎµ¦½º ¿À·ù try catch plz
             try
             {
                 _meshFilters[i].mesh = _cropSO.meshs[index];

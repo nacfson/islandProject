@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CustomUpdateManager;
 
-public class FarmManager : MonoBehaviour, IUpdatable
+public class FarmManager : MonoBehaviour
 {
     private static FarmManager _instance;
     public static FarmManager Instance
@@ -17,8 +17,10 @@ public class FarmManager : MonoBehaviour, IUpdatable
             return _instance;
         }
     }
+    public void Generate() { }
+
     private Transform _cropParentTrm;
-    private List<Crop> _cropList = new List<Crop>();
+    private List<Farm> _farmList = new List<Farm>();
     public CropSaveData[] CropDatas
     {
         get
@@ -41,25 +43,25 @@ public class FarmManager : MonoBehaviour, IUpdatable
         {
             _instance = this;
         }
-
-        _cropParentTrm = transform.Find("Map/Crops");
-        _cropParentTrm.GetComponentsInChildren<Crop>(_cropList);
+        _cropParentTrm = transform.Find("FarmPos");
+        _cropParentTrm.GetComponentsInChildren<Farm>(_farmList);
     }
-    private void OnEnable() => Add(this);
-    private void OnDisable() => Remove(this);
-    public void Generate(){}
 
-    public void CustomUpdate()
+    //스크립트를 만들어서 그 위치에 스크립트가 존재하는지 확인후 bool 값 리턴
+    //bool이 true 상태이면 식물을 심음
+    public bool CanPlantCrops(Vector3 pos)
     {
-        _timer += Time.deltaTime;
-        if(_timer > _targetTime)
+        foreach(Farm farm in _farmList)
         {
-            _cropList.ForEach(c => c.UpgradeLevel(1));
-            _timer = 0f;
+            bool result = farm.CanPlanCrop(pos);
+            if(result)
+            {
+                //일단 position만 넘겨줌 
+                //나중에 식물 데이터도 넘겨줘서 식물을 알아서 심도록 바꾸어야 함
+                farm.AddCrop(pos);
+            }
         }
+        return true;
     }
-
-    public void Add(IUpdatable updatable) => UpdateManager.Add(updatable);
-    public void Remove(IUpdatable updatable) => UpdateManager.Remove(updatable);
 }
 

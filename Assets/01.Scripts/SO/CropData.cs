@@ -9,6 +9,8 @@ public class CropData : Item
     public Material mat;
 
     public int maxLevel;
+    public int sizeLevel;
+
     [Tooltip("It's about minute")]
     public int time;
 }
