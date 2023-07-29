@@ -212,11 +212,14 @@
     flex-shrink: 0;
     flex-grow: 1;
     position: absolute;
-    width: 361px;
-    height: 437px;
+    width: 15%;
+    height: 32%;
     background-color: rgb(0, 0, 0);
 }
 
 .selectUI.active {
     scale: 1 1;
+}
+
+.selectUI > .button {
 }
