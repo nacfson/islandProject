@@ -124,6 +124,10 @@
             <ui:Button text="Buy" display-tooltip-when-elided="true" name="BuyBtn" class="button" />
             <ui:Button text="Sell" display-tooltip-when-elided="true" name="SellBtn" class="button" style="right: 20%; background-color: rgb(255, 147, 131);" />
         </ui:VisualElement>
-        <ui:VisualElement name="SelectUI" class="selectUI active" />
+        <ui:VisualElement name="SelectUI" class="selectUI active">
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="FirstBtn" class="button" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="SecondBtn" class="button" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="ThirdBtn" class="button" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -215,6 +215,11 @@
     width: 15%;
     height: 32%;
     background-color: rgb(0, 0, 0);
+    border-top-left-radius: 39px;
+    border-bottom-left-radius: 39px;
+    border-top-right-radius: 39px;
+    border-bottom-right-radius: 39px;
+    padding-top: 34px;
 }
 
 .selectUI.active {
@@ -222,4 +227,17 @@
 }
 
 .selectUI > .button {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: rgb(220, 255, 0);
+    -unity-font-definition: url('project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&guid=68bf536b04e874c4d859fa5ed5b46fe1&type=2#Asia신디나루M SDF 1');
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    font-size: 47px;
+    margin-left: 11px;
+    margin-right: 11px;
+    margin-top: 11px;
+    margin-bottom: 11px;
 }
