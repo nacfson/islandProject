@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-
+using UI_Toolkit;
 public class InventorySlot
 {
     private Inventory _inventory;
@@ -12,6 +12,7 @@ public class InventorySlot
     {
         this._image = image;
         this._count = count;
+        _image.RegisterCallback<ClickEvent>(e => UT_MainUI.Instance.ActiveSelectUI());
     }
     public void UpdateUI()
     {
@@ -32,7 +33,6 @@ public class InventorySlot
         //지금 용량이 item의 최대 칸을 넘었는지
         return _inventory.amount >= _inventory.item.maxCnt;
     }
-
     public Item GetItem()
     {
         if (_inventory == null) return null;

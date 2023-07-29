@@ -58,5 +58,6 @@ public class Farm : MonoBehaviour
 
         Crop crop = (Crop)PoolManager.Instance.Pop(cropData.itemName);
         crop.transform.SetParent(GameManager.Instance.transform);
+        crop.transform.position = closestVec;
     }
 }

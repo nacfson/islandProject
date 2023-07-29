@@ -19,6 +19,7 @@ namespace UI_Toolkit
         private VisualElement _iu;
         private VisualElement _inventoryUI;
         private VisualElement _fadeUI;
+        private VisualElement _selectUI;
 
         [Header("Shop")]
         private VisualElement _shopUI;
@@ -63,19 +64,14 @@ namespace UI_Toolkit
             _inventoryUI = _root.Q<VisualElement>("InventoryUI");
             //_fadeUI = _root.Q<VisualElement>("FadeUI");
             _shopUI = _root.Q<VisualElement>("ShopUI");
+            _selectUI = _root.Q<VisualElement>("SelectUI");
 
             Button buyBtn = _shopUI.Q<Button>("BuyBtn");
             Button sellBtn = _shopUI.Q<Button>("SellBtn");
 
-            buyBtn.RegisterCallback<ClickEvent>(e =>
-            {
-                BuyItem();
-            });
+            buyBtn.RegisterCallback<ClickEvent>(e => BuyItem());
+            sellBtn.RegisterCallback<ClickEvent>(e => SellItem());
 
-            sellBtn.RegisterCallback<ClickEvent>(e =>
-            {
-                SellItem();
-            });
             _shopView = _shopUI.Q<ScrollView>("ShopView");
 
             _inventoryUI.RemoveFromClassList("active");
@@ -104,6 +100,25 @@ namespace UI_Toolkit
 
             //_fadeUI.transform.scale = Vector3.zero;
         }
+        public void ActiveSelectUI()
+        {
+            Vector2 mousePos = Input.mousePosition;
+            Vector2 localMousePos = _root.WorldToLocal(mousePos);
+            Debug.Log(localMousePos);
+
+            var style = _selectUI.resolvedStyle;
+
+            _selectUI.style.left = localMousePos.x;
+            _selectUI.style.bottom = localMousePos.y - style.height;
+            _selectUI.AddToClassList("active");
+        }
+        public void UnActiveSelectUI()
+        {
+            _selectUI.RemoveFromClassList("active");
+        }
+
+
+
 
         #region Inventory Logic
         public void OpenInv(bool result)
@@ -119,8 +134,6 @@ namespace UI_Toolkit
                 GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
             }
         }
-
-
 
         public bool IsInvOpen()
         {
@@ -151,7 +164,6 @@ namespace UI_Toolkit
             _shopView.Clear();
             _slotDictionary.Clear();
             InventoryManager.Instance.SlotList.ForEach(s => itemList.Add(s.GetItem()));
-            //List<InventorySlot> slotList = InventoryManager.Instance.SlotList;
 
             foreach (Item item in itemList)
             {
@@ -184,6 +196,7 @@ namespace UI_Toolkit
                 _shopView.Add(itemUXML);
             }
         }
+
 
         public bool BuyItem()
         {

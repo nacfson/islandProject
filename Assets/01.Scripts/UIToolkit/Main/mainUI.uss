@@ -206,3 +206,17 @@
 .shopUI > .button:hover {
     scale: 0.8 0.8;
 }
+
+.selectUI {
+    scale: 0 0;
+    flex-shrink: 0;
+    flex-grow: 1;
+    position: absolute;
+    width: 361px;
+    height: 437px;
+    background-color: rgb(0, 0, 0);
+}
+
+.selectUI.active {
+    scale: 1 1;
+}
