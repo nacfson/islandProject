@@ -10,16 +10,14 @@ public class Farm : MonoBehaviour
     private Collider _collider;
     private Vector3[] _vecs = new Vector3[4];
 
-    private List<Crop> _cropList = new List<Crop>();
-    public List<Crop> CropList => _cropList;
-
+    private Crop[] _crops;
+    public Crop[] Crops => _crops;
     public void SetUp()
     {
         _collider = GetComponent<Collider>();
-        
+        _crops = GetComponentsInChildren<Crop>();
     }
     public bool CanPlantCrop(Vector3 pos) => Vector3.Distance(transform.position,pos) < _canPlantDistance;
-
     /// <summary>
     /// 식물의 크기에 따라 농작물의 설치 위치를 계산해야함
     /// </summary>

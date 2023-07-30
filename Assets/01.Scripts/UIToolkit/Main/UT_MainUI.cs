@@ -21,10 +21,14 @@ namespace UI_Toolkit
         private VisualElement _fadeUI;
         private VisualElement _selectUI;
 
+        [Header("Select")]
+        private Item _selectedItem;
+
+
         [Header("Shop")]
         private VisualElement _shopUI;
         private ScrollView _shopView;
-        private Item _selectedItem;
+        private Item _shopItem;
         private Dictionary<VisualElement, Item> _slotDictionary = new Dictionary<VisualElement, Item>();
 
         private static UT_MainUI _instance;
@@ -69,6 +73,15 @@ namespace UI_Toolkit
             Button buyBtn = _shopUI.Q<Button>("BuyBtn");
             Button sellBtn = _shopUI.Q<Button>("SellBtn");
 
+            Button firstBtn = _selectUI.Q<Button>("FirstBtn");
+            Button secondBtn = _selectUI.Q<Button>("SecondBtn");
+            Button thirdBtn = _selectUI.Q<Button>("ThirdBtn");
+
+            //각 아이템에 맞는 함수를 실행 시켜주어야 함
+            firstBtn.RegisterCallback<ClickEvent>(e => InventoryManager.Instance.DoItemAction(_selectedItem.uniqueID));
+            secondBtn.RegisterCallback<ClickEvent>(e => Debug.Log("SecondBtn"));
+            thirdBtn.RegisterCallback<ClickEvent>(e => UnActiveSelectUI());
+
             buyBtn.RegisterCallback<ClickEvent>(e => BuyItem());
             sellBtn.RegisterCallback<ClickEvent>(e => SellItem());
 
@@ -100,8 +113,11 @@ namespace UI_Toolkit
 
             //_fadeUI.transform.scale = Vector3.zero;
         }
-        public void ActiveSelectUI()
+        public void ActiveSelectUI(Item item)
         {
+            if (item == null) return;
+            _selectedItem = item;
+
             Vector2 mousePos = Input.mousePosition;
             Vector2 localMousePos = _root.WorldToLocal(mousePos);
             Debug.Log(localMousePos);
@@ -115,6 +131,7 @@ namespace UI_Toolkit
         public void UnActiveSelectUI()
         {
             _selectUI.RemoveFromClassList("active");
+            _selectedItem = null;
         }
 
 
@@ -131,6 +148,7 @@ namespace UI_Toolkit
             else
             {
                 _inventoryUI.RemoveFromClassList("active");
+                _selectUI.RemoveFromClassList("active");
                 GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
             }
         }
@@ -179,7 +197,7 @@ namespace UI_Toolkit
                 _slotDictionary.Add(itemUXML, item);
                 itemUXML.RegisterCallback<ClickEvent>(e =>
                 {
-                    _selectedItem = _slotDictionary[itemUXML];
+                    _shopItem = _slotDictionary[itemUXML];
                     itemUXML.AddToClassList("select");
                     //Debug.LogError("SelectedItem");
                 });
@@ -200,13 +218,13 @@ namespace UI_Toolkit
 
         public bool BuyItem()
         {
-            if (_selectedItem == null) return false;
+            if (_shopItem == null) return false;
 
-            bool enoughMoney = MoneyManager.Instance.CanUseMoney(_selectedItem.price);
+            bool enoughMoney = MoneyManager.Instance.CanUseMoney(_shopItem.price);
             if (enoughMoney)
             {
-                InventoryManager.Instance.AddItem(_selectedItem, 1); // 아이템 추가
-                MoneyManager.Instance.AddMoney(-_selectedItem.price);  //돈 사용
+                InventoryManager.Instance.AddItem(_shopItem, 1); // 아이템 추가
+                MoneyManager.Instance.AddMoney(-_shopItem.price);  //돈 사용
                 //CreateItemUI(); 아이템을 샀을 때 인벤토리 리스트랑 상점 리스트랑 같이 업데이트 해주어야 되는데 지금은 생략 ( 어차피 돈 없으면 못 사고 개수 부족하면 판매 안됨 )
                 return true;
             }
@@ -215,12 +233,12 @@ namespace UI_Toolkit
 
         public bool SellItem()
         {
-            if (_selectedItem == null) return false;
+            if (_shopItem == null) return false;
 
-            bool enoughItem = InventoryManager.Instance.SubtractItem(_selectedItem, 1); //아이템 감소
+            bool enoughItem = InventoryManager.Instance.SubtractItem(_shopItem, 1); //아이템 감소
             if (enoughItem)
             {
-                MoneyManager.Instance.AddMoney(_selectedItem.sellPrice); // 돈 추가
+                MoneyManager.Instance.AddMoney(_shopItem.sellPrice); // 돈 추가
                 //CreateItemUI();
                 return true;
             }
@@ -233,6 +251,7 @@ namespace UI_Toolkit
             _inventoryUI.RemoveFromClassList("active");
             _iu.RemoveFromClassList("active");
             _shopUI.RemoveFromClassList("active");
+            _selectUI.RemoveFromClassList("active");
         }
         /// <summary>
         /// 그저 싱글톤 생성을 위해서 만들어 둔 함수.

@@ -17,6 +17,7 @@ MonoBehaviour:
   sellPrice: 1500
   uniqueID: 3
   itemSprite: {fileID: 21300000, guid: e368fe23e5ff2d34fa7bf832aecfd136, type: 3}
+  itemType: 1
   maxCnt: 100
   meshs:
   - {fileID: -8365129639449590315, guid: 006fb0a1f76db2744b4149d684f483f3, type: 3}

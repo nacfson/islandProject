@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -24,6 +25,7 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] private ItemListData _itemListSO;
     private Dictionary<int, Item> _itemDictionary;
+    private Dictionary<ItemType, MethodInfo> _itemActionDictionary;
     private void Awake()
     {
         if (_instance == null)
@@ -31,7 +33,22 @@ public class InventoryManager : MonoBehaviour
             _instance = this;
         }
         _itemDictionary = new Dictionary<int, Item>();
+        _itemActionDictionary = new Dictionary<ItemType, MethodInfo>();
         _itemListSO.itemList.ForEach(i => _itemDictionary.Add(i.uniqueID, i)); //ItemDictionary에 고유 id에 맞는 아이템 추가
+
+        foreach (ItemType itemType in Enum.GetValues((typeof(ItemType))))
+        {
+            try
+            { 
+                MethodInfo mInfo = this.GetType().GetMethod(String.Format("Do{0}Item",itemType), BindingFlags.Instance | BindingFlags.NonPublic);
+                _itemActionDictionary.Add(itemType, mInfo);
+            }
+            catch
+            {
+                Debug.LogError(String.Format("This is an error at {0}",itemType));
+            }
+
+        }
     }
 
     //똑같은 아이템을 보유하고있는 슬롯 있으면 개수 추가,
@@ -82,7 +99,6 @@ public class InventoryManager : MonoBehaviour
         }
         return false;
     }
-
     private void UpdateInventory()
     {
         Debug.Log("UpdateInventory");
@@ -94,12 +110,6 @@ public class InventoryManager : MonoBehaviour
                 Debug.Log($"Item: {i.GetItem()} Count {i.GetAmount()}");
             }
         }
-    }
-    public Item GetItemFromID(int uniqueID)
-    {
-        Item item = _itemDictionary[uniqueID];
-        if (item == null) return null;
-        return item;
     }
 
     public bool IsFullInv()
@@ -124,5 +134,29 @@ public class InventoryManager : MonoBehaviour
         }
         UpdateInventory();
     }
+    #region ItemLogic
+    public Item GetItemFromID(int uniqueID)
+    {
+        Item item = _itemDictionary[uniqueID];
+        if (item == null) return null;
+        return item;
+    }
+    public void DoItemAction(int itemID)
+    {
+        Item item = GetItemFromID(itemID);
+        ItemType itemType = item.itemType;
+
+        MethodInfo mInfo = _itemActionDictionary[itemType];
+        mInfo?.Invoke(this, new object[] { item});
+    }
+    private void DoNormalItem(Item item) => Debug.Log("DoNormalItem");
+    private void DoCropItem(Item item)
+    {
+        Vector3 playerPos = GameManager.Instance.PlayerBrain.transform.position;
+        FarmManager.Instance.CanPlantCrops(playerPos,item.uniqueID);
+    }
+    private void DoToolItem(Item item) => Debug.Log("DoToolAction");
+    #endregion
+
     public void Generate(){}
 }

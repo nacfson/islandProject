@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CustomUpdateManager;
+using System.Linq;
 
 public class FarmManager : MonoBehaviour,IUpdatable
 {
@@ -21,15 +22,16 @@ public class FarmManager : MonoBehaviour,IUpdatable
 
     private Transform _farmParentTrm;
     private List<Farm> _farmList = new List<Farm>();
-    private List<Crop> _cropList = new List<Crop>();
+    private HashSet<Crop> _cropHash = new HashSet<Crop>();
     public CropSaveData[] CropDatas
     {
         get
         {
-            CropSaveData[] cropDatas = new CropSaveData[_cropList.Count];
+            CropSaveData[] cropDatas = new CropSaveData[_cropHash.Count];
             for (int i = 0; i < cropDatas.Length; i++)
             {
-                cropDatas[i] = _cropList[i].CropSaveData;
+                
+                cropDatas[i] = _cropHash.ElementAt(i).CropSaveData;
             }
             return cropDatas;
         }
@@ -48,6 +50,18 @@ public class FarmManager : MonoBehaviour,IUpdatable
         }
         _farmParentTrm = transform.Find("PosData/FarmPos");
         _farmParentTrm.GetComponentsInChildren(_farmList);
+        foreach(Farm farm  in _farmList)
+        {
+            farm.SetUp();
+            for(int i = 0; i < farm.Crops.Length; i++)
+            {
+                Crop crop = farm.Crops[i];
+                if(_cropHash.Contains())
+            }
+
+        }
+        
+        
     }
     //bool이 true 상태이면 식물을 심음
     public bool CanPlantCrops(Vector3 pos,int itemID)
@@ -79,7 +93,10 @@ public class FarmManager : MonoBehaviour,IUpdatable
             //현재는 특정시간마다 모든 작물들을 업그레이드 시켜주는데
             //나중에는 작물마다 다른시간들을 적용하면 좋을 것 같다.
             Debug.Log("UpgradeLevel");
-            _cropList.ForEach(c => c.UpgradeLevel(1));
+            foreach(Crop crop in _cropHash)
+            {
+                crop.UpgradeLevel(1);
+            }
             _timer = 0f;
         }
     }

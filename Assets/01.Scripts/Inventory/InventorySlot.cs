@@ -12,7 +12,7 @@ public class InventorySlot
     {
         this._image = image;
         this._count = count;
-        _image.RegisterCallback<ClickEvent>(e => UT_MainUI.Instance.ActiveSelectUI());
+        _image.RegisterCallback<ClickEvent>(e => UT_MainUI.Instance.ActiveSelectUI(GetItem()));
     }
     public void UpdateUI()
     {
@@ -40,7 +40,15 @@ public class InventorySlot
     }
     public void SetItem(Item item, int amount)
     {
-        _inventory = new Inventory(item, amount);
+        if (_inventory == null)
+        {
+            _inventory = new Inventory(item, amount);
+        }
+        else
+        {
+            _inventory.item = item;
+            _inventory.amount = amount;
+        }
     }
     public void AddItem(int amount)
     {
@@ -50,8 +58,5 @@ public class InventorySlot
             _inventory = null;
         }
     }
-    public int GetAmount()
-    {
-        return _inventory.amount;
-    }
+    public int GetAmount() => _inventory.amount;
 }
