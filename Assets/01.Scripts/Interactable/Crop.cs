@@ -17,7 +17,7 @@ public class CropSaveData
     }
 }
 
-public class Crop : MonoBehaviour, IInteractable
+public class Crop : PoolableMono, IInteractable
 {
     [SerializeField] private CropData _cropSO;
     private CropSaveData _cropSaveData;
@@ -45,8 +45,8 @@ public class Crop : MonoBehaviour, IInteractable
         if(_currentLevel == _cropSO.maxLevel)
         {
             PlayerBrain pb = (PlayerBrain)brain;
-            pb.ChangeState(StateType.Pick);
             pb.AgentAnimator.OnPickAnimationEndTrigger += DropItem;
+            pb.ChangeState(StateType.Pick);
             return;
         }
         return;
@@ -63,13 +63,23 @@ public class Crop : MonoBehaviour, IInteractable
         ChangeCropState(_currentLevel);
         InventoryManager.Instance.AddItem(_cropSO,Random.Range(1,3));
     }
+    private float _timer = 0f;
+    [SerializeField] private float _targetTime = 10f;
     public void UpgradeLevel(int plus)
     {
         if (_currentLevel >= _cropSO.maxLevel) return;
 
-        _currentLevel += plus;
-        _currentLevel = Mathf.Clamp(_currentLevel, 0, _cropSO.maxLevel);
-        ChangeCropState(_currentLevel);
+
+        _timer += Time.deltaTime;
+        if (_timer > _targetTime)
+        {
+            Debug.Log("UpgradeLevel");
+            _currentLevel += plus;
+            _currentLevel = Mathf.Clamp(_currentLevel, 0, _cropSO.maxLevel);
+            ChangeCropState(_currentLevel);
+            _timer = 0f;
+        }
+
     }
 
     private void ChangeCropState(int index)
@@ -90,8 +100,8 @@ public class Crop : MonoBehaviour, IInteractable
         }
     }
 
-    public static explicit operator Crop(PoolableMono v)
+    public override void Init()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Init");
     }
 }

@@ -3,12 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+public struct FarmPos
+{
+    public Vector3 pos;
+    public bool used;
+}
+
 [RequireComponent(typeof(Collider))]
 public class Farm : MonoBehaviour
 {
     [SerializeField] private float _canPlantDistance = 1f;
     private Collider _collider;
-    private Vector3[] _vecs = new Vector3[4];
+    private FarmPos[] _farmPosArray = new FarmPos[4];
 
     private Crop[] _crops;
     public Crop[] Crops => _crops;
@@ -17,7 +23,21 @@ public class Farm : MonoBehaviour
         _collider = GetComponent<Collider>();
         _crops = GetComponentsInChildren<Crop>();
     }
-    public bool CanPlantCrop(Vector3 pos) => Vector3.Distance(transform.position,pos) < _canPlantDistance;
+    public bool CanPlantCrop(Vector3 pos)
+    {
+        float distance = Vector3.Distance(transform.position, pos);
+        Debug.Log(distance);
+        foreach (var f in _farmPosArray)
+        {
+            bool result = f.used;
+            if (result == true)
+            {
+                return distance < _canPlantDistance;
+            }
+        }
+        return false;
+    }
+
     /// <summary>
     /// 식물의 크기에 따라 농작물의 설치 위치를 계산해야함
     /// </summary>
@@ -28,22 +48,26 @@ public class Farm : MonoBehaviour
         float y = _collider.bounds.extents.y;
         float z = _collider.bounds.extents.z;
 
-        _vecs[0] = new Vector3(-x, y, -z); //left, down
-        _vecs[1] = new Vector3(x, y, -z); //right, down
-        _vecs[2] = new Vector3(-x, y, z); //left, up
-        _vecs[3] = new Vector3(x, y, z); //right, up
+        _farmPosArray[0].pos = new Vector3(-x, y, -z); //left, down
+        _farmPosArray[1].pos = new Vector3(x, y, -z); //right, down
+        _farmPosArray[2].pos = new Vector3(-x, y, z); //left, up
+        _farmPosArray[3].pos = new Vector3(x, y, z); //right, up
 
-        Vector3 closestVec = _vecs[0];
+        Vector3 closestVec = _farmPosArray[0].pos;
         float closestDistance = 100f;
+        int index = 0;
+
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < _vecs.Length; i++)
+        for (int i = 0; i < _farmPosArray.Length; i++)
         {
-            float distance = Vector3.Distance(transform.position + _vecs[i], pos);
+            float distance = Vector3.Distance(transform.position + _farmPosArray[i].pos, pos);
             if (distance <= closestDistance)
             {
+                if (_farmPosArray[i].used) continue;
                 sb.Remove(0, sb.Length);
-                closestVec = _vecs[i];
+                closestVec = _farmPosArray[i].pos;
                 closestDistance = distance;
+                index = i;
                 sb.Append(string.Format("ClosestVec: {0}",closestVec));
                 sb.Append(string.Format("ClosestDistance: {0}\n",closestDistance));
                 sb.Append(string.Format("Vec Index{0}",i));
@@ -55,7 +79,8 @@ public class Farm : MonoBehaviour
         CropData cropData = (CropData)InventoryManager.Instance.GetItemFromID(itemID);
 
         Crop crop = (Crop)PoolManager.Instance.Pop(cropData.itemName);
-        crop.transform.SetParent(GameManager.Instance.transform);
-        crop.transform.position = closestVec;
+        crop.transform.SetParent(this.transform);
+        crop.transform.position = closestVec + transform.position;
+        _farmPosArray[index].used = true;
     }
 }

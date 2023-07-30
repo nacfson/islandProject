@@ -152,8 +152,10 @@ public class InventoryManager : MonoBehaviour
     private void DoNormalItem(Item item) => Debug.Log("DoNormalItem");
     private void DoCropItem(Item item)
     {
+        Debug.Log("DoCropItem");
         Vector3 playerPos = GameManager.Instance.PlayerBrain.transform.position;
-        FarmManager.Instance.CanPlantCrops(playerPos,item.uniqueID);
+        bool result = FarmManager.Instance.CanPlantCrops(playerPos,item.uniqueID);
+        Debug.Log(String.Format("Result: {0}", result));
     }
     private void DoToolItem(Item item) => Debug.Log("DoToolAction");
     #endregion

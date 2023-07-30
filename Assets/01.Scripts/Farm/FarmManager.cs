@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CustomUpdateManager;
 using System.Linq;
+using System;
 
 public class FarmManager : MonoBehaviour,IUpdatable
 {
@@ -37,10 +38,6 @@ public class FarmManager : MonoBehaviour,IUpdatable
         }
     }
 
-    private float _timer = 0f;
-    [SerializeField] private float _targetTime = 10f;
-
-
 
     private void Awake()
     {
@@ -50,18 +47,24 @@ public class FarmManager : MonoBehaviour,IUpdatable
         }
         _farmParentTrm = transform.Find("PosData/FarmPos");
         _farmParentTrm.GetComponentsInChildren(_farmList);
+
         foreach(Farm farm  in _farmList)
         {
             farm.SetUp();
             for(int i = 0; i < farm.Crops.Length; i++)
             {
                 Crop crop = farm.Crops[i];
-                if(_cropHash.Contains())
+                if(!_cropHash.Contains(crop))
+                {
+                    _cropHash.Add(crop);
+                }
             }
-
         }
-        
-        
+
+        foreach(Crop crop in _cropHash)
+        {
+            Debug.Log(String.Format("Crop: {0}", crop));
+        }
     }
     //bool이 true 상태이면 식물을 심음
     public bool CanPlantCrops(Vector3 pos,int itemID)
@@ -87,17 +90,9 @@ public class FarmManager : MonoBehaviour,IUpdatable
     #region UpdateSystem
     public void CustomUpdate()
     {
-        _timer += Time.deltaTime;
-        if (_timer > _targetTime)
+        foreach (Crop crop in _cropHash)
         {
-            //현재는 특정시간마다 모든 작물들을 업그레이드 시켜주는데
-            //나중에는 작물마다 다른시간들을 적용하면 좋을 것 같다.
-            Debug.Log("UpgradeLevel");
-            foreach(Crop crop in _cropHash)
-            {
-                crop.UpgradeLevel(1);
-            }
-            _timer = 0f;
+            crop.UpgradeLevel(1);
         }
     }
     private void OnEnable() => Add(this);

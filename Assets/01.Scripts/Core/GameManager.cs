@@ -41,8 +41,6 @@ public class GameManager : MonoBehaviour
             Debug.LogError($"Multiple GameManager is exist");
         }
 
-
-
         CreatePoolManager(this.transform);
         CreateCameraController();
         UT_MainUI.Instance.Generate();
