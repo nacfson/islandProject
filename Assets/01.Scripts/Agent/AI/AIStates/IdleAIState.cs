@@ -6,7 +6,7 @@ public class IdleAIState : NormalAIState
 {
     public override void OnEnterState()
     {
-        _navMovement.StopImmediately();
+        //_navMovement.StopImmediately();
         _agentAnimator.InitAllAnimations();
     }
 

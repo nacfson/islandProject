@@ -87,7 +87,7 @@ public class SaveManager : MonoBehaviour
             itemKeyValues.Add(keyValue);
         }
 
-        //_saveData.SetDatas(money, playerPos, itemKeyValues,FarmManager.Instance.CropDatas);
+        _saveData.SetDatas(money, playerPos, itemKeyValues,FarmManager.Instance.CropDatas);
 
         string jsonData = JsonUtility.ToJson(_saveData, true);
         File.WriteAllText(_savePath + _fileName, jsonData);
@@ -95,7 +95,6 @@ public class SaveManager : MonoBehaviour
     [ContextMenu("Load")]
     public void Load()
     {
-        //Load Debug가 찍히지 않음
         if(File.Exists(_savePath + _fileName))
         {
             Debug.Log("Load");
@@ -113,10 +112,10 @@ public class SaveManager : MonoBehaviour
             {
                 Item item = InventoryManager.Instance.GetItemFromID(pair.key);
                 var keyValue = new CustomKeyValue<Item, int>(item,pair.value);
+                Debug.Log(string.Format("KeyValue: {0}",keyValue));
                 itemIntKeyValues.Add(keyValue);
             }
             InventoryManager.Instance.SetSlotItem(itemIntKeyValues);
-
         }
     }
     public void Generate(){}

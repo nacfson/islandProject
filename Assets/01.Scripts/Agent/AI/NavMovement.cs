@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class NavMovement : Agent<AIActionData>
 {
     protected NavMeshAgent _navMeshAgent;
+    public NavMeshAgent NavMeshAgent => _navMeshAgent;
 
     public override void SetUp(Transform agent)
     {

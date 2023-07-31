@@ -129,5 +129,6 @@
             <ui:Button text="버리기" display-tooltip-when-elided="true" name="SecondBtn" class="button" />
             <ui:Button text="취소하기" display-tooltip-when-elided="true" name="ThirdBtn" class="button" />
         </ui:VisualElement>
+        <ui:VisualElement name="MoneyUI" class="active" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
     </ui:VisualElement>
 </ui:UXML>

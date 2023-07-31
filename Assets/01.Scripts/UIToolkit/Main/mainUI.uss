@@ -224,6 +224,7 @@
 
 .selectUI.active {
     scale: 1 1;
+    transition-duration: 0.5s;
 }
 
 .selectUI > .button {
@@ -240,4 +241,12 @@
     margin-right: 11px;
     margin-top: 11px;
     margin-bottom: 11px;
+}
+
+.moneyUI {
+    scale: 0 0;
+}
+
+.moneyUI.active {
+    scale: 1 1;
 }

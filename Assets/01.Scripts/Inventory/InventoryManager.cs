@@ -126,10 +126,11 @@ public class InventoryManager : MonoBehaviour
     public void SetSlotList(ref List<InventorySlot> slotList) => _slotList = slotList;
     public void SetSlotItem(List<CustomKeyValue<Item, int>> itemKeyValues)
     {
+        Debug.Log("SetSlotItem");
         for(int i =0; i < itemKeyValues.Count; i++)
         {
             CustomKeyValue<Item,int> pair = itemKeyValues.ElementAt(i);
-            Debug.Log(String.Format(pair.ToString()));
+            Debug.Log(String.Format("Pair: {0}",pair));
             _slotList[i].SetItem(pair.key, pair.value);
         }
         UpdateInventory();

@@ -51,9 +51,9 @@ public class FarmManager : MonoBehaviour,IUpdatable
         foreach(Farm farm  in _farmList)
         {
             farm.SetUp();
-            for(int i = 0; i < farm.Crops.Length; i++)
+            for(int i = 0; i < farm.cropList.Count; i++)
             {
-                Crop crop = farm.Crops[i];
+                Crop crop = farm.cropList[i];
                 if(!_cropHash.Contains(crop))
                 {
                     _cropHash.Add(crop);
@@ -74,7 +74,11 @@ public class FarmManager : MonoBehaviour,IUpdatable
             bool result = farm.CanPlantCrop(pos);
             if(result)
             {
-                farm.AddCrop(pos,itemID);
+                //설치할 Crop을 반환받음
+                Crop crop = farm.AddCrop(pos,itemID);
+                //HashSet에 추가
+                if(!_cropHash.Contains(crop)) { _cropHash.Add(crop); }
+                else { Debug.LogError(string.Format("It is exist: {0}", crop)); }
                 return true;
             }
         }

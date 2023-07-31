@@ -16,12 +16,11 @@ public class Farm : MonoBehaviour
     private Collider _collider;
     private FarmPos[] _farmPosArray = new FarmPos[4];
 
-    private Crop[] _crops;
-    public Crop[] Crops => _crops;
+    public List<Crop> cropList = new List<Crop>();
     public void SetUp()
     {
         _collider = GetComponent<Collider>();
-        _crops = GetComponentsInChildren<Crop>();
+        GetComponentsInChildren(cropList);
     }
     public bool CanPlantCrop(Vector3 pos)
     {
@@ -30,7 +29,7 @@ public class Farm : MonoBehaviour
         foreach (var f in _farmPosArray)
         {
             bool result = f.used;
-            if (result == true)
+            if (!result)
             {
                 return distance < _canPlantDistance;
             }
@@ -42,7 +41,7 @@ public class Farm : MonoBehaviour
     /// 식물의 크기에 따라 농작물의 설치 위치를 계산해야함
     /// </summary>
     /// <param name="pos"></param>
-    public void AddCrop(Vector3 pos,int itemID)
+    public Crop AddCrop(Vector3 pos,int itemID)
     {
         float x = _collider.bounds.extents.x;
         float y = _collider.bounds.extents.y;
@@ -80,7 +79,10 @@ public class Farm : MonoBehaviour
 
         Crop crop = (Crop)PoolManager.Instance.Pop(cropData.itemName);
         crop.transform.SetParent(this.transform);
-        crop.transform.position = closestVec + transform.position;
+        crop.transform.position = Vector3.Lerp(transform.position, closestVec + transform.position,0.5f);
+        cropList.Add(crop);
         _farmPosArray[index].used = true;
+
+        return crop;
     }
 }

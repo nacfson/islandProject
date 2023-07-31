@@ -13,7 +13,6 @@ public class PlayerBrain : AgentBrain<ActionData>{
     [SerializeField] protected NormalState _currentState;
 
     private Dictionary<StateType,NormalState> _stateDictionary;
-
     private List<Agent<ActionData>> _agents;
 
     private AgentAnimator _agentAnimator;

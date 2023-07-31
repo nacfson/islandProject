@@ -19,9 +19,6 @@ public class AIBrain : AgentBrain<AIActionData>, IUpdatable
     protected AIAnimator _agentAnimator;
     public NavMovement NavMovement => _navMovement;
     protected NavMovement _navMovement;
-
-
-
     protected override void Awake()
     {
         SetUp(this.transform);

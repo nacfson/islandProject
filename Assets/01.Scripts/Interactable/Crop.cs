@@ -69,7 +69,6 @@ public class Crop : PoolableMono, IInteractable
     {
         if (_currentLevel >= _cropSO.maxLevel) return;
 
-
         _timer += Time.deltaTime;
         if (_timer > _targetTime)
         {
