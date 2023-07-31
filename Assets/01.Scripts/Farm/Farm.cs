@@ -55,8 +55,6 @@ public class Farm : MonoBehaviour
         Vector3 closestVec = _farmPosArray[0].pos;
         float closestDistance = 100f;
         int index = 0;
-
-        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < _farmPosArray.Length; i++)
         {
             float distance = Vector3.Distance(transform.position + _farmPosArray[i].pos, pos);
@@ -67,13 +65,11 @@ public class Farm : MonoBehaviour
                 closestVec = _farmPosArray[i].pos;
                 closestDistance = distance;
                 index = i;
-                sb.Append(string.Format("ClosestVec: {0}",closestVec));
-                sb.Append(string.Format("ClosestDistance: {0}\n",closestDistance));
-                sb.Append(string.Format("Vec Index{0}",i));
+
             }
         }
 
-        Debug.Log(sb.ToString());
+
 
         CropData cropData = (CropData)InventoryManager.Instance.GetItemFromID(itemID);
 
