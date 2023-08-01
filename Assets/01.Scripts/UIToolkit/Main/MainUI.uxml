@@ -119,16 +119,19 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="FadeUI" class="fadeUI" style="visibility: hidden;" />
-        <ui:VisualElement name="ShopUI" class="shopUI" style="flex-grow: 1;">
+        <ui:VisualElement name="ShopUI" class="shopUI" style="flex-grow: 1; top: 0; height: 70%;">
             <ui:ScrollView name="ShopView" class="shopView" />
-            <ui:Button text="Buy" display-tooltip-when-elided="true" name="BuyBtn" class="button" />
-            <ui:Button text="Sell" display-tooltip-when-elided="true" name="SellBtn" class="button" style="right: 20%; background-color: rgb(255, 147, 131);" />
+            <ui:Button text="Buy" display-tooltip-when-elided="true" name="BuyBtn" class="button" style="right: 30%; bottom: 20%;" />
+            <ui:Button text="Sell" display-tooltip-when-elided="true" name="SellBtn" class="button" style="right: 10%; background-color: rgb(255, 147, 131); bottom: 20%;" />
         </ui:VisualElement>
         <ui:VisualElement name="SelectUI" class="selectUI">
             <ui:Button text="사용하기 " display-tooltip-when-elided="true" name="FirstBtn" class="button" />
             <ui:Button text="버리기" display-tooltip-when-elided="true" name="SecondBtn" class="button" />
             <ui:Button text="취소하기" display-tooltip-when-elided="true" name="ThirdBtn" class="button" />
         </ui:VisualElement>
-        <ui:VisualElement name="MoneyUI" class="active moneyUI" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+        <ui:VisualElement name="MoneyUI" class="active moneyUI" style="flex-grow: 1;">
+            <ui:VisualElement name="MoneyImage" class="image" />
+            <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="MoneyLabel" class="text" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

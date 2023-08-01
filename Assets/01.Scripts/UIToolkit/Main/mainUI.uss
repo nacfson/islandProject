@@ -121,12 +121,14 @@
 .shopUI {
     scale: 0 0;
     flex-shrink: 0;
-    background-color: rgba(255, 255, 255, 0.42);
-    width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    width: 87%;
     height: 100%;
     flex-grow: 1;
     position: absolute;
     transition-duration: 0.5s;
+    top: -127px;
+    right: -11px;
 }
 
 .shopUI.active {
@@ -135,11 +137,11 @@
 
 .shopView {
     right: 5%;
-    width: 50%;
+    width: 40%;
     height: 70%;
     background-color: rgb(255, 129, 129);
     position: absolute;
-    top: 15%;
+    top: 3%;
     border-top-left-radius: 28px;
     border-bottom-left-radius: 28px;
     border-top-right-radius: 28px;
@@ -251,23 +253,58 @@
     border-right-color: rgb(255, 255, 255);
     border-top-color: rgb(255, 255, 255);
     border-bottom-color: rgb(255, 255, 255);
-    border-left-width: 9px;
-    border-right-width: 9px;
-    border-top-width: 9px;
-    border-bottom-width: 9px;
+    border-left-width: 8px;
+    border-right-width: 8px;
+    border-top-width: 8px;
+    border-bottom-width: 8px;
     flex-shrink: 0;
     flex-grow: 1;
-    width: 10%;
+    width: 13%;
     height: 10%;
     position: absolute;
     top: 0;
-    background-color: rgb(0, 0, 0);
-    border-top-left-radius: 63px;
-    border-bottom-left-radius: 63px;
-    border-top-right-radius: 63px;
-    border-bottom-right-radius: 63px;
+    background-color: rgb(226, 189, 95);
+    border-top-left-radius: 45px;
+    border-bottom-left-radius: 45px;
+    border-top-right-radius: 45px;
+    border-bottom-right-radius: 45px;
+    margin-left: 61px;
+    margin-right: 61px;
+    margin-top: 61px;
+    margin-bottom: 61px;
 }
 
 .moneyUI.active {
     scale: 1 1;
+}
+
+.moneyUI > .image {
+    background-color: rgba(255, 20, 20, 0);
+    width: 40%;
+    height: 85%;
+    top: -64%;
+    left: 30%;
+    background-image: url('project://database/Assets/02.Assets/0.Sprite/Money.png?fileID=2800000&guid=4d1f6c2141fec134a949e38e507c068f&type=3#Money');
+    border-left-width: 8px;
+    border-right-width: 8px;
+    border-top-width: 8px;
+    border-bottom-width: 8px;
+    border-left-color: rgba(243, 243, 243, 0);
+    border-right-color: rgba(243, 243, 243, 0);
+    border-top-color: rgba(243, 243, 243, 0);
+    border-bottom-color: rgba(243, 243, 243, 0);
+    flex-shrink: 0;
+    flex-grow: 1;
+}
+
+.moneyUI > .text {
+    align-items: center;
+    justify-content: center;
+    -unity-text-align: middle-center;
+    text-overflow: clip;
+    -unity-font-definition: url('project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&guid=68bf536b04e874c4d859fa5ed5b46fe1&type=2#Asia신디나루M SDF 1');
+    -unity-font-style: bold;
+    top: -50%;
+    font-size: 30px;
+    color: rgb(255, 255, 255);
 }

@@ -20,6 +20,7 @@ namespace UI_Toolkit
         private VisualElement _inventoryUI;
         private VisualElement _fadeUI;
         private VisualElement _selectUI;
+        private VisualElement _moneyUI;
 
         [Header("Select")]
         private Item _selectedItem;
@@ -30,6 +31,9 @@ namespace UI_Toolkit
         private ScrollView _shopView;
         private Item _shopItem;
         private Dictionary<VisualElement, Item> _slotDictionary = new Dictionary<VisualElement, Item>();
+
+        [Header("Money")]
+        private Label _moneyLabel;
 
         private static UT_MainUI _instance;
         public static UT_MainUI Instance
@@ -69,6 +73,7 @@ namespace UI_Toolkit
             //_fadeUI = _root.Q<VisualElement>("FadeUI");
             _shopUI = _root.Q<VisualElement>("ShopUI");
             _selectUI = _root.Q<VisualElement>("SelectUI");
+            _moneyUI = _root.Q<VisualElement>("MoneyUI");
 
             Button buyBtn = _shopUI.Q<Button>("BuyBtn");
             Button sellBtn = _shopUI.Q<Button>("SellBtn");
@@ -76,6 +81,8 @@ namespace UI_Toolkit
             Button firstBtn = _selectUI.Q<Button>("FirstBtn");
             Button secondBtn = _selectUI.Q<Button>("SecondBtn");
             Button thirdBtn = _selectUI.Q<Button>("ThirdBtn");
+
+            _moneyLabel = _moneyUI.Q<Label>("MoneyLabel");
 
             //각 아이템에 맞는 함수를 실행 시켜주어야 함
             firstBtn.RegisterCallback<ClickEvent>(e => InventoryManager.Instance.DoItemAction(_selectedItem.uniqueID));
@@ -90,8 +97,13 @@ namespace UI_Toolkit
             _inventoryUI.RemoveFromClassList("active");
 
             _infoUI = new InfoUI(_iu);
-        }
 
+            MoneyManager.Instance.OnMoneyChanged += SetMoneyUI;
+        }
+        private void OnDisable()
+        {
+            //MoneyManager.Instance.OnMoneyChanged -= SetMoneyUI;
+        }
         private void Start()
         {
             List<InventorySlot> slotList = new List<InventorySlot>();
@@ -160,12 +172,9 @@ namespace UI_Toolkit
         #endregion
 
 
-        public void StartTalk(TalkData talkData, string name)
+        public void StartTalk(TalkData talkData, string name,Action Callback = null)
         {
-            _infoUI.SetUp(talkData, name, () =>
-            {
-                _infoUI.ShowText();
-            });
+            _infoUI.SetUp(talkData, name, Callback);
             _infoUI.ShowText();
         }
         #region ShopUI
@@ -250,8 +259,14 @@ namespace UI_Toolkit
         {
             _inventoryUI.RemoveFromClassList("active");
             _iu.RemoveFromClassList("active");
+            //_infoUI = null;
             _shopUI.RemoveFromClassList("active");
             _selectUI.RemoveFromClassList("active");
+
+        }
+        public void SetMoneyUI(int money)
+        {
+            _moneyLabel.text = String.Format("{0:n0}",money);
         }
         /// <summary>
         /// 그저 싱글톤 생성을 위해서 만들어 둔 함수.
@@ -287,7 +302,7 @@ namespace UI_Toolkit
             _contentLabel = infoUI.Q<Label>("ContentLabel");
             _nameLabel = infoUI.Q<VisualElement>("NameUI").Q<Label>("NameLabel");
 
-            RegisterAction();
+            _infoUI.RegisterCallback<PointerDownEvent>(e => ShowText());
         }
 
         public void SetUp(TalkData talkData, string name, Action action)
@@ -302,10 +317,8 @@ namespace UI_Toolkit
         //���� �ִϸ��̼��� �������̸� ��ŵ, �������� �ƴϸ� ���� ��ȭ�� �̵�
         public void ShowText()
         {
-            //Debug.LogError("ShowText");
             if (_isAnimating)
             {
-                //_contentLabel.text = _contentLabel.tooltip;
                 UI_Toolkit.UT_MainUI.Instance.StopAllCoroutines();
                 _contentLabel.text = _targetText;
                 _isAnimating = false;
@@ -320,9 +333,9 @@ namespace UI_Toolkit
                 else
                 {
                     _infoUI.RemoveFromClassList("active");
-                    GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
                     _returnIdx = _talkData.talkList.Count - 1;
                     GameManager.Instance.CamController.TalkMode(false);
+                    _callback?.Invoke();
                 }
             }
         }
@@ -359,13 +372,6 @@ namespace UI_Toolkit
             }
             _contentLabel.text = text.Substring(0, text.Length);
             _isAnimating = false;
-        }
-
-        //���ʿ� �׼� ��ü�� VisualElement Ŭ������ �Ѱ���
-        public void RegisterAction()
-        {
-            //Callback = action;
-            _infoUI.RegisterCallback<PointerDownEvent>(e => _callback?.Invoke());
         }
     }
     #endregion

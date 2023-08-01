@@ -9,8 +9,7 @@ public class TalkAI : AIInteractable
 
     public override void Interact(AgentBrain<ActionData> brain)
     {
-        UT_MainUI.Instance.StartTalk(_talkData, gameObject.name);
-
+        UT_MainUI.Instance.StartTalk(_talkData, gameObject.name, () => GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle));
         _brain.GetAD().IsTalking = true;
 
         var br = _brain as AIBrain; //typeCasting

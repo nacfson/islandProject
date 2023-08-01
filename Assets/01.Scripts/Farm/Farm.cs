@@ -61,7 +61,6 @@ public class Farm : MonoBehaviour
             if (distance <= closestDistance)
             {
                 if (_farmPosArray[i].used) continue;
-                sb.Remove(0, sb.Length);
                 closestVec = _farmPosArray[i].pos;
                 closestDistance = distance;
                 index = i;

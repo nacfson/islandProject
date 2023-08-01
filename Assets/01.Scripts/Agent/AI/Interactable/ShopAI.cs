@@ -7,8 +7,10 @@ using System.Linq;
 public class ShopAI : AIInteractable
 {
     [SerializeField] private ItemListData _items;
+    [SerializeField] private TalkData _talKData;
     public override void Interact(AgentBrain<ActionData> brain)
     {
+        UT_MainUI.Instance.StartTalk(_talKData,"≥ ±ºªÛ¿Œ",null);
         UT_MainUI.Instance.ShowShopUI(_items.itemList.ToHashSet<Item>());
         AIBrain aiBrain = (AIBrain)_brain;
         aiBrain.GetAD().IsInteracting = true;

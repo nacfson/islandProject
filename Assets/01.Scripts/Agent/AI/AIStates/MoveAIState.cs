@@ -23,11 +23,9 @@ public class MoveAIState : NormalAIState
     {
         base.UpdateState();
         if (_brain.GetAD().CanMove == false) return;
-        //_agentAnimator.SetSpeed(_navMovement.GetSpeed(0.3f));
 
         if (_navMovement.IsArrived())
         {
-            //Vector3 pos = GameManager.Instance.RandomTargetPos();
             Vector3 pos = _brain.TargetPosData.GetRandomTargetPos();
             _navMovement.SetDestination(pos);
         }
