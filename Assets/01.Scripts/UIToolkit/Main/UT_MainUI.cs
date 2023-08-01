@@ -78,16 +78,20 @@ namespace UI_Toolkit
             Button buyBtn = _shopUI.Q<Button>("BuyBtn");
             Button sellBtn = _shopUI.Q<Button>("SellBtn");
 
-            Button firstBtn = _selectUI.Q<Button>("FirstBtn");
-            Button secondBtn = _selectUI.Q<Button>("SecondBtn");
-            Button thirdBtn = _selectUI.Q<Button>("ThirdBtn");
+            Label firstLabel = _selectUI.Q<Label>("FirstLabel");
+            Label secondLabel = _selectUI.Q<Label>("SecondLabel");
+            Label thirdLabel = _selectUI.Q<Label>("ThirdLabel");
 
             _moneyLabel = _moneyUI.Q<Label>("MoneyLabel");
 
             //각 아이템에 맞는 함수를 실행 시켜주어야 함
-            firstBtn.RegisterCallback<ClickEvent>(e => InventoryManager.Instance.DoItemAction(_selectedItem.uniqueID));
-            secondBtn.RegisterCallback<ClickEvent>(e => Debug.Log("SecondBtn"));
-            thirdBtn.RegisterCallback<ClickEvent>(e => UnActiveSelectUI());
+            firstLabel.RegisterCallback<ClickEvent>(e => InventoryManager.Instance.DoItemAction(_selectedItem.uniqueID));
+            secondLabel.RegisterCallback<ClickEvent>(e =>
+            {
+                Item item = InventoryManager.Instance.GetItemFromID(_selectedItem.uniqueID);
+                InventoryManager.Instance.SubtractItem(item, 1);
+            });
+            thirdLabel.RegisterCallback<ClickEvent>(e => UnActiveSelectUI());
 
             buyBtn.RegisterCallback<ClickEvent>(e => BuyItem());
             sellBtn.RegisterCallback<ClickEvent>(e => SellItem());

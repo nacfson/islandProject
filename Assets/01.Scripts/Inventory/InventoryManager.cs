@@ -145,10 +145,19 @@ public class InventoryManager : MonoBehaviour
     public void DoItemAction(int itemID)
     {
         Item item = GetItemFromID(itemID);
-        ItemType itemType = item.itemType;
+        if(SubtractItem(item,1))
+        {
+            ItemType itemType = item.itemType;
 
-        MethodInfo mInfo = _itemActionDictionary[itemType];
-        mInfo?.Invoke(this, new object[] { item});
+            MethodInfo mInfo = _itemActionDictionary[itemType];
+            mInfo?.Invoke(this, new object[] { item });
+        }
+        else
+        {
+            Debug.LogError($"Can't Use Item! ItemID: {itemID}");
+        }
+
+        UpdateInventory();
     }
     private void DoNormalItem(Item item) => Debug.Log("DoNormalItem");
     private void DoCropItem(Item item)

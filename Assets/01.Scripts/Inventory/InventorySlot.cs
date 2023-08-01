@@ -3,28 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UI_Toolkit;
+using System.Text;
+
 public class InventorySlot
 {
     private Inventory _inventory;
     private VisualElement _image;
     private Label _count;
+
+    private StringBuilder _sb;
     public InventorySlot(VisualElement image, Label count)
     {
         this._image = image;
         this._count = count;
         _image.RegisterCallback<ClickEvent>(e => UT_MainUI.Instance.ActiveSelectUI(GetItem()));
+        _sb = new StringBuilder();
     }
     public void UpdateUI()
     {
+        _sb.Remove(0, _sb.Length);
         if (_inventory == null)
         {
-            _count.text = "x0";
             _image.style.backgroundImage = null;
-            return;
+            _image.RemoveFromClassList("active");
         }
-        string result = $"x{_inventory.amount}";
-        _image.style.backgroundImage = _inventory.item?.itemSprite.texture;
-        _count.text = result;
+        else
+        {
+            _sb.Append($"x{_inventory.amount}");
+            _image.style.backgroundImage = _inventory.item?.itemSprite.texture;
+            _image.AddToClassList("active");
+        }
+        _count.text = _sb.ToString();
     }
     public bool IsFull()
     {

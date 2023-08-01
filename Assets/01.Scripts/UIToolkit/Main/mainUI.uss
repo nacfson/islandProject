@@ -45,7 +45,7 @@
 .inventoryUI {
     width: 70%;
     height: 50%;
-    background-color: rgb(176, 176, 176);
+    background-color: rgb(226, 225, 199);
     flex-grow: 1;
     flex-shrink: 0;
     top: 10%;
@@ -71,25 +71,31 @@
 }
 
 .inventorySlot {
-    width: 10%;
-    height: 30%;
+    width: 9%;
+    height: 25%;
     background-color: rgba(111, 111, 111, 0);
     border-top-left-radius: 54px;
     border-bottom-left-radius: 54px;
     border-top-right-radius: 54px;
     border-bottom-right-radius: 54px;
-    background-image: url('project://database/Assets/02.Assets/Masalimov%20Ilnur/Professional%20Pixel%20RPG%20Icon%20Pack/Sprites/Panel.png?fileID=2800000&guid=cceae44e769a40244ad9642c0f71992a&type=3#Panel');
+    background-image: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 19px;
+    margin-bottom: 10px;
 }
 
 .inventorySlot.image {
     flex-grow: 1;
-    background-color: rgba(255, 255, 255, 0.24);
+    background-color: rgba(70, 70, 70, 0.45);
     flex-shrink: 0;
     width: 100%;
     height: 100%;
     bottom: 0;
-    right: 0;
-    background-image: url('project://database/Assets/02.Assets/Models/Topdown%20Island%20Pack/Materials_textures/Smoke.tga?fileID=2800000&guid=ff655d3619e794b49802b22a40ba671e&type=3#Smoke');
+    right: 8px;
+    background-image: none;
+    top: -25px;
+    scale: 0.3 0.3;
 }
 
 .inventorySlot.count {
@@ -101,6 +107,7 @@
     -unity-font-definition: url('project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&guid=68bf536b04e874c4d859fa5ed5b46fe1&type=2#Asia신디나루M SDF 1');
     font-size: 40px;
     -unity-font-style: bold;
+    background-image: none;
 }
 
 .inventoryUI.active {
@@ -216,9 +223,9 @@
     flex-shrink: 0;
     flex-grow: 1;
     position: absolute;
-    width: 15%;
-    height: 32%;
-    background-color: rgb(122, 147, 109);
+    width: 13%;
+    height: 28%;
+    background-color: rgb(229, 212, 139);
     border-top-left-radius: 39px;
     border-bottom-left-radius: 39px;
     border-top-right-radius: 39px;
@@ -229,22 +236,6 @@
 .selectUI.active {
     scale: 1 1;
     transition-duration: 0.5s;
-}
-
-.selectUI > .button {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    background-color: rgb(204, 203, 84);
-    -unity-font-definition: url('project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&guid=68bf536b04e874c4d859fa5ed5b46fe1&type=2#Asia신디나루M SDF 1');
-    -unity-font-style: bold;
-    -unity-text-align: middle-center;
-    font-size: 47px;
-    margin-left: 11px;
-    margin-right: 11px;
-    margin-top: 11px;
-    margin-bottom: 11px;
 }
 
 .moneyUI {
@@ -307,4 +298,28 @@
     top: -50%;
     font-size: 30px;
     color: rgb(255, 255, 255);
+}
+
+.inventorySlot.image.active {
+    scale: 1 1;
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url('project://database/Assets/02.Assets/0.Sprite/Item/apppleSprite.png?fileID=2800000&guid=e49eed8007ce78a49928ca212d5009e7&type=3#apppleSprite');
+}
+
+.selectUI > .label {
+    -unity-font-definition: url('project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&guid=68bf536b04e874c4d859fa5ed5b46fe1&type=2#Asia신디나루M SDF 1');
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    font-size: 50px;
+    transition-duration: 0.3s;
+    margin-bottom: 21px;
+}
+
+.selectUI .label:hover {
+    background-color: rgb(238, 198, 66);
+    border-top-left-radius: 19px;
+    border-bottom-left-radius: 19px;
+    border-top-right-radius: 19px;
+    border-bottom-right-radius: 19px;
+    transition-duration: 0.3s;
 }
