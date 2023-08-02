@@ -25,7 +25,7 @@ public class LightManager : MonoBehaviour
     private float _curLightIntensity;
     private void Awake()
     {
-        if(_instance == null)
+        if (_instance == null)
         {
             _instance = this;
         }
@@ -44,8 +44,10 @@ public class LightManager : MonoBehaviour
 
     private void CalculateLight(int hour)
     {
-
+        float normalValue = (float)hour / 24.0f;
+        _curFogDensity = _fogDensityCurve.Evaluate(normalValue);
+        _curLightIntensity = _lightIntensityCurve.Evaluate(normalValue);
     }
 
-    public void Generate(){}
+    public void Generate() { }
 }
