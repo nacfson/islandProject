@@ -59,13 +59,22 @@ public class InventorySlot
             _inventory.amount = amount;
         }
     }
-    public void AddItem(int amount)
+    /// <summary>
+    /// It returns Inventroy.Amount is zero
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    public bool AddItem(int amount)
     {
+        bool result = false;
         _inventory.AddItem(amount);
         if (_inventory.amount <= 0)
         {
             _inventory = null;
+            result = true;
         }
+        UpdateUI();
+        return result;
     }
     public int GetAmount() => _inventory.amount;
 }

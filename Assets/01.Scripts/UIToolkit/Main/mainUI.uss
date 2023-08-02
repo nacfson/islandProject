@@ -310,9 +310,11 @@
     -unity-font-definition: url('project://database/Assets/08.Fonts/Asia%EC%8B%A0%EB%94%94%EB%82%98%EB%A3%A8M%20SDF%201.asset?fileID=11400000&guid=68bf536b04e874c4d859fa5ed5b46fe1&type=2#Asia신디나루M SDF 1');
     -unity-text-align: middle-center;
     -unity-font-style: bold;
-    font-size: 50px;
+    font-size: 40px;
     transition-duration: 0.3s;
     margin-bottom: 21px;
+    margin-top: 12px;
+    color: rgb(77, 36, 5);
 }
 
 .selectUI .label:hover {
@@ -322,4 +324,6 @@
     border-top-right-radius: 19px;
     border-bottom-right-radius: 19px;
     transition-duration: 0.3s;
+    padding-left: 27px;
+    padding-right: 12px;
 }

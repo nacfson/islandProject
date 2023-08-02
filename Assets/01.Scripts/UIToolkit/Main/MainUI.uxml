@@ -125,9 +125,9 @@
             <ui:Button text="Sell" display-tooltip-when-elided="true" name="SellBtn" class="button" style="right: 10%; background-color: rgb(255, 147, 131); bottom: 20%;" />
         </ui:VisualElement>
         <ui:VisualElement name="SelectUI" class="selectUI">
-            <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="FirstLabel" class="label" />
-            <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="SecondLabel" class="label" />
-            <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ThirdLabel" class="label" />
+            <ui:Label tabindex="-1" text="사용하기" display-tooltip-when-elided="true" name="FirstLabel" class="label" />
+            <ui:Label tabindex="-1" text="버리기" display-tooltip-when-elided="true" name="SecondLabel" class="label" />
+            <ui:Label tabindex="-1" text="취소하기" display-tooltip-when-elided="true" name="ThirdLabel" class="label" />
         </ui:VisualElement>
         <ui:VisualElement name="MoneyUI" class="moneyUI active" style="flex-grow: 1;">
             <ui:VisualElement name="MoneyImage" class="image" />

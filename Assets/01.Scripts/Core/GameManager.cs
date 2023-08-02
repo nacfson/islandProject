@@ -43,8 +43,11 @@ public class GameManager : MonoBehaviour
 
         CreatePoolManager(this.transform);
         CreateCameraController();
+        TimeManager.Instance.Generate();
         MoneyManager.Instance.Generate();
         UT_MainUI.Instance.Generate();
+        UIManager.Instance.Generate();
+        LightManager.Instance.Generate();
         SaveManager.Instance.Generate();
         InventoryManager.Instance.Generate();
         FarmManager.Instance.Generate();

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UI_Toolkit;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -90,9 +91,9 @@ public class InventoryManager : MonoBehaviour
         {
             if (i.GetItem() == item)
             {
-                if (i.GetAmount() >= amount)
+                if(i.GetAmount() >= amount && i.AddItem(-amount))
                 {
-                    i.AddItem(-amount);
+                    UT_MainUI.Instance.UnActiveSelectUI();
                     return true;
                 }
             }
