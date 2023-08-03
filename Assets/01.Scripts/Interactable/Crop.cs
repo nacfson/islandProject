@@ -17,7 +17,7 @@ public class CropSaveData
     }
 }
 
-public class Crop : PoolableMono, IInteractable
+public class Crop : PoolableMono,IGrowable, IInteractable
 {
     [SerializeField] private CropData _cropSO;
     private CropSaveData _cropSaveData;

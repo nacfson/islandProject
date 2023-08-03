@@ -4,6 +4,7 @@ using UnityEngine;
 using CustomUpdateManager;
 using System.Linq;
 using System;
+using JetBrains.Annotations;
 
 public class FarmManager : MonoBehaviour,IUpdatable
 {
@@ -23,6 +24,8 @@ public class FarmManager : MonoBehaviour,IUpdatable
 
     private Transform _farmParentTrm;
     private List<Farm> _farmList = new List<Farm>();
+    private Tree[] _trees;
+
     private HashSet<Crop> _cropHash = new HashSet<Crop>();
     public CropSaveData[] CropDatas
     {
@@ -48,6 +51,7 @@ public class FarmManager : MonoBehaviour,IUpdatable
         _farmParentTrm = transform.Find("PosData/FarmPos");
         _farmParentTrm.GetComponentsInChildren(_farmList);
 
+        //Farm List
         foreach(Farm farm  in _farmList)
         {
             farm.SetUp();
@@ -60,11 +64,24 @@ public class FarmManager : MonoBehaviour,IUpdatable
                 }
             }
         }
+        //Crop Hash
 
         foreach(Crop crop in _cropHash)
         {
             Debug.Log(String.Format("Crop: {0}", crop));
         }
+        //Tree Array
+
+        Transform[] transforms = GameManager.Instance.GetPosDatas("TreePos");
+        _trees = new Tree[transforms.Length];
+        for(int i = 0; i < transforms.Length; i++) 
+        {
+            _trees[i] = transforms[i].GetComponent<Tree>();
+            _trees[i].SetUp();
+        }
+        
+
+
     }
     //bool이 true 상태이면 식물을 심음
     public bool CanPlantCrops(Vector3 pos,int itemID)

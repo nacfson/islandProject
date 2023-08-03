@@ -16,7 +16,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                _instance = FindObjectOfType<InventoryManager>();   
+                _instance = FindObjectOfType<InventoryManager>();
             }
             return _instance;
         }
@@ -40,13 +40,13 @@ public class InventoryManager : MonoBehaviour
         foreach (ItemType itemType in Enum.GetValues((typeof(ItemType))))
         {
             try
-            { 
-                MethodInfo mInfo = this.GetType().GetMethod(String.Format("Do{0}Item",itemType), BindingFlags.Instance | BindingFlags.NonPublic);
+            {
+                MethodInfo mInfo = this.GetType().GetMethod(String.Format("Do{0}Item", itemType), BindingFlags.Instance | BindingFlags.NonPublic);
                 _itemActionDictionary.Add(itemType, mInfo);
             }
             catch
             {
-                Debug.LogError(String.Format("This is an error at {0}",itemType));
+                Debug.LogError(String.Format("This is an error at {0}", itemType));
             }
 
         }
@@ -89,13 +89,25 @@ public class InventoryManager : MonoBehaviour
     {
         foreach (var i in _slotList)
         {
-            if (i.GetItem() == item)
+            if (i.GetItem() == item && i.GetAmount() >= amount)
             {
-                if(i.GetAmount() >= amount && i.AddItem(-amount))
+                if (i.AddItem(-amount))
                 {
                     UT_MainUI.Instance.UnActiveSelectUI();
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+
+    public bool CanSubtractItem(Item item,int amount)
+    {
+        foreach (var i in _slotList)
+        {
+            if (i.GetItem() == item && i.GetAmount() >= amount)
+            {
+                return true;
             }
         }
         return false;
@@ -128,10 +140,10 @@ public class InventoryManager : MonoBehaviour
     public void SetSlotItem(List<CustomKeyValue<Item, int>> itemKeyValues)
     {
         Debug.Log("SetSlotItem");
-        for(int i =0; i < itemKeyValues.Count; i++)
+        for (int i = 0; i < itemKeyValues.Count; i++)
         {
-            CustomKeyValue<Item,int> pair = itemKeyValues.ElementAt(i);
-            Debug.Log(String.Format("Pair: {0}",pair));
+            CustomKeyValue<Item, int> pair = itemKeyValues.ElementAt(i);
+            Debug.Log(String.Format("Pair: {0}", pair));
             _slotList[i].SetItem(pair.key, pair.value);
         }
         UpdateInventory();
@@ -146,30 +158,40 @@ public class InventoryManager : MonoBehaviour
     public void DoItemAction(int itemID)
     {
         Item item = GetItemFromID(itemID);
-        if(SubtractItem(item,1))
+
+        if(CanSubtractItem(item,1))
         {
             ItemType itemType = item.itemType;
 
             MethodInfo mInfo = _itemActionDictionary[itemType];
             mInfo?.Invoke(this, new object[] { item });
         }
-        else
-        {
-            Debug.LogError($"Can't Use Item! ItemID: {itemID}");
-        }
 
-        UpdateInventory();
+
     }
     private void DoNormalItem(Item item) => Debug.Log("DoNormalItem");
     private void DoCropItem(Item item)
     {
         Debug.Log("DoCropItem");
         Vector3 playerPos = GameManager.Instance.PlayerBrain.transform.position;
-        bool result = FarmManager.Instance.CanPlantCrops(playerPos,item.uniqueID);
+        bool result = FarmManager.Instance.CanPlantCrops(playerPos, item.uniqueID);
+        if(result)
+        {
+            if(SubtractItem(item, 1) == false)
+            {
+                Debug.LogError("This is not enough item");
+            }
+            UpdateInventory();
+        }
+        else
+        {
+            Debug.LogError(String.Format("Can't Plant Crops this pos! {0}",GameManager.Instance.PlayerBrain.transform.position));
+        }
+
         Debug.Log(String.Format("Result: {0}", result));
     }
     private void DoToolItem(Item item) => Debug.Log("DoToolAction");
     #endregion
 
-    public void Generate(){}
+    public void Generate() { }
 }
