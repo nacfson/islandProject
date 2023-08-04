@@ -13,7 +13,6 @@ public class ItemObject : PoolableMono, IInteractable
     private MeshFilter _meshFilter;
     private MeshRenderer _meshRenderer;
 
-
     private void Awake()
     {
         _meshFilter = GetComponent<MeshFilter>();
@@ -39,6 +38,10 @@ public class ItemObject : PoolableMono, IInteractable
 
         _meshFilter.mesh = _mesh;
         _meshRenderer.material = _mat;
+
+        enabled = true;
+        gameObject.layer = LayerMask.NameToLayer("INTERACTABLE");
+        transform.SetParent(null);
     }
 
     public void Interact(AgentBrain<ActionData> brain)

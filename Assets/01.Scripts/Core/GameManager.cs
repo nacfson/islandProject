@@ -78,6 +78,11 @@ public class GameManager : MonoBehaviour
     public Transform[] GetPosDatas(string childName)
     {
         Transform trm = transform.Find(String.Format("PosData/{0}",childName));
-        return trm.GetComponentsInChildren<Transform>();
+        Transform[] trms = new Transform[trm.childCount];
+        for(int i = 0; i < trms.Length; i++)
+        {
+            trms[i] = trm.GetChild(i).GetComponent<Transform>();
+        }
+        return trms;
     }
 }

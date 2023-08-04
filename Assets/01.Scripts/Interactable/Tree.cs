@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using DG.Tweening;
 
-public class Tree : MonoBehaviour, IInteractable, IActionable
+public class Tree : MonoBehaviour, IInteractable, IActionable, IGrowable
 {
+    #region Shake 관련 변수들
     private int _shakeCount = 3;
     [SerializeField] private float _shakeTimer = 3f;
     [SerializeField] private ItemObjListData _itemList;
@@ -14,18 +16,28 @@ public class Tree : MonoBehaviour, IInteractable, IActionable
     private bool _canShake = true;
 
     private MeshRenderer[] _meshRenderers;
+    #endregion
+
+    #region 과일 관련 변수들
+    private int _maxLevel = 3;
+    private int _curLevel = 0;
+
+    private float _curTime = 0f;
+    [SerializeField] private float _targetTime = 60f;
+    public event Action OnFruitGrew;
+    private Transform _fruitPos;
 
     private Transform[] _fruitPoses;
 
-
+    #endregion
     public void SetUp()
     {
 
-        Transform fruitPosParent = transform.Find("FruitPos");
-        _fruitPoses = new Transform[fruitPosParent.childCount];
+        _fruitPos = transform.Find("FruitPos");
+        _fruitPoses = new Transform[_fruitPos.childCount];
         for(int i = 0; i < _fruitPoses.Length; i++)
         {
-            _fruitPoses[i] = fruitPosParent.GetChild(i);
+            _fruitPoses[i] = _fruitPos.GetChild(i);
         }
 
     }
@@ -42,6 +54,7 @@ public class Tree : MonoBehaviour, IInteractable, IActionable
 
     private void DropItem()
     {
+        Init();
         ItemObject item = _itemList.GetRandItemObj();
         for (int i = 0; i < 3; i++)
         {
@@ -136,4 +149,37 @@ public class Tree : MonoBehaviour, IInteractable, IActionable
     public void ChangeShakeTrue(AgentBrain<ActionData> brain) => _canShake = true;
     private void ChangeToIdle(AgentBrain<ActionData> brain) => brain.ChangeState(StateType.Idle);
 
+    public void UpgradeLevel(int plus)
+    {
+        if (_curLevel >= _maxLevel) return;
+
+        _curTime += Time.deltaTime;
+        if (_curTime >= _targetTime)
+        {
+            _curLevel += plus;
+            if (_curLevel >= _maxLevel)
+            {
+                OnFruitGrew?.Invoke();
+                ItemObject item = _itemList.GetRandItemObj();
+                for (int i = 0; i < _fruitPoses.Length; i++)
+                {
+                    ItemObject itemObj = PoolManager.Instance.Pop(item.name) as ItemObject;
+                    itemObj.transform.SetParent(_fruitPoses[i]);
+                    itemObj.GetComponent<ItemObject>().enabled = false;
+                    itemObj.gameObject.layer = LayerMask.NameToLayer("Default");
+                    itemObj.transform.localPosition = Vector3.zero;
+                }
+                _curLevel = 0;
+            }
+            _curTime = 0f;
+        }
+    }
+    private void Init()
+    {
+        for(int i = 0; i < _fruitPoses.Length; i++)
+        {
+            ItemObject obj = _fruitPos.GetChild(i).GetComponentInChildren<ItemObject>();
+            PoolManager.Instance.Push(obj);
+        }
+    }
 }

@@ -78,6 +78,7 @@ public class FarmManager : MonoBehaviour,IUpdatable
         {
             _trees[i] = transforms[i].GetComponent<Tree>();
             _trees[i].SetUp();
+            Debug.Log(_trees[i].gameObject.name);
         }
         
 
@@ -111,9 +112,13 @@ public class FarmManager : MonoBehaviour,IUpdatable
     #region UpdateSystem
     public void CustomUpdate()
     {
-        foreach (Crop crop in _cropHash)
+        foreach (IGrowable crop in _cropHash)
         {
             crop.UpgradeLevel(1);
+        }
+        foreach(IGrowable tree in _trees)
+        {
+            tree.UpgradeLevel(1);
         }
     }
     private void OnEnable() => Add(this);

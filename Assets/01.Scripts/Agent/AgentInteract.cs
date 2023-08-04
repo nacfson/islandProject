@@ -50,9 +50,10 @@ public class AgentInteract : Agent<ActionData>
             // 여기에서 가장 가까운 콜라이더에 대한 동작을 수행할 수 있습니다.
             Debug.Log("가장 가까운 콜라이더: " + closestCollider.name);
             if (closestCollider.TryGetComponent<IInteractable>(out IInteractable i)) action(i);
-            else if (closestCollider.transform.parent.TryGetComponent<IInteractable>(out IInteractable ii)) action(ii);
+            else if (closestCollider.transform.parent.TryGetComponent(out IInteractable ii)) action(ii);
 
             if (closestCollider.TryGetComponent<IActionable>(out IActionable a)) _brain.Actionable = a;
+            else if (closestCollider.transform.parent.TryGetComponent(out IActionable aa)) _brain.Actionable = aa;
         }
     }
 
