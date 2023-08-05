@@ -190,7 +190,13 @@ public class InventoryManager : MonoBehaviour
 
         Debug.Log(String.Format("Result: {0}", result));
     }
-    private void DoToolItem(Item item) => Debug.Log("DoToolAction");
+    private void DoToolItem(Item item)
+    {
+        PlayerBrain pb = GameManager.Instance.PlayerBrain;
+        IActionable actionable = pb.FindTransform(String.Format("Tools/{0}",item.itemName)).GetComponent<IActionable>();
+        pb.Actionable = actionable;
+        Debug.Log(String.Format("PlayerBrain.Actionable: {0}",pb.Actionable));
+    }
     #endregion
 
     public void Generate() { }

@@ -18,6 +18,7 @@ public class UIState : NormalState{
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             UI_Toolkit.UT_MainUI.Instance.UnShowAllUI();
+            GameManager.Instance.CamController.TalkMode(false);
 
             //여기서 NullReference 오류 발생
             _brain.ChangeState(StateType.Idle);

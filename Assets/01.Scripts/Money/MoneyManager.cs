@@ -29,7 +29,7 @@ public class MoneyManager : MonoBehaviour
             _instance = this;
         }
 
-        _money = 3000;
+        _money = MAX_MONEY;
     }
 
     private void Start()

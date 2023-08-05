@@ -68,4 +68,5 @@ public class PlayerBrain : AgentBrain<ActionData>
         _currentState.OnEnterState();
 
     }
+    public Transform FindTransform(string childName) => transform.Find(childName);
 }
