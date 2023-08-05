@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : NormalState{
-    public override void OnEnterState(){
+public class IdleState : NormalState
+{
+    public override void OnEnterState()
+    {
         _agentMovement.StopImmediately();
         _agentMovement.IsActiveMove = true;
         _agentInteract.UnInteract();
@@ -11,10 +13,12 @@ public class IdleState : NormalState{
         _brain.GetAD().CanInteract = true;
     }
 
-    public override void OnExitState(){
+    public override void OnExitState()
+    {
     }
 
-    public override void UpdateState(){
+    public override void UpdateState()
+    {
 
-    }   
+    }
 }
