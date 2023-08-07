@@ -19,7 +19,7 @@ public class Tree : MonoBehaviour, IInteractable, IActionable, IGrowable
     #endregion
 
     #region 과일 관련 변수들
-    private int _maxLevel = 3;
+    private readonly int _maxLevel = 3;
     private int _curLevel = 0;
 
     private float _curTime = 0f;
@@ -93,6 +93,8 @@ public class Tree : MonoBehaviour, IInteractable, IActionable, IGrowable
             DropItem();
             pb.AgentAnimator.OnPushAnimationEndTrigger += ChangeToIdle;
             StopAllCoroutines();
+            _curLevel = 0;
+
             return;
         }
         StopAllCoroutines();
@@ -153,10 +155,13 @@ public class Tree : MonoBehaviour, IInteractable, IActionable, IGrowable
     {
         if (_curLevel >= _maxLevel) return;
 
+        Debug.Log(string.Format("CurLever: {0}",_curLevel));
+        Debug.Log(string.Format("MaxLevel: {0}",_maxLevel));
+
         _curTime += Time.deltaTime;
         if (_curTime >= _targetTime)
         {
-            _curLevel += plus;
+            _curLevel += plus;                        
             if (_curLevel >= _maxLevel)
             {
                 OnFruitGrew?.Invoke();
@@ -169,7 +174,6 @@ public class Tree : MonoBehaviour, IInteractable, IActionable, IGrowable
                     itemObj.gameObject.layer = LayerMask.NameToLayer("Default");
                     itemObj.transform.localPosition = Vector3.zero;
                 }
-                _curLevel = 0;
             }
             _curTime = 0f;
         }

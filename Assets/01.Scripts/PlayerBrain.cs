@@ -6,7 +6,7 @@ using System;
 
 public enum StateType
 {
-    Idle = 0, UI = 1, Push = 2, Pick = 3, Entry = 4,
+    Idle = 0, UI = 1, Push = 2, Pick = 3, Entry = 4,Tool =5,
 }
 
 public class PlayerBrain : AgentBrain<ActionData>
@@ -54,6 +54,13 @@ public class PlayerBrain : AgentBrain<ActionData>
 
 
         _agentAnimator.OnOpenAnimationEndTrigger += (AgentBrain<ActionData> brain) => UIManager.Instance.FadeSequence(2f, () => ChangeState(StateType.Idle));
+
+        Transform toolTrmParent = FindTransform("Tools");
+        for(int i = 0;  i < toolTrmParent.childCount; i++)
+        {
+            toolTrmParent.GetChild(i).gameObject.SetActive(false);
+        }
+
     }
 
     protected virtual void Update()
@@ -69,4 +76,9 @@ public class PlayerBrain : AgentBrain<ActionData>
 
     }
     public Transform FindTransform(string childName) => transform.Find(childName);
+
+    public void SetToolActive(string name, bool active)
+    {
+        FindTransform(String.Format("Tools/{0}",name)).gameObject.SetActive(active);
+    }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -362,6 +362,7 @@ GameObject:
   - component: {fileID: 37648588}
   - component: {fileID: 37648589}
   - component: {fileID: 37648590}
+  - component: {fileID: 37648591}
   m_Layer: 0
   m_Name: States
   m_TagString: Untagged
@@ -442,6 +443,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54a18722646dfa24eb651d16fb32bde0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &37648591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37648584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e116587120c03745944f2ffc2cb436a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &40490202 stripped
@@ -8602,10 +8615,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0052016876
-      value: 0.2732106
-      inSlope: -1.2047085
-      outSlope: -1.2047085
+      time: -0.00769187
+      value: 0.107783526
+      inSlope: -0.27837914
+      outSlope: -0.27837914
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -8613,8 +8626,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.18765986
       value: 0.05340168
-      inSlope: -0.81671816
-      outSlope: -0.81671816
+      inSlope: -0.35355353
+      outSlope: -0.35355353
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -8622,24 +8635,24 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.5344952
       value: -0.09529629
-      inSlope: 0.10799937
-      outSlope: 0.10799937
+      inSlope: -0.07821807
+      outSlope: -0.07821807
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.9692456
-      value: 0.18499891
-      inSlope: 1.3640099
-      outSlope: 1.3640099
+      time: 0.95635206
+      value: 0.019571856
+      inSlope: 1.1777923
+      outSlope: 1.1777923
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.0000618
-      value: 0.24919796
+      time: 0.9871682
+      value: 0.0837709
       inSlope: 2.083293
       outSlope: 2.083293
       tangentMode: 34

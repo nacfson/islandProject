@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using UI_Toolkit;
 using UnityEngine;
 using UnityEngine.Video;
@@ -192,9 +193,14 @@ public class InventoryManager : MonoBehaviour
     }
     private void DoToolItem(Item item)
     {
+        StringBuilder sb = new StringBuilder();
+        sb.Append(String.Format("Tools/{0}",item.itemName));
         PlayerBrain pb = GameManager.Instance.PlayerBrain;
-        IActionable actionable = pb.FindTransform(String.Format("Tools/{0}",item.itemName)).GetComponent<IActionable>();
+        IActionable actionable = pb.FindTransform(sb.ToString()).GetComponent<IActionable>();
+        pb.SetToolActive(sb.ToString(),true);
         pb.Actionable = actionable;
+        pb.ChangeState(StateType.Tool);
+        UT_MainUI.Instance.UnShowAllUI();
         Debug.Log(String.Format("PlayerBrain.Actionable: {0}",pb.Actionable));
     }
     #endregion
