@@ -155,9 +155,6 @@ public class Tree : MonoBehaviour, IInteractable, IActionable, IGrowable
     {
         if (_curLevel >= _maxLevel) return;
 
-        Debug.Log(string.Format("CurLever: {0}",_curLevel));
-        Debug.Log(string.Format("MaxLevel: {0}",_maxLevel));
-
         _curTime += Time.deltaTime;
         if (_curTime >= _targetTime)
         {

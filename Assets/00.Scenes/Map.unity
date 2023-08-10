@@ -3019,6 +3019,7 @@ MonoBehaviour:
   IsInteracting: 0
   IsPushing: 0
   IsPicking: 0
+  UsingTool: 0
   CanInteract: 1
   TargetPos: {x: 0, y: 0, z: 0}
 --- !u!4 &648476230 stripped
@@ -5548,6 +5549,7 @@ MonoBehaviour:
   IsInteracting: 0
   IsPushing: 0
   IsPicking: 0
+  UsingTool: 0
   CanInteract: 0
   TargetPos: {x: 0, y: 0, z: 0}
   IsTalking: 0
@@ -5661,7 +5663,7 @@ MonoBehaviour:
     m_Root: {fileID: 8968411727313972034}
     m_Mid: {fileID: 909963338646979055}
     m_Tip: {fileID: 3928868367915879311}
-    m_Target: {fileID: 543450652026186486}
+    m_Target: {fileID: 0}
     m_Hint: {fileID: 0}
     m_TargetPositionWeight: 1
     m_TargetRotationWeight: 1

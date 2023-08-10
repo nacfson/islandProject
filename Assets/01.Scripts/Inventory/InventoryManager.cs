@@ -203,11 +203,9 @@ public class InventoryManager : MonoBehaviour
         }   
 
         StringBuilder sb = new StringBuilder();
-        sb.Append(String.Format("Tools/{0}",item.itemName));
+        sb.Append(String.Format("{0}",item.itemName));
 
-
-
-        IActionable actionable = pb.FindTransform(sb.ToString()).GetComponent<IActionable>();
+        IActionable actionable = pb.FindTransform(sb.ToString(),pb.ToolTrm).GetComponent<IActionable>();
         pb.SetToolActive(sb.ToString(),true);
         pb.Actionable = actionable;
         pb.ChangeState(StateType.Tool);

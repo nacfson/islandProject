@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using UnityEngine.Animations.Rigging;
 
 public enum StateType
 {
@@ -15,10 +16,12 @@ public class PlayerBrain : AgentBrain<ActionData>
     [SerializeField] protected NormalState _currentState;
 
     [SerializeField] private Transform _toolTrm;
+    public Transform ToolTrm => _toolTrm;
 
     private Dictionary<StateType, NormalState> _stateDictionary;
     private List<Agent<ActionData>> _agents;
 
+    private TwoBoneIKConstraint _twoBone;
     private AgentAnimator _agentAnimator;
     public AgentAnimator AgentAnimator => _agentAnimator;
 
@@ -51,7 +54,9 @@ public class PlayerBrain : AgentBrain<ActionData>
             _stateDictionary.Add(state, stateScript);
         }
 
-        _actionData = transform.Find("ActionData").GetComponent<ActionData>();
+        _twoBone = FindTransform(string.Format("Visual/RigLayer/RightHandIK")).GetComponent<TwoBoneIKConstraint>();
+        Debug.Log(_twoBone);
+        _actionData = FindTransform("ActionData").GetComponent<ActionData>();
 
 
 
@@ -77,10 +82,30 @@ public class PlayerBrain : AgentBrain<ActionData>
         _currentState.OnEnterState();
 
     }
-    public Transform FindTransform(string childName) => transform.Find(childName);
+    public Transform FindTransform(string childName,Transform parentTrm = null)
+    {
+        Transform returnTrm;
+        if(parentTrm != null)
+        {
+            returnTrm = parentTrm.Find(childName);
+        }
+        else
+        {
+            returnTrm = transform.Find(childName);
+        }
+        return returnTrm;
+    }
 
     public void SetToolActive(string name, bool active)
     {
+        if (active)
+        {
+            _twoBone.data.target = _toolTrm;
+        }
+        else
+        {
+            _twoBone.data.target = null;
+        }
         _toolTrm.Find(String.Format("{0}",name)).gameObject.SetActive(active);
     }
 }
