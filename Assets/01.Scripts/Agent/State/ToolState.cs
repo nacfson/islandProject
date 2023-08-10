@@ -9,11 +9,13 @@ public class ToolState : NormalState
         _agentMovement.StopImmediately();
         _agentMovement.IsActiveMove = true;
         _brain.GetAD().CanInteract = true;
+        _brain.GetAD().UsingTool = true;
     }
 
     public override void OnExitState()
     {
         _agentAction.UnAction();
+        _brain.GetAD().UsingTool = false;
     }
 
     public override void UpdateState()

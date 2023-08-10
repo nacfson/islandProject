@@ -191,11 +191,22 @@ public class InventoryManager : MonoBehaviour
 
         Debug.Log(String.Format("Result: {0}", result));
     }
+    //사용중이면 취소하기 버튼으로 바꿈
     private void DoToolItem(Item item)
     {
+        PlayerBrain pb = GameManager.Instance.PlayerBrain;
+
+        if (pb.GetAD().UsingTool)
+        {
+            pb.ChangeState(StateType.Idle);
+
+        }   
+
         StringBuilder sb = new StringBuilder();
         sb.Append(String.Format("Tools/{0}",item.itemName));
-        PlayerBrain pb = GameManager.Instance.PlayerBrain;
+
+
+
         IActionable actionable = pb.FindTransform(sb.ToString()).GetComponent<IActionable>();
         pb.SetToolActive(sb.ToString(),true);
         pb.Actionable = actionable;

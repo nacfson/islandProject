@@ -7,6 +7,7 @@ public class ActionData : MonoBehaviour{
     public bool IsInteracting;
     public bool IsPushing;
     public bool IsPicking;
+    public bool UsingTool;
 
     public bool CanInteract;
     public Vector3 TargetPos;

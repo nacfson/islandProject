@@ -14,6 +14,8 @@ public class PlayerBrain : AgentBrain<ActionData>
     public NormalState CurrentState => _currentState;
     [SerializeField] protected NormalState _currentState;
 
+    [SerializeField] private Transform _toolTrm;
+
     private Dictionary<StateType, NormalState> _stateDictionary;
     private List<Agent<ActionData>> _agents;
 
@@ -55,10 +57,10 @@ public class PlayerBrain : AgentBrain<ActionData>
 
         _agentAnimator.OnOpenAnimationEndTrigger += (AgentBrain<ActionData> brain) => UIManager.Instance.FadeSequence(2f, () => ChangeState(StateType.Idle));
 
-        Transform toolTrmParent = FindTransform("Tools");
-        for(int i = 0;  i < toolTrmParent.childCount; i++)
+        
+        for(int i = 0;  i < _toolTrm.childCount; i++)
         {
-            toolTrmParent.GetChild(i).gameObject.SetActive(false);
+            _toolTrm.GetChild(i).gameObject.SetActive(false);
         }
 
     }
@@ -79,6 +81,6 @@ public class PlayerBrain : AgentBrain<ActionData>
 
     public void SetToolActive(string name, bool active)
     {
-        FindTransform(String.Format("Tools/{0}",name)).gameObject.SetActive(active);
+        _toolTrm.Find(String.Format("{0}",name)).gameObject.SetActive(active);
     }
 }
