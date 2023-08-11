@@ -68,7 +68,6 @@ public class AgentMovement : Agent<ActionData>
         }
         StopImmediately();
         Callback?.Invoke();
-        IsActiveMove = true;
     }
 
     public void SetPlayerPos(Vector3 pos)
