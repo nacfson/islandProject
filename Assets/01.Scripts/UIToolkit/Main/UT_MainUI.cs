@@ -166,6 +166,7 @@ namespace UI_Toolkit
                 _inventoryUI.RemoveFromClassList("active");
                 _selectUI.RemoveFromClassList("active");
                 GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
+                GameManager.Instance.CamController.TalkMode(false);
             }
         }
 

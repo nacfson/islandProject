@@ -8,7 +8,8 @@ public class AgentInventory : Agent<ActionData>{
         _agentInput.OnInventoryKeyPress += OpenInv;
     }
 
-    public void OpenInv(){
+    public void OpenInv()
+    {
         bool isOpen = UT_MainUI.Instance.IsInvOpen();
         //Debug.Log(isOpen);
         UT_MainUI.Instance.OpenInv(!isOpen);

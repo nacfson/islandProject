@@ -4,15 +4,16 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 
-public class FishingRod : MonoBehaviour, IActionable
+public class FishingRod : MonoBehaviour, IActionable,ITool
 {
     private Transform _bobber;
+    private Transform _playerTrm;
 
-    public void Awake()
+    public void Init(Transform trm)
     {
         _bobber = transform.Find("Bobber");
+        this._playerTrm = trm;
     }
-
     public void DoAction(AgentBrain<ActionData> brain)
     {
         ThrowBobber();
@@ -25,7 +26,7 @@ public class FishingRod : MonoBehaviour, IActionable
 
     public void ThrowBobber()
     {
-        Vector3 endValue = Vector3.zero;
+        Vector3 endValue = _playerTrm.forward;
         float jumpPower = 2f;
         int numJumps = 1;
         float duration = 2f;
