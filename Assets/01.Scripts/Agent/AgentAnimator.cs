@@ -12,11 +12,13 @@ public class AgentAnimator : Agent<ActionData>
     protected readonly int _pushTriggerHash = Animator.StringToHash("PUSH");
     protected readonly int _pickTriggerHash = Animator.StringToHash("PICK");
     protected readonly int _openTriggerHash = Animator.StringToHash("OPEN");
+    protected readonly int _throwTriggerHash = Animator.StringToHash(("THROW"));
 
     public event Action<AgentBrain<ActionData>> OnPushAnimationEndTrigger;
     public event Action<AgentBrain<ActionData>> OnPickAnimationEndTrigger;
     public event Action<AgentBrain<ActionData>> OnOpenAnimationStartTrigger;
     public event Action<AgentBrain<ActionData>> OnOpenAnimationEndTrigger;
+    public event Action<AgentBrain<ActionData>> OnThrowAnimationEndTrigger; 
 
     protected Animator _animator;
 
@@ -30,6 +32,7 @@ public class AgentAnimator : Agent<ActionData>
     public void SetTriggerPush(bool result) => SetAnimatorTrigger(result, _pushTriggerHash);
     public void SetTriggerPick(bool result) => SetAnimatorTrigger(result, _pickTriggerHash);
     public void SetTriggerOpen(bool result) => SetAnimatorTrigger(result, _openTriggerHash);
+    public void SetTriggerThrow(bool result) => SetAnimatorTrigger(result, _throwTriggerHash);
     private void SetAnimatorTrigger(bool result,int animHash)
     {
         if (result) _animator.SetTrigger(animHash);
@@ -42,6 +45,8 @@ public class AgentAnimator : Agent<ActionData>
         SetTriggerPush(false);
         SetTriggerPick(false);
         SetTriggerOpen(false);
+        SetTriggerThrow(false);
+
     }
 
     public void OnPushAnimationEnd()
@@ -59,5 +64,12 @@ public class AgentAnimator : Agent<ActionData>
     public void OnOpenAnimationStart()
     {
         OnOpenAnimationStartTrigger?.Invoke(_brain);
+    }
+    /// <summary>
+    /// 낚싯대 던지는 애니메이션에 이러한 이벤트를 추가해주어야 함
+    /// </summary>
+    public void OnThrowAnimationEnd()
+    {
+        OnThrowAnimationEndTrigger?.Invoke(_brain);
     }
 }

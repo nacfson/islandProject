@@ -13,6 +13,7 @@ public class AgentInput : Agent<ActionData>, IUpdatable
     public event Action OnInteractKeyPress;
     public event Action OnActionKeyPress;
     public event Action OnInventoryKeyPress;
+    
 
     public override void SetUp(Transform agent)
     {

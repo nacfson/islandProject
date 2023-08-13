@@ -65,11 +65,12 @@ public class PlayerBrain : AgentBrain<ActionData>
         
         for(int i = 0;  i < _toolTrm.childCount; i++)
         {
-            if (_toolTrm.TryGetComponent<ITool>(out ITool tool))
+            GameObject toolObj = _toolTrm.GetChild(i).gameObject;
+            if (toolObj.TryGetComponent<ITool>(out ITool tool))
             {
                 tool.Init(this.transform);
             }
-            _toolTrm.GetChild(i).gameObject.SetActive(false);
+            toolObj.SetActive(false);
         }
 
     }
