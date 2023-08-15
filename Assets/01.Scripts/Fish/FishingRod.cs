@@ -13,25 +13,32 @@ public class FishingRod : MonoBehaviour, IActionable,ITool
     private bool _isThrowed = false;
     public void Init(Transform trm)
     {
+        _bobber = transform.Find("Bobber");
         _originBobberPos = _bobber.transform.position;
         _isThrowed = false;
-        _bobber = transform.Find("Bobber");
         this._playerTrm = trm;
         _agentAnimator = trm.Find("Visual").GetComponent<AgentAnimator>();
     }
     public void DoAction(AgentBrain<ActionData> brain)
     {
+        PlayerBrain pb = (PlayerBrain)brain;
         if (_isThrowed)
         {
+            Debug.Log("UnThrow");
             _agentAnimator.OnThrowAnimationEndTrigger -= ThrowBobber;
+            _agentAnimator.SetBoolThrow(false);
             _bobber.transform.position = _originBobberPos;
             _isThrowed = false;
+            pb.ChangeState(StateType.Tool);
         }
         else
         {
+            Debug.Log("Throw");
             _agentAnimator.OnThrowAnimationEndTrigger += ThrowBobber;
             _agentAnimator.SetTriggerThrow(true);
+            _agentAnimator.SetBoolThrow(true);
             _isThrowed = true;
+            pb.ChangeState(StateType.Fishing);
         }
         //ThrowBobber();
     }

@@ -13,7 +13,7 @@ public class AgentAnimator : Agent<ActionData>
     protected readonly int _pickTriggerHash = Animator.StringToHash("PICK");
     protected readonly int _openTriggerHash = Animator.StringToHash("OPEN");
     protected readonly int _throwTriggerHash = Animator.StringToHash(("THROW"));
-
+    protected readonly int _throwBoolHash = Animator.StringToHash(("IS_THROW"));
     public event Action<AgentBrain<ActionData>> OnPushAnimationEndTrigger;
     public event Action<AgentBrain<ActionData>> OnPickAnimationEndTrigger;
     public event Action<AgentBrain<ActionData>> OnOpenAnimationStartTrigger;
@@ -29,6 +29,7 @@ public class AgentAnimator : Agent<ActionData>
     }
     public void SetSpeed(float value) => _animator.SetFloat(_speedHash, value);
     public void SetBoolPush(bool value) => _animator.SetBool(_pushBoolHash, value);
+    public void SetBoolThrow(bool value) => _animator.SetBool(_throwBoolHash, value);
     public void SetTriggerPush(bool result) => SetAnimatorTrigger(result, _pushTriggerHash);
     public void SetTriggerPick(bool result) => SetAnimatorTrigger(result, _pickTriggerHash);
     public void SetTriggerOpen(bool result) => SetAnimatorTrigger(result, _openTriggerHash);
@@ -46,7 +47,6 @@ public class AgentAnimator : Agent<ActionData>
         SetTriggerPick(false);
         SetTriggerOpen(false);
         SetTriggerThrow(false);
-
     }
 
     public void OnPushAnimationEnd()

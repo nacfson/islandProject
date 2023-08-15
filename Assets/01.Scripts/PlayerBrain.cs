@@ -7,7 +7,7 @@ using UnityEngine.Animations.Rigging;
 
 public enum StateType
 {
-    Idle = 0, UI = 1, Push = 2, Pick = 3, Entry = 4,Tool =5,
+    Idle = 0, UI = 1, Push = 2, Pick = 3, Entry = 4,Tool =5,Fishing = 6
 }
 
 public class PlayerBrain : AgentBrain<ActionData>
@@ -62,10 +62,11 @@ public class PlayerBrain : AgentBrain<ActionData>
 
         _agentAnimator.OnOpenAnimationEndTrigger += (AgentBrain<ActionData> brain) => UIManager.Instance.FadeSequence(2f, () => ChangeState(StateType.Idle));
 
-        
+        Debug.Log(string.Format("ToolObjChildCOunt: {0}",_toolTrm.childCount));
         for(int i = 0;  i < _toolTrm.childCount; i++)
         {
             GameObject toolObj = _toolTrm.GetChild(i).gameObject;
+            Debug.Log(string.Format("ToolObjectName: {0}",toolObj.name));
             if (toolObj.TryGetComponent<ITool>(out ITool tool))
             {
                 tool.Init(this.transform);
