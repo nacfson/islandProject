@@ -14,7 +14,7 @@ public class ToolState : NormalState
 
     public override void OnExitState()
     {
-        _agentAction.UnAction();
+        //_agentAction.UnAction();
         _brain.GetAD().UsingTool = false;
     }
 

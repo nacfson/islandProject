@@ -70,6 +70,7 @@ public class AgentAnimator : Agent<ActionData>
     /// </summary>
     public void OnThrowAnimationEnd()
     {
+        Debug.Log("OnThrowAnimationEnd");
         OnThrowAnimationEndTrigger?.Invoke(_brain);
     }
 }
