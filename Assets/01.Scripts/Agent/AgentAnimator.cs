@@ -14,14 +14,15 @@ public class AgentAnimator : Agent<ActionData>
     protected readonly int _openTriggerHash = Animator.StringToHash("OPEN");
     protected readonly int _throwTriggerHash = Animator.StringToHash(("THROW"));
     protected readonly int _throwBoolHash = Animator.StringToHash(("IS_THROW"));
+
     public event Action<AgentBrain<ActionData>> OnPushAnimationEndTrigger;
     public event Action<AgentBrain<ActionData>> OnPickAnimationEndTrigger;
     public event Action<AgentBrain<ActionData>> OnOpenAnimationStartTrigger;
     public event Action<AgentBrain<ActionData>> OnOpenAnimationEndTrigger;
-    public event Action<AgentBrain<ActionData>> OnThrowAnimationEndTrigger; 
+    public event Action<AgentBrain<ActionData>> OnThrowAnimationEndTrigger;
+    public event Action<AgentBrain<ActionData>> UnThrowAnimationEndTrigger;
 
     protected Animator _animator;
-
     public override void SetUp(Transform agent)
     {
         _animator = GetComponent<Animator>();
@@ -72,5 +73,11 @@ public class AgentAnimator : Agent<ActionData>
     {
         Debug.Log("OnThrowAnimationEnd");
         OnThrowAnimationEndTrigger?.Invoke(_brain);
+    }
+
+    public void UnThrowAnimationEnd()
+    {
+        Debug.Log("UnThrowAnimationEndTrigger");
+        UnThrowAnimationEndTrigger?.Invoke(_brain);
     }
 }

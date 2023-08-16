@@ -4,17 +4,28 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 
-public class FishingRod : MonoBehaviour, IActionable,ITool
+public class FishingRod : MonoBehaviour, IActionable, ITool
 {
     [SerializeField] private float _jumpPower = 2f;
     [SerializeField] private float _duration = 2f;
     [SerializeField] private float _throwDistance = 3f;
+    [SerializeField] private LayerMask _canInteractLayer;
     
     private Transform _bobber;
     private Vector3 _originBobberPos;
     private Transform _playerTrm;
+    private ToolHandler _handler;
+
     private AgentAnimator _agentAnimator;
+
     private bool _isThrowed = false;
+    private bool _canFishing = false;
+    public bool CanFishing
+    {
+        get => _canFishing;
+        set => _canFishing = value;
+    }
+
     public void Init(Transform trm)
     {
         _bobber = transform.Find("Bobber");
@@ -29,11 +40,20 @@ public class FishingRod : MonoBehaviour, IActionable,ITool
         PlayerBrain pb = (PlayerBrain)brain;
         if (_isThrowed)
         {
+            if(_canFishing)
+            {
+                _agentAnimator.UnThrowAnimationEndTrigger += Fishing;
+                return;
+            }
             Debug.Log("UnThrow");
+
             _agentAnimator.SetBoolThrow(false);
             _bobber.transform.position = _originBobberPos;
             _isThrowed = false;
             pb.ChangeState(StateType.Tool);
+
+            _handler.UnRegisterActionable();
+            _handler = null;
         }
         else
         {
@@ -46,10 +66,19 @@ public class FishingRod : MonoBehaviour, IActionable,ITool
         //ThrowBobber();
     }
 
+    private void Fishing(AgentBrain<ActionData> obj)
+    {
+        Debug.Log("¹°°í±â¸¦ È¹µæÇÏ¿´´Ù.");
+
+        
+    }
+
     public void UnAction(AgentBrain<ActionData> brain)
     {
         Debug.Log("UnRegisterThrowBobber");
         _agentAnimator.OnThrowAnimationEndTrigger -= ThrowBobber;
+        _agentAnimator.UnThrowAnimationEndTrigger -= Fishing;
+
     }
 
     public void ThrowBobber(AgentBrain<ActionData> brain)
@@ -62,7 +91,18 @@ public class FishingRod : MonoBehaviour, IActionable,ITool
 
         Sequence sequence = DOTween.Sequence();
         sequence.Append(_bobber.DOJump(endValue,_jumpPower,numJumps,_duration,snapping));
-        sequence.AppendCallback(() => Debug.Log(String.Format("Boober Pos: {0} FihsingRod Pos: {1}",_bobber.position,transform.position)));
+        sequence.AppendCallback(() => 
+        {
+            Vector3 bobberPos = _bobber.transform.position;
+            Collider[] cols = Physics.OverlapSphere(bobberPos,1f,_canInteractLayer);
+            if(cols.Length > 0)
+            {
+                if(cols[0].TryGetComponent<Water>(out Water water))
+                {
+                    water.Interact(this, bobberPos);
+                    _handler = water;
+                }
+            }
+        });
     }
-
 }

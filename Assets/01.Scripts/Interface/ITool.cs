@@ -1,5 +1,5 @@
 using UnityEngine;
-    public interface ITool
-    {
-        public void Init(Transform trm);
-    }
+public interface ITool
+{
+    public void Init(Transform trm);
+}
