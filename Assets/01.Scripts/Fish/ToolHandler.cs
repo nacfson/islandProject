@@ -11,7 +11,7 @@ public abstract class ToolHandler : MonoBehaviour
     }
     public virtual void UnRegisterActionable()
     {
-        Debug.Log(String.Format("µÓ∑œ «ÿ¡¶µ» Actionable: {0}",_iActionable));
+        Debug.Log(String.Format("Îì±Î°ù Ìï¥Ï†úÎêú Actionable: {0}",_iActionable));
         _iActionable = null;
     }
 }
