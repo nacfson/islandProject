@@ -5,10 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public enum ERarity
 {
+    NONE = 0,
     COMMON = 1,
     RARE = 2,
     UNIQUE = 3
 }
+
+
 [CreateAssetMenu(menuName = "SO/Item/Fish")]
 public class FishData : Item
 {

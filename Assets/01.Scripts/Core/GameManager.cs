@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private PoolingListSO _poolingList;
     [SerializeField] private TargetPosListData _targetPosList;
+
+    [SerializeField] private ItemRarityData _itemRarityData;
+    public ItemRarityData ItemRarityData => _itemRarityData;
+    
     private CameraController _camController;
     public CameraController CamController => _camController;
 
