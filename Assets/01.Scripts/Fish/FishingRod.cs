@@ -14,17 +14,11 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
     private Transform _bobber;
     private Vector3 _originBobberPos;
     private Transform _playerTrm;
-    private ToolHandler _handler;
+    private Water _handler;
 
     private AgentAnimator _agentAnimator;
 
     private bool _isThrowed = false;
-    private bool _canFishing = false;
-    public bool CanFishing
-    {
-        get => _canFishing;
-        set => _canFishing = value;
-    }
 
     public void Init(Transform trm)
     {
@@ -40,13 +34,14 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
         PlayerBrain pb = (PlayerBrain)brain;
         if (_isThrowed)
         {
-            if(_canFishing)
+            FishData fish = _handler.GetFish();
+            if(fish != null)
             {
-                _agentAnimator.UnThrowAnimationEndTrigger += Fishing;
+                InventoryManager.Instance.AddItem(fish,1);
+                Debug.Log(String.Format("Î¨ºÍ≥†Í∏∞Î•º ÌöçÎìùÌïòÏòÄÏäµÎãàÎã§: {0}",fish));
                 return;
             }
             Debug.Log("UnThrow");
-
             _agentAnimator.SetBoolThrow(false);
             _bobber.transform.position = _originBobberPos;
             _isThrowed = false;
@@ -65,22 +60,12 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
         }
         //ThrowBobber();
     }
-
-    private void Fishing(AgentBrain<ActionData> obj)
-    {
-        Debug.Log("π∞∞Ì±‚∏¶ »πµÊ«œø¥¥Ÿ.");
-
-        
-    }
-
     public void UnAction(AgentBrain<ActionData> brain)
     {
         Debug.Log("UnRegisterThrowBobber");
         _agentAnimator.OnThrowAnimationEndTrigger -= ThrowBobber;
-        _agentAnimator.UnThrowAnimationEndTrigger -= Fishing;
 
     }
-
     public void ThrowBobber(AgentBrain<ActionData> brain)
     {
         Vector3 endValue = _playerTrm.position + _playerTrm.forward * _throwDistance;
