@@ -45,13 +45,17 @@ public class Water : ToolHandler
 
     private IEnumerator FishCor()
     {
+        FishingRod fr = (FishingRod)_iActionable;
         float targetTime = Random.Range(_minAppearTime,_maxAppearTime);
         yield return new WaitForSeconds(targetTime);
+        Debug.Log("Can Catch Fish");
         //여기서 물고기를 낚아야 된다는 신호를 보내야 함
+        fr.EmphasizeIcon(true);
         _returnFish = _fishList.GetFishDataWithRarity(this.ItemRarityData);
         yield return new WaitForSeconds(1f);
         _returnFish = null;
-        FishingRod fr = (FishingRod)_iActionable;
+        fr.EmphasizeIcon(false);
+
     }
 
     public FishData GetFish() => _returnFish;
