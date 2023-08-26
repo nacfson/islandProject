@@ -8,10 +8,11 @@ public class Water : ToolHandler
 {
     private Vector3 _bobberPos;
 
-    [SerializeField] private FishDataList _fishList;
+    private FishDataList _fishList;
+    private FishingRod _fishingRod;
 
     private float _minAppearTime = 5f;
-    private float _maxAppearTime = 60f;
+    private float _maxAppearTime = 5f;
     
     private FishData _returnFish;
     private ItemRarityData _itemRarityData;
@@ -26,9 +27,16 @@ public class Water : ToolHandler
             return _itemRarityData;
         }
     }
+
     public void Interact(IActionable actionable,Vector3 bobberPos)
     {
+        if(_fishList == null)
+        {
+            _fishList = GameManager.Instance.FishDataList;
+        }
+        
         RegisterActionable(actionable);
+        _fishingRod = (FishingRod)actionable;
         this._bobberPos = bobberPos;
         Debug.Log(String.Format("BobberPos: {0}",_bobberPos));
         StartCoroutine(FishCor());
@@ -41,20 +49,20 @@ public class Water : ToolHandler
         UnRegisterActionable();
         this._bobberPos = Vector3.zero;
         StopAllCoroutines();
+        _fishingRod.EmphasizeIcon(false);
     }
 
     private IEnumerator FishCor()
     {
-        FishingRod fr = (FishingRod)_iActionable;
         float targetTime = Random.Range(_minAppearTime,_maxAppearTime);
         yield return new WaitForSeconds(targetTime);
         Debug.Log("Can Catch Fish");
         //여기서 물고기를 낚아야 된다는 신호를 보내야 함
-        fr.EmphasizeIcon(true);
+        _fishingRod.EmphasizeIcon(true);
         _returnFish = _fishList.GetFishDataWithRarity(this.ItemRarityData);
         yield return new WaitForSeconds(1f);
         _returnFish = null;
-        fr.EmphasizeIcon(false);
+        _fishingRod.EmphasizeIcon(false);
 
     }
 

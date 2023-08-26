@@ -548,6 +548,10 @@ PrefabInstance:
       value: TempRoom
       objectReference: {fileID: 0}
     - target: {fileID: 6050311056938276165, guid: 91972965bc17c744bac2ab896e097f38, type: 3}
+      propertyPath: m_Name
+      value: TempWater(Floor)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050311056938276165, guid: 91972965bc17c744bac2ab896e097f38, type: 3}
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
@@ -1078,7 +1082,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8edc21ee203be504d8ad6bf270c07200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fishList: {fileID: 0}
 --- !u!4 &176633994 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5609359287999745926, guid: a977d6cc54605b74cbf99c58ec43e45c, type: 3}
@@ -8694,6 +8697,7 @@ MonoBehaviour:
   _poolingList: {fileID: 11400000, guid: 180115cb86db9904ba68846b742a2a41, type: 2}
   _targetPosList: {fileID: 11400000, guid: 5e06b2225c0e8fc40a92d84be8119251, type: 2}
   _itemRarityData: {fileID: 11400000, guid: 1cd202afa9577a240a2be9e27f2e5451, type: 2}
+  _fishDataList: {fileID: 11400000, guid: 75473c58e7de5784cb08bfd444bd39fd, type: 2}
 --- !u!4 &2131735648
 Transform:
   m_ObjectHideFlags: 0

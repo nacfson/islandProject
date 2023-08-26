@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private ItemRarityData _itemRarityData;
     public ItemRarityData ItemRarityData => _itemRarityData;
+
+    [SerializeField] private FishDataList _fishDataList;
+    public FishDataList FishDataList => _fishDataList;
     
     private CameraController _camController;
     public CameraController CamController => _camController;

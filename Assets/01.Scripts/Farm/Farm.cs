@@ -68,8 +68,6 @@ public class Farm : MonoBehaviour
             }
         }
 
-
-
         CropData cropData = (CropData)InventoryManager.Instance.GetItemFromID(itemID);
 
         Crop crop = (Crop)PoolManager.Instance.Pop(cropData.itemName);
