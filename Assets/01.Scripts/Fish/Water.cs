@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(Collider))]
 public class Water : ToolHandler
 {
+    //낚싯대 포스
     private Vector3 _bobberPos;
 
     private FishDataList _fishList;
