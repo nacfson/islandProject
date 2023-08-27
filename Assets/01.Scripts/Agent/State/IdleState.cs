@@ -11,6 +11,7 @@ public class IdleState : NormalState
         _agentInteract.UnInteract();
         _agentAction.UnAction();
         _brain.GetAD().CanInteract = true;
+        _brain.GetAD().CanAction = true;
     }
 
     public override void OnExitState()

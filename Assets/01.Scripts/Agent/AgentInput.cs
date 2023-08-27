@@ -81,8 +81,6 @@ public class AgentInput : Agent<ActionData>, IUpdatable
         OnMoementKeyPress?.Invoke(input);
     }
 
-
-
     public void Add(IUpdatable updatable) => UpdateManager.Add(updatable);
 
     public void Remove(IUpdatable updatable) => UpdateManager.Remove(updatable);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,12 @@ public abstract class NormalState : MonoBehaviour, IState{
     protected AgentAnimator _agentAnimator;
     protected AgentInteract _agentInteract;
     protected AgentAction _agentAction;
+
+    /// <summary>
+    /// PreviousState로 전환할 때 State를 전환하기 위해서 State의 StateType을 가져올 수 있게 만듦
+    /// </summary>
+    [field:SerializeField]
+    public StateType StateType {get;set;}
     
     public abstract void OnEnterState();
 

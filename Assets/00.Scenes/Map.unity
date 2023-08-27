@@ -399,6 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3bc5caf42fded41bc6762e4d9819e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateType>k__BackingField: 0
 --- !u!114 &37648587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,6 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d937f3e09ab33441afa79550ddddae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateType>k__BackingField: 1
 --- !u!114 &37648588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,6 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7afa09fb0d7d9b84e9db6a373082dac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateType>k__BackingField: 2
 --- !u!114 &37648589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,6 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f123d81dfd3c57469774c3c390fbdaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateType>k__BackingField: 3
 --- !u!114 &37648590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,6 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a18722646dfa24eb651d16fb32bde0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateType>k__BackingField: 4
 --- !u!114 &37648591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,6 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e116587120c03745944f2ffc2cb436a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateType>k__BackingField: 5
 --- !u!114 &37648592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8493c1e204783b1499846b8ba5561cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateType>k__BackingField: 6
 --- !u!4 &40490202 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 71486648461611207, guid: 6c2261cb4cee64444b00d79bf7e49a09, type: 3}
@@ -3063,6 +3070,7 @@ MonoBehaviour:
   IsPicking: 0
   UsingTool: 0
   CanInteract: 1
+  CanAction: 0
   TargetPos: {x: 0, y: 0, z: 0}
 --- !u!4 &648476230 stripped
 Transform:
@@ -5623,6 +5631,7 @@ MonoBehaviour:
   IsPicking: 0
   UsingTool: 0
   CanInteract: 0
+  CanAction: 0
   TargetPos: {x: 0, y: 0, z: 0}
   IsTalking: 0
   CanMove: 1
@@ -36007,6 +36016,10 @@ PrefabInstance:
     - target: {fileID: 2939172349463032598, guid: 8b588e02811807c46a46487004d001aa, type: 3}
       propertyPath: m_Name
       value: FishingRod
+      objectReference: {fileID: 0}
+    - target: {fileID: 8403033923599445522, guid: 8b588e02811807c46a46487004d001aa, type: 3}
+      propertyPath: _duration
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

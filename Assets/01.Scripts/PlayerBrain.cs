@@ -15,6 +15,19 @@ public class PlayerBrain : AgentBrain<ActionData>
     public NormalState CurrentState => _currentState;
     [SerializeField] protected NormalState _currentState;
 
+    protected NormalState _previousState;
+    public NormalState PrevState
+    {
+        get
+        {
+            if(_previousState == null)
+            {
+                Debug.LogError($"Previous State is null");
+            }
+            return _previousState;
+        }
+    }
+
     [SerializeField] private Transform _toolTrm;
     public Transform ToolTrm => _toolTrm;
 
@@ -83,6 +96,7 @@ public class PlayerBrain : AgentBrain<ActionData>
 
     public override void ChangeState(object state)
     {
+        _previousState = _currentState;
         _currentState.OnExitState();
         _currentState = _stateDictionary[(StateType)state];
         _currentState.OnEnterState();

@@ -10,5 +10,6 @@ public class ActionData : MonoBehaviour{
     public bool UsingTool;
 
     public bool CanInteract;
+    public bool CanAction;
     public Vector3 TargetPos;
 }

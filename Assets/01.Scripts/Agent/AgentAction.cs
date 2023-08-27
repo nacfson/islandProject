@@ -13,6 +13,7 @@ public class AgentAction : Agent<ActionData>
 
     public void DoAction()
     {
+        if(!_brain.GetAD().CanAction) return;
         IActionable actionable = _brain.Actionable;
         if (actionable != null)
         {

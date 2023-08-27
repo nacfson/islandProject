@@ -44,7 +44,6 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
             {
                 InventoryManager.Instance.AddItem(fish,1);
                 Debug.Log(String.Format("물고기를 획득하였습니다: {0}",fish));
-                return;
             }
             Debug.Log("UnThrow");
             _agentAnimator.SetBoolThrow(false);
