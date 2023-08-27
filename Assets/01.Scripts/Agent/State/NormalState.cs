@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class NormalState : MonoBehaviour, IState{
+public abstract class NormalState : MonoBehaviour, IState
+{
     protected AgentBrain<ActionData> _brain;
     protected AgentMovement _agentMovement;
     protected AgentAnimator _agentAnimator;
@@ -13,16 +14,17 @@ public abstract class NormalState : MonoBehaviour, IState{
     /// <summary>
     /// PreviousState로 전환할 때 State를 전환하기 위해서 State의 StateType을 가져올 수 있게 만듦
     /// </summary>
-    [field:SerializeField]
-    public StateType StateType {get;set;}
-    
+    [field: SerializeField]
+    public StateType StateType { get; set; }
+
     public abstract void OnEnterState();
 
     public abstract void OnExitState();
- 
+
     public abstract void UpdateState();
 
-    public virtual void SetUp(Transform agent){
+    public virtual void SetUp(Transform agent)
+    {
         _brain = agent.GetComponent<AgentBrain<ActionData>>();
         _agentMovement = agent.GetComponent<AgentMovement>();
         _agentInteract = agent.GetComponent<AgentInteract>();

@@ -100,6 +100,7 @@ public class PlayerBrain : AgentBrain<ActionData>
         _currentState.OnExitState();
         _currentState = _stateDictionary[(StateType)state];
         _currentState.OnEnterState();
+        Debug.Log($"PreviousState: {PrevState} CurrentState: {CurrentState}");
 
     }
     public Transform FindTransform(string childName,Transform parentTrm = null)

@@ -10,7 +10,7 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
     [SerializeField] private float _duration = 2f;
     [SerializeField] private float _throwDistance = 3f;
     [SerializeField] private LayerMask _canInteractLayer;
-    
+
     private Transform _bobber;
     private Vector3 _originBobberPos;
     private Transform _playerTrm;
@@ -39,20 +39,23 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
         PlayerBrain pb = (PlayerBrain)brain;
         if (_isThrowed)
         {
-            FishData fish = _handler.GetFish();
-            if(fish != null)
-            {
-                InventoryManager.Instance.AddItem(fish,1);
-                Debug.Log(String.Format("물고기를 획득하였습니다: {0}",fish));
-            }
             Debug.Log("UnThrow");
             _agentAnimator.SetBoolThrow(false);
             _bobber.transform.position = _originBobberPos;
             _isThrowed = false;
             pb.ChangeState(StateType.Tool);
 
-            _handler.UnRegisterActionable();
-            _handler = null;
+            if (_handler != null)
+            {
+                FishData fish = _handler.GetFish();
+                if (fish != null)
+                {
+                    InventoryManager.Instance.AddItem(fish, 1);
+                    Debug.Log(String.Format("물고기를 획득하였습니다: {0}", fish));
+                }
+                _handler.UnRegisterActionable();
+                _handler = null;
+            }
         }
         else
         {
@@ -79,14 +82,14 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
         Debug.Log("ThrowBobber");
 
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(_bobber.DOJump(endValue,_jumpPower,numJumps,_duration,snapping));
-        sequence.AppendCallback(() => 
+        sequence.Append(_bobber.DOJump(endValue, _jumpPower, numJumps, _duration, snapping));
+        sequence.AppendCallback(() =>
         {
             Vector3 bobberPos = _bobber.transform.position;
-            Collider[] cols = Physics.OverlapSphere(bobberPos,1f,_canInteractLayer);
-            if(cols.Length > 0)
+            Collider[] cols = Physics.OverlapSphere(bobberPos, 1f, _canInteractLayer);
+            if (cols.Length > 0)
             {
-                if(cols[0].TryGetComponent<Water>(out Water water))
+                if (cols[0].TryGetComponent<Water>(out Water water))
                 {
                     water.Interact(this, bobberPos);
                     _handler = water;
