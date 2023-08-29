@@ -87,6 +87,7 @@ public class PlayerBrain : AgentBrain<ActionData>
             toolObj.SetActive(false);
         }
 
+        _currentState.OnEnterState();
     }
 
     protected virtual void Update()

@@ -19,6 +19,7 @@ public class Door : MonoBehaviour, IInteractable
         PlayerBrain pb = brain as PlayerBrain;
         pb.GetAD().TargetPos = _pivot.position;
         pb.ChangeState(StateType.Entry);
+        pb.AgentMovement.LookRotation(transform.position,false);
         pb.AgentAnimator.OnOpenAnimationStartTrigger += OpenDoor;
     }
     public void OpenDoor(AgentBrain<ActionData> brain)

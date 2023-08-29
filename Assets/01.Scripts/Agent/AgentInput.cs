@@ -6,7 +6,7 @@ using CustomUpdateManager;
 
 public class AgentInput : Agent<ActionData>, IUpdatable
 {
-    public event Action<Vector3> OnMoementKeyPress;
+    public event Action<Vector2> OnMoementKeyPress;
 
     public event Action OnJumpKeyPress;
     public event Action OnRunKeyPress;
@@ -77,7 +77,7 @@ public class AgentInput : Agent<ActionData>, IUpdatable
     private void GetMovementInput()
     {
         float x = Input.GetAxisRaw("Horizontal"), z = Input.GetAxisRaw("Vertical");
-        Vector3 input = new Vector3(x, 0, z);
+        Vector2 input = new Vector2(x, z);
         OnMoementKeyPress?.Invoke(input);
     }
 

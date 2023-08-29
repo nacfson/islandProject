@@ -9,10 +9,14 @@ public class AgentMovement : Agent<ActionData>
     [SerializeField] protected float _gravity = -9.81f;
 
     protected CharacterController _charController;
+    
+    protected Vector3 _moveInput;
     protected Vector3 _movementVelocity;
     protected float _verticalSpeed;
 
-    public bool IsActiveMove = false;
+    public bool IsGround => _charController.isGrounded;
+    public bool IsActiveMove {get;set;}
+    public bool IsMoving => _charController.velocity.sqrMagnitude > 0.01f;
 
     public override void SetUp(Transform agent)
     {
@@ -26,28 +30,20 @@ public class AgentMovement : Agent<ActionData>
 
     private void FixedUpdate()
     {
-        if (!IsActiveMove) return;
-
-        if (_movementVelocity.sqrMagnitude > 0f)
+        //if (!IsActiveMove) return;
+        if (IsActiveMove)
         {
             CalculateMovement();
         }
-        if (_charController.isGrounded)
+        if (IsMoving)
         {
-            _verticalSpeed = 0f;
+            Vector3 rotVec = new Vector3(_movementVelocity.x, 0f, _movementVelocity.z);
+            LookRotation(rotVec, true);
         }
-        else
-        {
-            _verticalSpeed += _gravity * Time.fixedDeltaTime;
-        }
-
-        Vector3 move = _movementVelocity + _verticalSpeed * Vector3.up;
-        //Debug.Log($"CurrentSpeed: {_movementVelocity.sqrMagnitude * 100f}");
-        _agentAnimator?.SetSpeed(_movementVelocity.sqrMagnitude * 100f);
-
-        _charController.Move(move);
+        ApplyGravity();
+        _charController.Move(_movementVelocity);
+        _agentAnimator?.SetSpeed(_moveInput.sqrMagnitude * 100f);
     }
-
     public void GoToVector(Vector3 dir, Action Callback = null)
     {
         StartCoroutine(GoToVectorCor(dir, Callback));
@@ -58,7 +54,7 @@ public class AgentMovement : Agent<ActionData>
     {
         IsActiveMove = false;
 
-        while (Vector3.Distance(transform.position, targetPos) >= 1f)
+        while (Vector3.Distance(transform.position, targetPos) >= 2f)
         {
             _charController.Move((targetPos - transform.position).normalized * _brain.MoveData.entrySpeed * Time.fixedDeltaTime);
             //걸어야 되어서 고정된 값을 넣어주지만 나중에 고쳐야 함
@@ -100,42 +96,43 @@ public class AgentMovement : Agent<ActionData>
 
     private void CalculateMovement()
     {
-        _movementVelocity.Normalize();
+        _moveInput.Normalize();
         if (_brain.GetAD().IsRun)
         {
-            _movementVelocity *= _brain.MoveData.RunSpeed * Time.fixedDeltaTime;
+            _movementVelocity = new Vector3(_moveInput.x, 0, _moveInput.y) * _brain.MoveData.RunSpeed *
+                                Time.fixedDeltaTime + _verticalSpeed * Vector3.up;
         }
         else
         {
-            _movementVelocity *= _brain.MoveData.Speed * Time.fixedDeltaTime;
+            _movementVelocity = new Vector3(_moveInput.x, 0, _moveInput.y) * _brain.MoveData.Speed *
+                                Time.fixedDeltaTime + _verticalSpeed * Vector3.up;
         }
-        //RotateToVector(_movementVelocity);
-        LookRotation(_movementVelocity, true);
+
     }
 
-    private void SetMovementVelocity(Vector3 movement)
+    private void ApplyGravity()
     {
-        _movementVelocity = movement;
-        //_charController.Move(Vector3.zero);
-        //_charController.velocity = Vector3.zero;
+        if (IsGround && _verticalSpeed < 0f)
+        {
+            _verticalSpeed = -1f;
+        }
+        else
+        {
+            _verticalSpeed += _gravity * Time.fixedDeltaTime;
+        }
+    }
+    private void SetMovementVelocity(Vector2 movement)
+    {
+        _moveInput = movement;
     }
 
     public void StopImmediately()
     {
-
-        //StackOverFlow
-        //_charController.SimpleMove(Vector3.zero);
         _movementVelocity = Vector3.zero;
         _agentAnimator?.SetSpeed(0f);
-        //_charController.Move(transform.position);
     }
 
-    public float GetMovementSpeed(float multiply)
-    {
-        return _charController.velocity.sqrMagnitude * multiply;
-    }
-    public void SetRun()
-    {
-        _brain.GetAD().IsRun = !_brain.GetAD().IsRun;
-    }
+    public float GetMovementSpeed(float multiply) => _charController.velocity.sqrMagnitude * multiply;
+    public void SetRun() => _brain.GetAD().IsRun = !_brain.GetAD().IsRun;
+
 }
