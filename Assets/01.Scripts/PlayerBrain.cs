@@ -76,6 +76,7 @@ public class PlayerBrain : AgentBrain<ActionData>
         _agentAnimator.OnOpenAnimationEndTrigger += (AgentBrain<ActionData> brain) => UIManager.Instance.FadeSequence(2f, () => ChangeState(StateType.Idle));
 
         Debug.Log(string.Format("ToolObjChildCOunt: {0}",_toolTrm.childCount));
+        
         for(int i = 0;  i < _toolTrm.childCount; i++)
         {
             GameObject toolObj = _toolTrm.GetChild(i).gameObject;

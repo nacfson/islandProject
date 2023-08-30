@@ -10,7 +10,6 @@ public class Water : ToolHandler
     private Vector3 _bobberPos;
 
     private FishDataList _fishList;
-    private FishingRod _fishingRod;
 
     private float _minAppearTime = 5f;
     private float _maxAppearTime = 5f;
@@ -37,7 +36,6 @@ public class Water : ToolHandler
         }
         
         RegisterActionable(actionable);
-        _fishingRod = (FishingRod)actionable;
         this._bobberPos = bobberPos;
         Debug.Log(String.Format("BobberPos: {0}",_bobberPos));
         StartCoroutine(FishCor());
@@ -50,7 +48,6 @@ public class Water : ToolHandler
         UnRegisterActionable();
         this._bobberPos = Vector3.zero;
         StopAllCoroutines();
-        _fishingRod.EmphasizeIcon(false);
     }
 
     private IEnumerator FishCor()
@@ -58,12 +55,11 @@ public class Water : ToolHandler
         float targetTime = Random.Range(_minAppearTime,_maxAppearTime);
         yield return new WaitForSeconds(targetTime);
         Debug.Log("Can Catch Fish");
+        //Emphasize Icon 실행
         //여기서 물고기를 낚아야 된다는 신호를 보내야 함
-        _fishingRod.EmphasizeIcon(true);
         _returnFish = _fishList.GetFishDataWithRarity(this.ItemRarityData);
         yield return new WaitForSeconds(1f);
         _returnFish = null;
-        _fishingRod.EmphasizeIcon(false);
 
     }
 
