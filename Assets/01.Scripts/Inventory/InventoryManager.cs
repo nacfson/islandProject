@@ -199,14 +199,14 @@ public class InventoryManager : MonoBehaviour
         if (pb.GetAD().UsingTool)
         {
             pb.ChangeState(StateType.Idle);
-
         }   
 
         StringBuilder sb = new StringBuilder();
-        sb.Append(String.Format("{0}",item.itemName));
+        sb.Append(item.itemName);
+        var agentTool = pb.AgentTool;
 
-        IActionable actionable = pb.FindTransform(sb.ToString(),pb.ToolTrm).GetComponent<IActionable>();
-        pb.SetToolActive(sb.ToString(),true);
+        IActionable actionable = pb.FindTransform(sb.ToString(),agentTool.ToolTrm).GetComponent<IActionable>();
+        agentTool.SetToolActive(sb.ToString(),true);
         pb.Actionable = actionable;
         pb.ChangeState(StateType.Tool);
         UT_MainUI.Instance.UnShowAllUI();

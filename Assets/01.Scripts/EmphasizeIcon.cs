@@ -5,11 +5,11 @@ using System;
 
 public class EmphasizeIcon : PoolableMono
 {
-    public void Appear(float time, Action Callback)
+    public void Appear(float time, Action Callback = null)
     {
         StartCoroutine(AppearCoroutine(time,Callback));
     }
-    private IEnumerator AppearCoroutine(float time, Action Callback)
+    private IEnumerator AppearCoroutine(float time, Action Callback = null)
     {
         yield return new WaitForSeconds(time);
         Callback?.Invoke();

@@ -28,18 +28,20 @@ public class PlayerBrain : AgentBrain<ActionData>
         }
     }
 
-    [SerializeField] private Transform _toolTrm;
-    public Transform ToolTrm => _toolTrm;
+
 
     private Dictionary<StateType, NormalState> _stateDictionary;
     private List<Agent<ActionData>> _agents;
 
-    private TwoBoneIKConstraint _twoBone;
+
     private AgentAnimator _agentAnimator;
     public AgentAnimator AgentAnimator => _agentAnimator;
 
     private AgentMovement _agentMovement;
     public AgentMovement AgentMovement => _agentMovement;
+
+    private AgentTool _agentTool;
+    public AgentTool AgentTool => _agentTool;
 
     public override void SetUp(Transform agent)
     {
@@ -51,7 +53,9 @@ public class PlayerBrain : AgentBrain<ActionData>
 
         _agentAnimator = _agents.Find(a => a.GetType() == typeof(AgentAnimator)) as AgentAnimator;
         _agentMovement = _agents.Find(a => a.GetType() == typeof(AgentMovement)) as AgentMovement;
+        _agentTool = _agents.Find(a => a.GetType() == typeof(AgentTool)) as AgentTool;
 
+        
         Transform stateTrm = transform.Find("States");
 
         foreach (StateType state in Enum.GetValues(typeof(StateType)))
@@ -67,26 +71,13 @@ public class PlayerBrain : AgentBrain<ActionData>
             _stateDictionary.Add(state, stateScript);
         }
 
-        _twoBone = FindTransform(string.Format("Visual/RigLayer/RightHandIK")).GetComponent<TwoBoneIKConstraint>();
-        Debug.Log(_twoBone);
         _actionData = FindTransform("ActionData").GetComponent<ActionData>();
 
 
 
         _agentAnimator.OnOpenAnimationEndTrigger += (AgentBrain<ActionData> brain) => UIManager.Instance.FadeSequence(2f, () => ChangeState(StateType.Idle));
 
-        Debug.Log(string.Format("ToolObjChildCOunt: {0}",_toolTrm.childCount));
-        
-        for(int i = 0;  i < _toolTrm.childCount; i++)
-        {
-            GameObject toolObj = _toolTrm.GetChild(i).gameObject;
-            Debug.Log(string.Format("ToolObjectName: {0}",toolObj.name));
-            if (toolObj.TryGetComponent<ITool>(out ITool tool))
-            {
-                tool.Init(this.transform);
-            }
-            toolObj.SetActive(false);
-        }
+
 
         _currentState.OnEnterState();
     }
@@ -119,16 +110,5 @@ public class PlayerBrain : AgentBrain<ActionData>
         return returnTrm;
     }
 
-    public void SetToolActive(string name, bool active)
-    {
-        if (active)
-        {
-            _twoBone.data.target = _toolTrm;
-        }
-        else
-        {
-            _twoBone.data.target = null;
-        }
-        _toolTrm.Find(String.Format("{0}",name)).gameObject.SetActive(active);
-    }
+
 }

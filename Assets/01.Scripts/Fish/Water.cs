@@ -16,6 +16,7 @@ public class Water : ToolHandler
     
     private FishData _returnFish;
     private ItemRarityData _itemRarityData;
+    private Transform _playerTrm;
     public ItemRarityData ItemRarityData
     {
         get
@@ -28,7 +29,7 @@ public class Water : ToolHandler
         }
     }
 
-    public void Interact(IActionable actionable,Vector3 bobberPos)
+    public void Interact(IActionable actionable,Transform playerTrm,Vector3 bobberPos)
     {
         if(_fishList == null)
         {
@@ -36,6 +37,7 @@ public class Water : ToolHandler
         }
         
         RegisterActionable(actionable);
+        this._playerTrm = playerTrm;
         this._bobberPos = bobberPos;
         Debug.Log(String.Format("BobberPos: {0}",_bobberPos));
         StartCoroutine(FishCor());
@@ -53,14 +55,18 @@ public class Water : ToolHandler
     private IEnumerator FishCor()
     {
         float targetTime = Random.Range(_minAppearTime,_maxAppearTime);
+        float showIconTime = Random.Range(1f, 1.5f);
+        
         yield return new WaitForSeconds(targetTime);
         Debug.Log("Can Catch Fish");
+        Vector3 spawnPos = _playerTrm.position + Vector3.up * 2f;
+        EmphasizeIcon icon = PoolManager.Instance.Pop("ICON") as EmphasizeIcon;
+        icon.Appear(showIconTime);
         //Emphasize Icon 실행
         //여기서 물고기를 낚아야 된다는 신호를 보내야 함
         _returnFish = _fishList.GetFishDataWithRarity(this.ItemRarityData);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(showIconTime);
         _returnFish = null;
-
     }
 
     public FishData GetFish() => _returnFish;

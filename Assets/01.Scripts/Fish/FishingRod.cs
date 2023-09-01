@@ -29,11 +29,6 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
         _agentAnimator = trm.Find("Visual").GetComponent<AgentAnimator>();
         _agentAnimator.OnThrowAnimationEndTrigger += ThrowBobber;
     }
-
-    public void EmphasizeIcon(bool result)
-    {
-        _playerTrm.Find("ICON").gameObject.SetActive(result);
-    }
     public void DoAction(AgentBrain<ActionData> brain)
     {
         PlayerBrain pb = (PlayerBrain)brain;
@@ -91,7 +86,7 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
             {
                 if (cols[0].TryGetComponent<Water>(out Water water))
                 {
-                    water.Interact(this, bobberPos);
+                    water.Interact(this,_playerTrm, bobberPos);
                     _handler = water;
                 }
             }
