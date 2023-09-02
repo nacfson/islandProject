@@ -16,7 +16,7 @@ public class AgentMovement : Agent<ActionData>
 
     public bool IsGround => _charController.isGrounded;
     public bool IsActiveMove {get;set;}
-    public bool IsMoving => _charController.velocity.sqrMagnitude > 0.01f;
+    public bool IsMoving => _moveInput.sqrMagnitude > 0.01f;
 
     public override void SetUp(Transform agent)
     {

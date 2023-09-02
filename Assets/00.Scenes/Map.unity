@@ -36050,6 +36050,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: FishingRod
       objectReference: {fileID: 0}
+    - target: {fileID: 4652618672858266734, guid: 8b588e02811807c46a46487004d001aa, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652618672858266734, guid: 8b588e02811807c46a46487004d001aa, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652618672858266734, guid: 8b588e02811807c46a46487004d001aa, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8403033923599445522, guid: 8b588e02811807c46a46487004d001aa, type: 3}
       propertyPath: _duration
       value: 0.7

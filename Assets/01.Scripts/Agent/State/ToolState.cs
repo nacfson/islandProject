@@ -8,7 +8,7 @@ public class ToolState : NormalState
     {
         _agentMovement.StopImmediately();
         _agentMovement.IsActiveMove = true;
-        _brain.GetAD().CanInteract = true;
+        _brain.GetAD().CanAction = true;
         _brain.GetAD().UsingTool = true;
     }
 

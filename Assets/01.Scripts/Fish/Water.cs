@@ -61,6 +61,7 @@ public class Water : ToolHandler
         Debug.Log("Can Catch Fish");
         Vector3 spawnPos = _playerTrm.position + Vector3.up * 2f;
         EmphasizeIcon icon = PoolManager.Instance.Pop("ICON") as EmphasizeIcon;
+        icon.transform.position = spawnPos;
         icon.Appear(showIconTime);
         //Emphasize Icon 실행
         //여기서 물고기를 낚아야 된다는 신호를 보내야 함

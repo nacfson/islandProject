@@ -23,7 +23,7 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
     public void Init(Transform trm)
     {
         _bobber = transform.Find("Bobber");
-        _originBobberPos = _bobber.transform.position;
+        _originBobberPos = _bobber.position;
         _isThrowed = false;
         this._playerTrm = trm;
         _agentAnimator = trm.Find("Visual").GetComponent<AgentAnimator>();
@@ -36,7 +36,8 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
         {
             Debug.Log("UnThrow");
             _agentAnimator.SetBoolThrow(false);
-            _bobber.transform.position = _originBobberPos;
+            
+            UnThrowBobber(pb);
             _isThrowed = false;
             pb.ChangeState(StateType.Tool);
 
@@ -60,7 +61,6 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
             _isThrowed = true;
             pb.ChangeState(StateType.Fishing);
         }
-        //ThrowBobber();
     }
     public void UnAction(AgentBrain<ActionData> brain)
     {
@@ -68,13 +68,11 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
         _agentAnimator.OnThrowAnimationEndTrigger -= ThrowBobber;
 
     }
-    public void ThrowBobber(AgentBrain<ActionData> brain)
+    private void ThrowBobber(AgentBrain<ActionData> brain)
     {
         Vector3 endValue = _playerTrm.position + _playerTrm.forward * _throwDistance;
         int numJumps = 1;
         bool snapping = false;
-
-        Debug.Log("ThrowBobber");
 
         Sequence sequence = DOTween.Sequence();
         sequence.Append(_bobber.DOJump(endValue, _jumpPower, numJumps, _duration, snapping));
@@ -91,6 +89,16 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
                 }
             }
         });
+    }
+
+    private void UnThrowBobber(AgentBrain<ActionData> brain)
+    {
+        Vector3 endValue = _originBobberPos;
+        int numJumps = 1;
+        bool snapping = false;
+
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(_bobber.DOJump(endValue, _jumpPower, numJumps, _duration, snapping));
     }
 
 }
