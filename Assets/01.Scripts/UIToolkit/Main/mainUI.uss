@@ -163,7 +163,7 @@
     height: 54px;
     flex-grow: 1;
     flex-shrink: 0;
-    background-color: rgb(254, 255, 109);
+    background-color: rgb(240, 241, 178);
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -183,10 +183,6 @@
     border-bottom-left-radius: 8px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-}
-
-.item.select {
-    background-color: rgb(245, 179, 179);
 }
 
 .item > .label {
@@ -212,10 +208,16 @@
     -unity-text-align: middle-center;
     font-size: 26px;
     transition-duration: 0.5s;
+    scale: 1 1.2;
 }
 
 .shopUI > .button:hover {
-    scale: 0.8 0.8;
+    scale: 1.2 1.4;
+    transform-origin: center;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .selectUI {
@@ -326,4 +328,10 @@
     transition-duration: 0.3s;
     padding-left: 27px;
     padding-right: 12px;
+}
+
+.select {
+    scale: 1 1.2;
+    transition-duration: 0.7s;
+    background-color: rgb(186, 255, 198);
 }

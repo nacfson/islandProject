@@ -1,4 +1,5 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/01.Scripts/UIToolkit/Main/mainUI.uss?fileID=7433441132597879392&amp;guid=fb7d2205e97a1c64b9e26e097d7904cf&amp;type=3#mainUI" />
     <ui:VisualElement name="Item" class="item" style="flex-grow: 1;">
         <ui:VisualElement name="ItemImage" class="image" />
         <ui:Label tabindex="-1" text="고급 낚싯대" display-tooltip-when-elided="true" name="NameLabel" class="label" />

@@ -120,8 +120,8 @@
         </ui:VisualElement>
         <ui:VisualElement name="FadeUI" class="fadeUI" style="visibility: hidden;" />
         <ui:VisualElement name="ShopUI" class="shopUI" style="flex-grow: 1; top: 0; height: 70%;">
-            <ui:ScrollView name="ShopView" class="shopView" />
-            <ui:Button text="Buy" display-tooltip-when-elided="true" name="BuyBtn" class="button" style="right: 30%; bottom: 20%;" />
+            <ui:ScrollView name="ShopView" class="shopView" style="background-color: rgba(246, 248, 221, 0.86);" />
+            <ui:Button text="Buy" display-tooltip-when-elided="true" name="BuyBtn" class="button" style="right: 30%; bottom: 20%; height: 5%;" />
             <ui:Button text="Sell" display-tooltip-when-elided="true" name="SellBtn" class="button" style="right: 10%; background-color: rgb(255, 147, 131); bottom: 20%;" />
         </ui:VisualElement>
         <ui:VisualElement name="SelectUI" class="selectUI">

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using DG.Tweening;
 using System;
+using System.Linq;
 
 namespace UI_Toolkit
 {
@@ -212,6 +213,10 @@ namespace UI_Toolkit
                 itemUXML.RegisterCallback<ClickEvent>(e =>
                 {
                     _shopItem = _slotDictionary[itemUXML];
+                    foreach (var kvp in _slotDictionary)
+                    {
+                        kvp.Key.RemoveFromClassList("select");
+                    }
                     itemUXML.AddToClassList("select");
                     //Debug.LogError("SelectedItem");
                 });
