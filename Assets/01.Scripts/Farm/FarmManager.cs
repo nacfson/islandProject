@@ -80,9 +80,6 @@ public class FarmManager : MonoBehaviour,IUpdatable
             _trees[i].SetUp();
             Debug.Log(_trees[i].gameObject.name);
         }
-        
-
-
     }
     //bool이 true 상태이면 식물을 심음
     public bool CanPlantCrops(Vector3 pos,int itemID)

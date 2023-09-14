@@ -167,8 +167,6 @@ public class InventoryManager : MonoBehaviour
             MethodInfo mInfo = _itemActionDictionary[itemType];
             mInfo?.Invoke(this, new object[] { item });
         }
-
-
     }
     private void DoNormalItem(Item item) => Debug.Log("DoNormalItem");
     private void DoCropItem(Item item)

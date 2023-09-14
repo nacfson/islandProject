@@ -27,11 +27,11 @@ namespace UI_Toolkit
         private Item _selectedItem;
 
 
-        [Header("Shop")]
-        private VisualElement _shopUI;
-        private ScrollView _shopView;
-        private Item _shopItem;
-        private Dictionary<VisualElement, Item> _slotDictionary = new Dictionary<VisualElement, Item>();
+        [Header("Shop")] 
+        private UT_Shop _utShop;
+
+        public UT_Shop UT_Shop => _utShop;
+        
 
         [Header("Money")]
         private Label _moneyLabel;
@@ -71,13 +71,18 @@ namespace UI_Toolkit
 
             _iu = _root.Q<VisualElement>("InfoUI");
             _inventoryUI = _root.Q<VisualElement>("InventoryUI");
-            //_fadeUI = _root.Q<VisualElement>("FadeUI");
-            _shopUI = _root.Q<VisualElement>("ShopUI");
+            
+            
+            //UT_Shop Creation
+            VisualElement shopUI = _root.Q<VisualElement>("ShopUI");
+            ScrollView shopView = shopUI.Q<ScrollView>("ShopView");
+            _utShop = new UT_Shop(shopUI,shopView,_itemUXML);
+
+            
             _selectUI = _root.Q<VisualElement>("SelectUI");
             _moneyUI = _root.Q<VisualElement>("MoneyUI");
 
-            Button buyBtn = _shopUI.Q<Button>("BuyBtn");
-            Button sellBtn = _shopUI.Q<Button>("SellBtn");
+
 
             Label firstLabel = _selectUI.Q<Label>("FirstLabel");
             Label secondLabel = _selectUI.Q<Label>("SecondLabel");
@@ -94,10 +99,7 @@ namespace UI_Toolkit
             });
             thirdLabel.RegisterCallback<ClickEvent>(e => UnActiveSelectUI());
 
-            buyBtn.RegisterCallback<ClickEvent>(e => BuyItem());
-            sellBtn.RegisterCallback<ClickEvent>(e => SellItem());
 
-            _shopView = _shopUI.Q<ScrollView>("ShopView");
 
             _inventoryUI.RemoveFromClassList("active");
 
@@ -149,6 +151,12 @@ namespace UI_Toolkit
         {
             _selectUI.RemoveFromClassList("active");
             _selectedItem = null;
+            
+            PlayerBrain pb = GameManager.Instance.PlayerBrain;
+            if (pb.CurrentState.StateType == StateType.Tool)
+            {
+                pb.ChangeState(StateType.Idle);    
+            }
         }
 
 
@@ -183,94 +191,15 @@ namespace UI_Toolkit
             _infoUI.SetUp(talkData, name, Callback);
             _infoUI.ShowText();
         }
-        #region ShopUI
-
-        public void ShowShopUI(HashSet<Item> itemList)
-        {
-            _shopUI.AddToClassList("active");
-
-            CreateItemUI(itemList);
-        }
-
-        private void CreateItemUI(HashSet<Item> itemList)
-        {
-            _shopView.Clear();
-            _slotDictionary.Clear();
-            InventoryManager.Instance.SlotList.ForEach(s => itemList.Add(s.GetItem()));
-
-            foreach (Item item in itemList)
-            {
-                if (item == null) continue;
-
-                VisualElement itemUXML = _itemUXML.Instantiate();
-
-                VisualElement itemImage = itemUXML.Q<VisualElement>("ItemImage");
-                Label nameLabel = itemUXML.Q<Label>("NameLabel");
-
-                Label priceLabel = itemUXML.Q<Label>("PriceLabel");
-
-                _slotDictionary.Add(itemUXML, item);
-                itemUXML.RegisterCallback<ClickEvent>(e =>
-                {
-                    _shopItem = _slotDictionary[itemUXML];
-                    foreach (var kvp in _slotDictionary)
-                    {
-                        kvp.Key.RemoveFromClassList("select");
-                    }
-                    itemUXML.AddToClassList("select");
-                    //Debug.LogError("SelectedItem");
-                });
-
-                Action<Sprite, string, int> SetUI = (image, name, price) =>
-                {
-                    itemImage.style.backgroundImage = image.texture;
-                    nameLabel.text = name;
-                    priceLabel.text = $"{price}BP";
-                };
-
-                SetUI(item.itemSprite, item.itemName, item.price);
-
-                _shopView.Add(itemUXML);
-            }
-        }
 
 
-        public bool BuyItem()
-        {
-            if (_shopItem == null) return false;
-
-            bool enoughMoney = MoneyManager.Instance.CanUseMoney(_shopItem.price);
-            if (enoughMoney)
-            {
-                InventoryManager.Instance.AddItem(_shopItem, 1); // 아이템 추가
-                MoneyManager.Instance.AddMoney(-_shopItem.price);  //돈 사용
-                //CreateItemUI(); 아이템을 샀을 때 인벤토리 리스트랑 상점 리스트랑 같이 업데이트 해주어야 되는데 지금은 생략 ( 어차피 돈 없으면 못 사고 개수 부족하면 판매 안됨 )
-                return true;
-            }
-            return false;
-        }
-
-        public bool SellItem()
-        {
-            if (_shopItem == null) return false;
-
-            bool enoughItem = InventoryManager.Instance.SubtractItem(_shopItem, 1); //아이템 감소
-            if (enoughItem)
-            {
-                MoneyManager.Instance.AddMoney(_shopItem.sellPrice); // 돈 추가
-                //CreateItemUI();
-                return true;
-            }
-            return false;
-        }
-        #endregion
 
         public void UnShowAllUI()
         {
             _inventoryUI.RemoveFromClassList("active");
             _iu.RemoveFromClassList("active");
             //_infoUI = null;
-            _shopUI.RemoveFromClassList("active");
+            _utShop.RegisterClass("active",false);
             _selectUI.RemoveFromClassList("active");
 
         }

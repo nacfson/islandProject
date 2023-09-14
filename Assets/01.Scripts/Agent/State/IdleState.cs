@@ -12,8 +12,12 @@ public class IdleState : NormalState
         _agentAction.UnAction();
         _brain.GetAD().CanInteract = true;
         _brain.GetAD().CanAction = true;
-        
-        
+        PlayerBrain pb = _brain as PlayerBrain;
+        if (pb != null)
+        {
+            pb.AgentTool.SetToolActive("*",false);
+        }
+
     }
 
     public override void OnExitState()

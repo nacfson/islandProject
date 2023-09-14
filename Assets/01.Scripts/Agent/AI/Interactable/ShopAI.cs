@@ -11,7 +11,7 @@ public class ShopAI : AIInteractable
     public override void Interact(AgentBrain<ActionData> brain)
     {
         UT_MainUI.Instance.StartTalk(_talKData,gameObject.name,null);
-        UT_MainUI.Instance.ShowShopUI(_items.itemList.ToHashSet<Item>());
+        UT_MainUI.Instance.UT_Shop.ShowShopUI(_items.itemList.ToHashSet<Item>());
         AIBrain aiBrain = (AIBrain)_brain;
         aiBrain.GetAD().IsInteracting = true;
         //aiBrain.NavMovement.StopImmediately();

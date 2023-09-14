@@ -28,12 +28,9 @@ public class PlayerBrain : AgentBrain<ActionData>
         }
     }
 
-
-
     private Dictionary<StateType, NormalState> _stateDictionary;
     private List<Agent<ActionData>> _agents;
-
-
+    
     private AgentAnimator _agentAnimator;
     public AgentAnimator AgentAnimator => _agentAnimator;
 
@@ -72,8 +69,6 @@ public class PlayerBrain : AgentBrain<ActionData>
         }
 
         _actionData = FindTransform("ActionData").GetComponent<ActionData>();
-
-
 
         _agentAnimator.OnOpenAnimationEndTrigger += (AgentBrain<ActionData> brain) => UIManager.Instance.FadeSequence(2f, () => ChangeState(StateType.Idle));
 

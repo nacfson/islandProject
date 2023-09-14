@@ -25,7 +25,7 @@ public class AgentTool : Agent<ActionData>
         }
     }
     
-    public void SetToolActive(string name, bool active)
+    public void SetToolActive(string name = "*", bool active = false)
     {
         if (active)
         {
@@ -35,10 +35,23 @@ public class AgentTool : Agent<ActionData>
         {
             _twoBone.data.target = null;
         }
-        GameObject toolObj = _toolTrm.Find($"{name}").gameObject;
-        Debug.Log($"ToolObjName: {(toolObj).gameObject.name}");
-        if(toolObj == null) Debug.LogError($"Can't Find at {name}, toolObj is Null{toolObj}");
-        toolObj.SetActive(active);
+
+        if (name == "*")
+        {
+            for(int i = 0;  i < _toolTrm.childCount; i++)
+            {
+                GameObject toolObj = _toolTrm.GetChild(i).gameObject;
+                toolObj.SetActive(false);
+            }
+        }
+        else
+        {
+            GameObject toolObj = _toolTrm.Find($"{name}").gameObject;
+            Debug.Log($"ToolObjName: {(toolObj).gameObject.name}");
+            if(toolObj == null) Debug.LogError($"Can't Find at {name}, toolObj is Null{toolObj}");
+            toolObj.SetActive(active);
+        }
+
     }
     
 }
