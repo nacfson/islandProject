@@ -150,17 +150,8 @@ namespace UI_Toolkit
         public void UnActiveSelectUI()
         {
             _selectUI.RemoveFromClassList("active");
-            _selectedItem = null;
-            
-            PlayerBrain pb = GameManager.Instance.PlayerBrain;
-            if (pb.CurrentState.StateType == StateType.Tool)
-            {
-                pb.ChangeState(StateType.Idle);    
-            }
+            _selectedItem = null;  
         }
-
-
-
 
         #region Inventory Logic
         public void OpenInv(bool result)
