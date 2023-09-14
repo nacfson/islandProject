@@ -70,7 +70,11 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
     }
     private void ThrowBobber(AgentBrain<ActionData> brain)
     {
-        Vector3 endValue = _playerTrm.position + _playerTrm.forward * _throwDistance;
+        Ray ray = new Ray(_playerTrm.position + _playerTrm.forward * _throwDistance,Vector3.down * 10f);
+        bool result = Physics.Raycast(ray,out RaycastHit hit,_canInteractLayer);
+        if (result == false) return;
+        Vector3 endValue = hit.point;
+            
         int numJumps = 1;
         bool snapping = false;
 
@@ -79,14 +83,10 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
         sequence.AppendCallback(() =>
         {
             Vector3 bobberPos = _bobber.transform.position;
-            Collider[] cols = Physics.OverlapSphere(bobberPos, 1f, _canInteractLayer);
-            if (cols.Length > 0)
+            if (hit.collider.TryGetComponent<Water>(out Water water))
             {
-                if (cols[0].TryGetComponent<Water>(out Water water))
-                {
-                    water.Interact(this,_playerTrm, bobberPos);
-                    _handler = water;
-                }
+                water.Interact(this,_playerTrm, bobberPos);
+                _handler = water;
             }
         });
     }
