@@ -86,6 +86,7 @@ public class FishingRod : MonoBehaviour, IActionable, ITool
             if (hit.collider.TryGetComponent<Water>(out Water water))
             {
                 water.Interact(this,_playerTrm, bobberPos);
+                Debug.Log($"Water: {water}");
                 _handler = water;
             }
         });
