@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class UT_StartUI : MonoBehaviour
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
+namespace UI_Toolkit
 {
-    // Start is called before the first frame update
-    void Start()
+    public class UT_StartUI : MonoBehaviour
     {
+        private UIDocument _uiDocument;
+
+        private void Awake()
+        {
+            _uiDocument = GetComponent<UIDocument>();
+            GameManager.Instance.GameInput.OnAnyKeyPress += () => SceneManager.LoadScene("Map");
+
+        }
+
+        private void OnEnable()
+        {
+            var root = _uiDocument.rootVisualElement;
+            
+            
+        }
+        
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

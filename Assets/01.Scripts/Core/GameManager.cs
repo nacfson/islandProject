@@ -7,21 +7,34 @@ using UI_Toolkit;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager _instnace;
-    public static GameManager Instance => _instnace;
 
+    
+    #region Property
+
+    private static GameManager _instance;
+
+    public static GameManager Instance
+    {
+        get
+        {
+            if(_instance == null)
+            {
+                _instance = FindObjectOfType<GameManager>();
+            }
+            return _instance;
+        }
+    }
+    
     [SerializeField] private PoolingListSO _poolingList;
     [SerializeField] private TargetPosListData _targetPosList;
-
     [SerializeField] private ItemRarityData _itemRarityData;
     public ItemRarityData ItemRarityData => _itemRarityData;
-
+    
     [SerializeField] private FishDataList _fishDataList;
     public FishDataList FishDataList => _fishDataList;
-    
-    private CameraController _camController;
-    public CameraController CamController => _camController;
 
+    [SerializeField] private Input_GameInput _gameInput;
+    public Input_GameInput GameInput => _gameInput;
     public PlayerBrain PlayerBrain
     {
         get
@@ -34,22 +47,13 @@ public class GameManager : MonoBehaviour
         }
     }
     private PlayerBrain _playerBrain;
-
-
+    #endregion
 
     private void Awake()
     {
-        if (_instnace == null)
-        {
-            _instnace = this;
-        }
-        else
-        {
-            Debug.LogError($"Multiple GameManager is exist");
-        }
-
+        Debug.Log(GameManager.Instance);
+        
         CreatePoolManager(this.transform);
-        CreateCameraController();
         TimeManager.Instance.Generate();
         MoneyManager.Instance.Generate();
         UT_MainUI.Instance.Generate();
@@ -58,21 +62,12 @@ public class GameManager : MonoBehaviour
         SaveManager.Instance.Generate();
         InventoryManager.Instance.Generate();
         FarmManager.Instance.Generate();
-
+        CameraManager.Instance.Generate();
+        
         DontDestroyOnLoad(this);
 
         _targetPosList.posDatas.ForEach(p => p.SetPosDatas());
     }
-
-    public void OnDestroy()
-    {
-        Debug.Log("Destroy GameManager");
-    }
-    private void CreateCameraController()
-    {
-        _camController = new CameraController(this.transform);
-    }
-
     private void CreatePoolManager(Transform trm)
     {
         PoolManager.Instance = new PoolManager(trm);

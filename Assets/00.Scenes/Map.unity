@@ -148,7 +148,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7379246}
   - component: {fileID: 7379248}
-  - component: {fileID: 7379247}
   - component: {fileID: 7379249}
   - component: {fileID: 7379250}
   - component: {fileID: 7379251}
@@ -180,18 +179,6 @@ Transform:
   - {fileID: 645748809}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7379247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7379245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 426407104ab1c384ca14d4bcea6e9023, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7379248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementData: {fileID: 11400000, guid: 141245bd2b6b0a44c86f88a6b36d0609, type: 2}
   _currentState: {fileID: 37648586}
+  _playerInput: {fileID: 11400000, guid: 0d0213947577e6548aca6581e271f1a6, type: 2}
 --- !u!114 &7379249
 MonoBehaviour:
   m_ObjectHideFlags: 0

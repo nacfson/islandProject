@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class Agent<T> : MonoBehaviour where T : ActionData
 {
     protected AgentBrain<T> _brain;
-    protected AgentInput _agentInput;
     protected AgentAnimator _agentAnimator;
     protected AgentMovement _agentMovement;
 
@@ -14,7 +13,6 @@ public abstract class Agent<T> : MonoBehaviour where T : ActionData
     public virtual void SetUp(Transform agent)
     {
         _brain = agent.GetComponent<AgentBrain<T>>();
-        _agentInput = agent.GetComponent<AgentInput>();
         _agentAnimator = agent.Find("Visual").GetComponent<AgentAnimator>();
         _agentMovement = agent.GetComponent<AgentMovement>();
 

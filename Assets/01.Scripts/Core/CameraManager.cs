@@ -4,19 +4,33 @@ using UnityEngine;
 using Core;
 using Cinemachine;
 
-public class CameraController
+public class CameraManager : MonoBehaviour
 {
+    private static CameraManager _instance;
+    public static CameraManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<CameraManager>();
+                _instance.Init();
+            }
+            return _instance;
+        }
+        
+    }
     private CinemachineVirtualCamera _cmCam;
     private CinemachineVirtualCamera _talkCam;
 
-    public CameraController(Transform trm)
+    public void Generate(){}
+    private void Init()
     {
         _cmCam = Define.CMCam;
         _talkCam = Define.TalkCam;
 
         _talkCam.enabled = false;
     }
-
     public void TalkMode(bool result)
     {
         _talkCam.enabled = result;

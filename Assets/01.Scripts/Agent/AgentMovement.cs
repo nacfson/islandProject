@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class AgentMovement : Agent<ActionData>
+public class AgentMovement : PlayerAgent
 {
     [SerializeField] protected float _gravity = -9.81f;
 
@@ -21,11 +21,11 @@ public class AgentMovement : Agent<ActionData>
     public override void SetUp(Transform agent)
     {
         base.SetUp(agent);
-
+        
         //AgentInput이 Setup 되어있지 않은 상황도 생각해야함
         _charController = GetComponent<CharacterController>();
-        _agentInput.OnMoementKeyPress += SetMovementVelocity;
-        _agentInput.OnRunKeyPress += SetRun;
+        _newInput.OnMovementKeyPress += SetMovementVelocity;
+        _newInput.OnRunKeyPress += SetRun;
     }
 
     private void FixedUpdate()
@@ -133,6 +133,6 @@ public class AgentMovement : Agent<ActionData>
     }
 
     public float GetMovementSpeed(float multiply) => _charController.velocity.sqrMagnitude * multiply;
-    public void SetRun() => _brain.GetAD().IsRun = !_brain.GetAD().IsRun;
+    public void SetRun(bool value) => _brain.GetAD().IsRun = value;
 
 }

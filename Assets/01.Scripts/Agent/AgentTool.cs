@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
-public class AgentTool : Agent<ActionData>
+public class AgentTool : PlayerAgent
 {
     [SerializeField] private Transform _toolTrm;
     public Transform ToolTrm => _toolTrm;

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AgentInteract : Agent<ActionData>
+public class AgentInteract : PlayerAgent
 {
     [SerializeField] protected float _detectionRadius = 1f;
-
     public override void SetUp(Transform agent)
     {
         base.SetUp(agent);
-        _agentInput.OnInteractKeyPress += Interact;
+        _newInput.OnInteractKeyPress += Interact;
     }
 
     public void Interact()

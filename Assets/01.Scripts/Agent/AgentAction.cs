@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AgentAction : Agent<ActionData>
+public class AgentAction : PlayerAgent
 {
     public override void SetUp(Transform agent)
     {
         base.SetUp(agent);
-
-        _agentInput.OnActionKeyPress += DoAction;
+        _newInput.OnActionKeyPress += DoAction;
     }
 
     public void DoAction()

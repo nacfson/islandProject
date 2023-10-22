@@ -24,9 +24,8 @@ public abstract class AgentBrain<T> : MonoBehaviour, IControllable where T : Act
     }
 
     public abstract void ChangeState(object state);
-    //ActionData Ã£¾Æ¼­ ³Ö¾îÁà¾ßÇÔ
+    //ActionData Ã£ï¿½Æ¼ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public abstract void SetUp(Transform agent);
-
     protected virtual void Awake()
     {
         SetUp(this.transform);

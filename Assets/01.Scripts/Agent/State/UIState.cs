@@ -25,7 +25,7 @@ public class UIState : NormalState
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             UI_Toolkit.UT_MainUI.Instance.UnShowAllUI();
-            GameManager.Instance.CamController.TalkMode(false);
+            CameraManager.Instance.TalkMode(false);
 
             //기존에 있던 State로 변환 시켜주어야 함
             PlayerBrain pb = _brain as PlayerBrain;

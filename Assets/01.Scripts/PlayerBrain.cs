@@ -15,6 +15,9 @@ public class PlayerBrain : AgentBrain<ActionData>
     public NormalState CurrentState => _currentState;
     [SerializeField] protected NormalState _currentState;
 
+    [SerializeField] protected Input_PlayerInput _playerInput;
+    public Input_PlayerInput PlayerInput => _playerInput;
+
     protected NormalState _previousState;
     public NormalState PrevState
     {
@@ -29,30 +32,32 @@ public class PlayerBrain : AgentBrain<ActionData>
     }
 
     private Dictionary<StateType, NormalState> _stateDictionary;
-    private List<Agent<ActionData>> _agents;
+    private List<PlayerAgent> _agents;
     
     private AgentAnimator _agentAnimator;
     public AgentAnimator AgentAnimator => _agentAnimator;
-
     private AgentMovement _agentMovement;
     public AgentMovement AgentMovement => _agentMovement;
-
+    
+    
     private AgentTool _agentTool;
     public AgentTool AgentTool => _agentTool;
 
     public override void SetUp(Transform agent)
     {
-        _agents = new List<Agent<ActionData>>();
+        _agents = new List<PlayerAgent>();
         _stateDictionary = new Dictionary<StateType, NormalState>();
 
-        GetComponentsInChildren<Agent<ActionData>>(_agents);
+        GetComponentsInChildren(_agents);
         _agents.ForEach(a => a.SetUp(agent));
 
-        _agentAnimator = _agents.Find(a => a.GetType() == typeof(AgentAnimator)) as AgentAnimator;
+        //AgentAnimator는 PlayerAgent가 아니여서 GetCmoponent로 찾아와줌
+        _agentAnimator = transform.Find("Visual").GetComponent<AgentAnimator>();
+        _agentAnimator.SetUp(this.transform);
+        
         _agentMovement = _agents.Find(a => a.GetType() == typeof(AgentMovement)) as AgentMovement;
         _agentTool = _agents.Find(a => a.GetType() == typeof(AgentTool)) as AgentTool;
 
-        
         Transform stateTrm = transform.Find("States");
 
         foreach (StateType state in Enum.GetValues(typeof(StateType)))
@@ -71,9 +76,6 @@ public class PlayerBrain : AgentBrain<ActionData>
         _actionData = FindTransform("ActionData").GetComponent<ActionData>();
 
         _agentAnimator.OnOpenAnimationEndTrigger += (AgentBrain<ActionData> brain) => UIManager.Instance.FadeSequence(2f, () => ChangeState(StateType.Idle));
-
-
-
         _currentState.OnEnterState();
     }
 

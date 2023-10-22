@@ -166,7 +166,7 @@ namespace UI_Toolkit
                 _inventoryUI.RemoveFromClassList("active");
                 _selectUI.RemoveFromClassList("active");
                 GameManager.Instance.PlayerBrain.ChangeState(StateType.Idle);
-                GameManager.Instance.CamController.TalkMode(false);
+                CameraManager.Instance.TalkMode(false);
             }
         }
 
@@ -264,7 +264,7 @@ namespace UI_Toolkit
                 {
                     _infoUI.RemoveFromClassList("active");
                     _returnIdx = _talkData.talkList.Count - 1;
-                    GameManager.Instance.CamController.TalkMode(false);
+                    CameraManager.Instance.TalkMode(false);
                     _callback?.Invoke();
                 }
             }
@@ -279,7 +279,7 @@ namespace UI_Toolkit
             _targetText = text;
             _infoUI.AddToClassList("active");
             GameManager.Instance.PlayerBrain.ChangeState(StateType.UI);
-            GameManager.Instance.CamController.TalkMode(true);
+            CameraManager.Instance.TalkMode(true);
 
             _isAnimating = true;
 
