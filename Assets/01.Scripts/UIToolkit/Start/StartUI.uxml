@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="container" style="flex-grow: 1; background-color: rgb(0, 0, 0);">
+        <ui:VisualElement name="start-ui" style="flex-grow: 1;" />
+        <ui:Label tabindex="-1" text="아무 키나 입력하여 게임을 시작하세요." parse-escape-sequences="true" display-tooltip-when-elided="true" name="start-label" style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/02.Assets/Masalimov%20Ilnur/Professional%20Pixel%20RPG%20Icon%20Pack/Fonts/Minecraftia-Regular.ttf?fileID=12800000&amp;guid=160712ab306b0e546847b2bcf3de08f9&amp;type=3#Minecraftia-Regular&apos;); color: rgb(255, 255, 255); -unity-font-style: bold; -unity-text-align: middle-center; font-size: 36px; bottom: 30%;" />
+    </ui:VisualElement>
+</ui:UXML>

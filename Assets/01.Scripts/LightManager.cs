@@ -38,8 +38,8 @@ public class LightManager : MonoBehaviour
     private void HourChange(int hour)
     {
         Debug.Log(hour);
-        RenderSettings.fogDensity = _curFogDensity;
-        _light.intensity = _curLightIntensity;
+        //RenderSettings.fogDensity = _curFogDensity;
+        //_light.intensity = _curLightIntensity;
     }
 
     private void CalculateLight(int hour)
