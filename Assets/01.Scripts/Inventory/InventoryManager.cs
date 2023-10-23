@@ -8,32 +8,13 @@ using UI_Toolkit;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : Singleton<InventoryManager>
 {
-    private static InventoryManager _instance;
-    public static InventoryManager Instance
+    public override void Init(GameManager root)
     {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<InventoryManager>();
-            }
-            return _instance;
-        }
-    }
-    private List<InventorySlot> _slotList = new List<InventorySlot>();
-    public List<InventorySlot> SlotList => _slotList;
+        base.Init(root);
+        _itemListSO = root.ItemListSO;
 
-    [SerializeField] private ItemListData _itemListSO;
-    private Dictionary<int, Item> _itemDictionary;
-    private Dictionary<ItemType, MethodInfo> _itemActionDictionary;
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
         _itemDictionary = new Dictionary<int, Item>();
         _itemActionDictionary = new Dictionary<ItemType, MethodInfo>();
         _itemListSO.itemList.ForEach(i => _itemDictionary.Add(i.uniqueID, i)); //ItemDictionary에 고유 id에 맞는 아이템 추가
@@ -49,9 +30,16 @@ public class InventoryManager : MonoBehaviour
             {
                 Debug.LogError(String.Format("This is an error at {0}", itemType));
             }
-
         }
+
     }
+
+    private List<InventorySlot> _slotList = new List<InventorySlot>();
+    public List<InventorySlot> SlotList => _slotList;
+
+    private ItemListData _itemListSO;
+    private Dictionary<int, Item> _itemDictionary;
+    private Dictionary<ItemType, MethodInfo> _itemActionDictionary;
 
     //똑같은 아이템을 보유하고있는 슬롯 있으면 개수 추가,
     //아니면 아이템을 보유하고 있지 않은 슬롯에 아이템 설정
@@ -113,6 +101,7 @@ public class InventoryManager : MonoBehaviour
         }
         return false;
     }
+    
     private void UpdateInventory()
     {
         Debug.Log("UpdateInventory");

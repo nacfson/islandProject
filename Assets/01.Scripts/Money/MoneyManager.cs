@@ -3,39 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
-public class MoneyManager : MonoBehaviour
+public class MoneyManager : Singleton<MoneyManager>
 {
-    private static MoneyManager _instance;
-    public static MoneyManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance= FindObjectOfType<MoneyManager>();    
-            }
-            return _instance;
-        }
-    }
     private const int MAX_MONEY = 1000000;
     private int _money;
 
     public event Action<int> OnMoneyChanged;
     public int Money => _money;
-    void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
 
-        _money = MAX_MONEY;
-    }
-
-    private void Start()
-    {
-        OnMoneyChanged?.Invoke(this._money);
-    }
     public void AddMoney(int plus)
     {
         _money += plus;
@@ -48,5 +23,11 @@ public class MoneyManager : MonoBehaviour
         OnMoneyChanged?.Invoke(this._money);
     }
     public bool CanUseMoney(int prize) => _money >= prize;
-    public void Generate(){}
+    public override void Init(GameManager root)
+    {
+        base.Init(root);
+        _money = MAX_MONEY;
+        Debug.Log(_money);
+        OnMoneyChanged?.Invoke(this._money);
+    }
 }

@@ -4,11 +4,15 @@ using UnityEngine;
 using Cinemachine;
 
 namespace Core{
-    public class Define{
+    public class Define
+    {
         private static Camera _mainCam;
-        public static Camera MainCam{
-            get{
-                if(_mainCam == null){
+        public static Camera MainCam
+        {
+            get
+            {
+                if(_mainCam == null)
+                {
                     _mainCam = Camera.main;
                 }
                 return _mainCam;
@@ -16,9 +20,12 @@ namespace Core{
         }
         
         private static CinemachineVirtualCamera _cmCam;
-        public static CinemachineVirtualCamera CMCam{
-            get{
-                if(_cmCam== null){
+        public static CinemachineVirtualCamera CMCam
+        {
+            get
+            {
+                if(_cmCam== null)
+                {
                     _cmCam = GameObject.Find("CMCam").GetComponent<CinemachineVirtualCamera>();
                 }
                 return _cmCam;
@@ -26,9 +33,12 @@ namespace Core{
         }
 
         private static CinemachineVirtualCamera _talkCam;
-        public static CinemachineVirtualCamera TalkCam{
-            get{
-                if(_talkCam == null){
+        public static CinemachineVirtualCamera TalkCam
+        {
+            get
+            {
+                if(_talkCam == null)
+                {
                     _talkCam = GameObject.Find("TalkCam").GetComponent<CinemachineVirtualCamera>();
                 }
                 return _talkCam;

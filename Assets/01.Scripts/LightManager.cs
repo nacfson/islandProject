@@ -2,20 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightManager : MonoBehaviour
+public class LightManager : Singleton<LightManager>
 {
-    private static LightManager _instance;
-    public static LightManager Instance
+    public override void Init(GameManager root)
     {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<LightManager>();
-            }
-            return _instance;
-        }
+        base.Init(root);
+        _light = _agentTrm.Find("MainLight").GetComponent<Light>();
+
+        TimeManager.Instance.OnHourChanged += CalculateLight;
+        TimeManager.Instance.OnHourChanged += HourChange;
     }
+
     private Light _light;
 
     [SerializeField] private AnimationCurve _fogDensityCurve;
@@ -23,17 +20,7 @@ public class LightManager : MonoBehaviour
 
     private float _curFogDensity;
     private float _curLightIntensity;
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        _light = transform.Find("MainLight").GetComponent<Light>();
 
-        TimeManager.Instance.OnHourChanged += CalculateLight;
-        TimeManager.Instance.OnHourChanged += HourChange;
-    }
 
     private void HourChange(int hour)
     {

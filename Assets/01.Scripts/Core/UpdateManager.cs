@@ -4,37 +4,30 @@ using UnityEngine;
 
 namespace CustomUpdateManager
 {
-    public static class UpdateManager
+    public class UpdateManager : Singleton<UpdateManager>
     {
-        static UpdateManager()
+        private static HashSet<IUpdatable> _updateHashes = new HashSet<IUpdatable>();
+        private bool _isInited;
+        public override void Init(GameManager root)
         {
-            var obj = new GameObject();
-            _instance = obj.AddComponent<UpdateManagerInnerMonoBehvaiour>();
+            base.Init(root);
+            _isInited = true;
         }
-
-        class UpdateManagerInnerMonoBehvaiour : MonoBehaviour
+        public void CustomUpdate()
         {
-            private void Update()
+            foreach(IUpdatable mono in _updateHashes)
             {
-                foreach(IUpdatable mono in _updateHashs)
-                {
-                    mono.CustomUpdate();
-                }
+                mono.CustomUpdate();
             }
         }
-
-        private static UpdateManagerInnerMonoBehvaiour _instance;
-        private static HashSet<IUpdatable> _updateHashs = new HashSet<IUpdatable>();
-        
-        public static void Add(IUpdatable mono)
+        public void Add(IUpdatable mono)
         {
-            _updateHashs.Add(mono);
+            _updateHashes.Add(mono);
         }
 
-        public static void Remove(IUpdatable mono)
+        public void Remove(IUpdatable mono)
         {
-            _updateHashs.Remove(mono);
+            _updateHashes.Remove(mono);
         }
-
     }
 }

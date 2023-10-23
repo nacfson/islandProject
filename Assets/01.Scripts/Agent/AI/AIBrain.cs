@@ -24,7 +24,7 @@ public class AIBrain : AgentBrain<AIActionData>, IUpdatable
         SetUp(this.transform);
     }
 
-    private void OnEnable() => Add(this);
+    private void Start() => Add(this);
     private void OnDisable() => Remove(this);
     public override void SetUp(Transform agent)
     {
@@ -56,7 +56,6 @@ public class AIBrain : AgentBrain<AIActionData>, IUpdatable
         _currentAIState.UpdateState();
     }
 
-    public void Add(IUpdatable updatable) => UpdateManager.Add(updatable);
-
-    public void Remove(IUpdatable updatable) => UpdateManager.Remove(updatable);
+    public void Add(IUpdatable updatable) => UpdateManager.Instance.Add(updatable);
+    public void Remove(IUpdatable updatable) => UpdateManager.Instance.Remove(updatable);
 }

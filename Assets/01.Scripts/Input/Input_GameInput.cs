@@ -21,7 +21,7 @@ public class Input_GameInput : ScriptableObject,GameInput.IManagerActions
         
         _gameInput.Manager.Enable();
     }
-
+    
 
     public void OnAny(InputAction.CallbackContext context)
     {

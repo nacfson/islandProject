@@ -63,6 +63,7 @@ public class Crop : PoolableMono,IGrowable, IInteractable
         ChangeCropState(_currentLevel);
         InventoryManager.Instance.AddItem(_cropSO,Random.Range(1,3));
     }
+    
     private float _timer = 0f;
     [SerializeField] private float _targetTime = 10f;
     public void UpgradeLevel(int plus)

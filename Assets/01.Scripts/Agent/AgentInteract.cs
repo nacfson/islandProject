@@ -12,6 +12,11 @@ public class AgentInteract : PlayerAgent
         _newInput.OnInteractKeyPress += Interact;
     }
 
+    private void OnDisable()
+    {
+        _newInput.OnInteractKeyPress -= Interact;
+    }
+
     public void Interact()
     {
         if (!_brain.GetAD().CanInteract || _brain.GetAD().IsInteracting) return;

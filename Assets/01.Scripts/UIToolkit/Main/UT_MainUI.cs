@@ -11,6 +11,20 @@ namespace UI_Toolkit
 {
     public class UT_MainUI : MonoBehaviour
     {
+        private static UT_MainUI _instance;
+
+        public static UT_MainUI Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindObjectOfType<UT_MainUI>();
+                }
+
+                return _instance;
+            }
+        }
         private UIDocument _document;
 
         private VisualElement _root;
@@ -35,34 +49,6 @@ namespace UI_Toolkit
 
         [Header("Money")]
         private Label _moneyLabel;
-
-        private static UT_MainUI _instance;
-        public static UT_MainUI Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = FindObjectOfType<UT_MainUI>();
-                }
-                return _instance;
-            }
-        }
-
-        private void Awake()
-        {
-            if (_instance == null)
-            {
-                _instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            DontDestroyOnLoad(this.gameObject);
-        }
         private void OnEnable()
         {
             _document = GetComponent<UIDocument>();
@@ -201,7 +187,6 @@ namespace UI_Toolkit
         /// <summary>
         /// 그저 싱글톤 생성을 위해서 만들어 둔 함수.
         /// </summary>
-        public void Generate() { }
     }
 
 

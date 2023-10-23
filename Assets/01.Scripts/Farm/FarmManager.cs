@@ -6,49 +6,12 @@ using System.Linq;
 using System;
 using JetBrains.Annotations;
 
-public class FarmManager : MonoBehaviour,IUpdatable
+public class FarmManager : Singleton<FarmManager>,IUpdatable
 {
-    private static FarmManager _instance;
-    public static FarmManager Instance
+    public override void Init(GameManager root)
     {
-        get
-        {
-            if(_instance == null )
-            {
-                _instance = FindObjectOfType<FarmManager>();
-            }
-            return _instance;
-        }
-    }
-    public void Generate() { }
-
-    private Transform _farmParentTrm;
-    private List<Farm> _farmList = new List<Farm>();
-    private Tree[] _trees;
-
-    private HashSet<Crop> _cropHash = new HashSet<Crop>();
-    public CropSaveData[] CropDatas
-    {
-        get
-        {
-            CropSaveData[] cropDatas = new CropSaveData[_cropHash.Count];
-            for (int i = 0; i < cropDatas.Length; i++)
-            {
-                
-                cropDatas[i] = _cropHash.ElementAt(i).CropSaveData;
-            }
-            return cropDatas;
-        }
-    }
-
-
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        _farmParentTrm = transform.Find("PosData/FarmPos");
+        base.Init(root);
+        _farmParentTrm = _agentTrm.Find("PosData/FarmPos");
         _farmParentTrm.GetComponentsInChildren(_farmList);
 
         //Farm List
@@ -80,8 +43,31 @@ public class FarmManager : MonoBehaviour,IUpdatable
             _trees[i].SetUp();
             Debug.Log(_trees[i].gameObject.name);
         }
+
+        _isInit = true;
     }
-    //bool이 true 상태이면 식물을 심음
+
+
+    private Transform _farmParentTrm;
+    private List<Farm> _farmList = new List<Farm>();
+    private Tree[] _trees;
+
+    private HashSet<Crop> _cropHash = new HashSet<Crop>();
+    public CropSaveData[] CropDatas
+    {
+        get
+        {
+            CropSaveData[] cropDatas = new CropSaveData[_cropHash.Count];
+            for (int i = 0; i < cropDatas.Length; i++)
+            {
+                
+                cropDatas[i] = _cropHash.ElementAt(i).CropSaveData;
+            }
+            return cropDatas;
+        }
+    }
+    
+    //bool?? true ??????? ????? ????
     public bool CanPlantCrops(Vector3 pos,int itemID)
     {
         foreach(Farm farm in _farmList)
@@ -89,9 +75,9 @@ public class FarmManager : MonoBehaviour,IUpdatable
             bool result = farm.CanPlantCrop(pos);
             if(result)
             {
-                //설치할 Crop을 반환받음
+                //????? Crop?? ???????
                 Crop crop = farm.AddCrop(pos,itemID);
-                //HashSet에 추가
+                //HashSet?? ???
                 if(!_cropHash.Contains(crop)) { _cropHash.Add(crop); }
                 else { Debug.LogError(string.Format("It is exist: {0}", crop)); }
                 return true;
@@ -109,6 +95,7 @@ public class FarmManager : MonoBehaviour,IUpdatable
     #region UpdateSystem
     public void CustomUpdate()
     {
+        if (!_isInit) return;
         foreach (IGrowable crop in _cropHash)
         {
             crop.UpgradeLevel(1);
@@ -118,10 +105,11 @@ public class FarmManager : MonoBehaviour,IUpdatable
             tree.UpgradeLevel(1);
         }
     }
+    
     private void OnEnable() => Add(this);
     private void OnDisable() => Remove(this);
-    public void Add(IUpdatable updatable) => UpdateManager.Add(updatable);
-    public void Remove(IUpdatable updatable) => UpdateManager.Remove(updatable);
+    public void Add(IUpdatable updatable) => UpdateManager.Instance.Add(updatable);
+    public void Remove(IUpdatable updatable) => UpdateManager.Instance.Remove(updatable);
     #endregion
 }
 

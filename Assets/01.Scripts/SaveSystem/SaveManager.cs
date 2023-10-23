@@ -22,7 +22,7 @@ public class SaveData
     public int money;
     public Vector3 playerPos;
 
-    //Key => ¾ÆÀÌÅÛ °íÀ¯ id, Value => ¾ÆÀÌÅÛ °³¼ö
+    //Key => ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ id, Value => ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public List<CustomKeyValue<int, int>> itemKeyValues = new List<CustomKeyValue<int, int>>();
     public CropSaveData[] cropDatas;
     public void SetDatas(int money, Vector3 playerPos, List<CustomKeyValue<int, int>> itemKeyValues,CropSaveData[] cropDatas)
@@ -50,15 +50,8 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    private SaveData _saveData;
-    private string _savePath;
-    private string _fileName = "/SaveFile.txt";
     private void Awake()
     {
-        if(_instance == null)
-        {
-            _instance = this;
-        }
         _saveData = new SaveData();
 
         _savePath = Application.dataPath + "/SaveData.txt";
@@ -68,6 +61,9 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    private SaveData _saveData;
+    private string _savePath;
+    private string _fileName = "/SaveFile.txt";
     [ContextMenu("Save")]
     public void Save()
     {
@@ -75,7 +71,7 @@ public class SaveManager : MonoBehaviour
         Vector3 playerPos = GameManager.Instance.PlayerBrain.transform.position;
 
         var itemKeyValues = new List<CustomKeyValue<int, int>>();
-        /* ½½·Ô ¸®½ºÆ®¿¡¼­ ¾ÆÀÌÅÛ ¾ÆÀÌµð, ¾ó¸¶³ª ÀÖ´ÂÁö °¡Á®¿Í¼­ Dictionary¿¡ ³Ö¾îÁÜ*/
+        /* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½, ï¿½ó¸¶³ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ Dictionaryï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½*/
         foreach(InventorySlot slot in InventoryManager.Instance.SlotList)
         {
             Item item = slot.GetItem();

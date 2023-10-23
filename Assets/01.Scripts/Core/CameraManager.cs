@@ -3,37 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using Core;
 using Cinemachine;
+using Unity.VisualScripting;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : Singleton<CameraManager>
 {
-    private static CameraManager _instance;
-    public static CameraManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<CameraManager>();
-                _instance.Init();
-            }
-            return _instance;
-        }
-        
-    }
     private CinemachineVirtualCamera _cmCam;
     private CinemachineVirtualCamera _talkCam;
-
-    public void Generate(){}
-    private void Init()
+    public override void Init(GameManager root)
     {
+        base.Init(root);
         _cmCam = Define.CMCam;
         _talkCam = Define.TalkCam;
-
+        
         _talkCam.enabled = false;
     }
     public void TalkMode(bool result)
     {
-        _talkCam.enabled = result;
-        _cmCam.enabled = !result;
+        if (_talkCam == null || _cmCam == null)
+        {
+            _talkCam = Define.TalkCam;
+            _cmCam = Define.CMCam;  
+        }
+        if(_talkCam != null)
+            _talkCam.enabled = result;
+        if(_cmCam != null)
+            _cmCam.enabled = !result;
     }
+
 }
